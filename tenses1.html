@@ -1,0 +1,1314 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>:root{color-scheme:light dark}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Aşama 1 · Yüklemi Yakala</title>
+</head><body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+<style>
+/* Layout: tek sütunlu ders akışı; üstte sabit ilerleme şeridi, ekranlar dokundukça alta eklenir */
+:root{
+  --bg:#F3F5F9; --surface:#FFFFFF; --sunk:#EBEEF4; --ink:#18202F; --muted:#5A6375; --line:#D9DEE8;
+  --accent:#2341B5; --accent-ink:#FFFFFF; --accent-soft:#E5EAFB;
+  --ok:#137A3B; --ok-soft:#E1F4E7; --bad:#B8233A; --bad-soft:#FBE6EA;
+  --g:#0E7268; --g-soft:#D7F0EB; --k:#A85008; --k-soft:#FBEAD2; --s:#6526C9; --s-soft:#EDE4FB;
+  --xp:#8F5A04; --xp-soft:#FDF0C8;
+  --d:#0369A1; --d-soft:#E0F2FE; --h:#BE185D; --h-soft:#FCE7F3; --c:#4D7C0F; --c-soft:#ECFCCB; --o:#4338CA; --o-soft:#E0E7FF; --oh:#A21CAF; --oh-soft:#FAE8FF; --i:#C2410C; --i-soft:#FFEDD5; --gi:#475569; --gi-soft:#E2E8F0;
+  --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --f-body:"Figtree","Segoe UI",system-ui,-apple-system,sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E131D; --surface:#161D2B; --sunk:#1D2536; --ink:#E7EBF3; --muted:#9BA4B6; --line:#2B3448;
+  --accent:#8EA3FF; --accent-ink:#0E131D; --accent-soft:#1E284D;
+  --ok:#5BD98A; --ok-soft:#123220; --bad:#FF8597; --bad-soft:#3A1621;
+  --g:#5FE0CC; --g-soft:#0E2F2B; --k:#F9B84A; --k-soft:#382710; --s:#C3B1FF; --s-soft:#271D47;
+  --xp:#F8CF5B; --xp-soft:#352A0E;
+  --d:#7DD3FC; --d-soft:#0C2A3D; --h:#F9A8D4; --h-soft:#3B1027; --c:#BEF264; --c-soft:#1F2C0B; --o:#A5B4FC; --o-soft:#1E1F4D; --oh:#F0ABFC; --oh-soft:#3A1240; --i:#FDBA74; --i-soft:#3A1F0B; --gi:#CBD5E1; --gi-soft:#243041;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E131D; --surface:#161D2B; --sunk:#1D2536; --ink:#E7EBF3; --muted:#9BA4B6; --line:#2B3448;
+  --accent:#8EA3FF; --accent-ink:#0E131D; --accent-soft:#1E284D;
+  --ok:#5BD98A; --ok-soft:#123220; --bad:#FF8597; --bad-soft:#3A1621;
+  --g:#5FE0CC; --g-soft:#0E2F2B; --k:#F9B84A; --k-soft:#382710; --s:#C3B1FF; --s-soft:#271D47;
+  --xp:#F8CF5B; --xp-soft:#352A0E;
+  --d:#7DD3FC; --d-soft:#0C2A3D; --h:#F9A8D4; --h-soft:#3B1027; --c:#BEF264; --c-soft:#1F2C0B; --o:#A5B4FC; --o-soft:#1E1F4D; --oh:#F0ABFC; --oh-soft:#3A1240; --i:#FDBA74; --i-soft:#3A1F0B; --gi:#CBD5E1; --gi-soft:#243041;
+  color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.62 var(--f-body);-webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+/* üst şerit */
+.hud{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hud-in{max-width:680px;margin:0 auto;padding:10px 16px 8px;display:flex;align-items:center;gap:12px}
+.hud-t{flex:1;min-width:0}
+.hud-t b{display:block;font:800 15px/1.2 var(--f-display);letter-spacing:-.01em}
+.hud-t span{display:block;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.xp-pill{flex:none;font:700 13px/1 var(--f-body);background:var(--xp-soft);color:var(--xp);padding:7px 11px;border-radius:999px;font-variant-numeric:tabular-nums}
+.menu-b{flex:none;width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer}
+.menu-b i{display:block;width:16px;height:2px;background:var(--ink);box-shadow:0 -5px 0 var(--ink),0 5px 0 var(--ink)}
+.bar{height:4px;background:var(--sunk)}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .4s}
+
+.menu{position:fixed;inset:0;z-index:40;background:rgba(10,14,22,.45);display:flex;justify-content:flex-end}
+.menu-p{width:min(320px,86vw);height:100%;background:var(--surface);padding:calc(env(safe-area-inset-top,0px) + 18px) 18px 18px;overflow:auto;display:flex;flex-direction:column;gap:6px}
+.menu-p h3{margin:0 0 8px;font:800 18px var(--f-display)}
+.menu-p a{display:block;padding:10px 12px;border-radius:10px;color:var(--ink);text-decoration:none;font-weight:600}
+.menu-p a.lock{color:var(--muted);pointer-events:none;font-weight:400}
+.menu-p a:not(.lock):hover{background:var(--sunk)}
+.menu-p .sp{flex:1}
+.ghost{background:none;border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;text-align:left}
+
+/* akış */
+main{max-width:680px;margin:0 auto;padding-inline:16px;padding-block:8px 120px}
+.screen{display:flex;flex-direction:column;gap:14px;padding-top:22px;scroll-margin-top:84px}
+.screen+.screen{border-top:1px dashed var(--line);margin-top:22px}
+p.say{margin:0;max-width:62ch}
+.eb{font:700 12px/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:6px 0 -6px}
+h2.h{margin:0;font:800 clamp(26px,6vw,34px)/1.1 var(--f-display);letter-spacing:-.02em;text-wrap:balance}
+h2.h.small{font-size:clamp(21px,5vw,25px)}
+h2.h .cd{vertical-align:6px;margin-right:8px}
+
+.hero{background:var(--accent);color:var(--accent-ink);border-radius:20px;padding:26px 22px 22px;display:flex;flex-direction:column;gap:10px;overflow:hidden;position:relative}
+.hero small{font:700 12px var(--f-body);letter-spacing:.14em;text-transform:uppercase;opacity:.8}
+.hero h1{margin:0;font:800 clamp(34px,9vw,48px)/1 var(--f-display);letter-spacing:-.03em}
+.hero p{margin:0;opacity:.9;max-width:40ch}
+.hero .gks{display:flex;gap:8px;margin-top:6px}
+.hero .gks span{font:800 15px var(--f-display);width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.16);background:color-mix(in srgb,var(--accent-ink) 16%,transparent)}
+
+.en{font-weight:600}
+.pr{font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+.pr.g{color:var(--g)} .pr.k{color:var(--k)} .pr.s{color:var(--s)}
+.sb{color:var(--accent)}
+u{text-decoration-color:var(--bad);text-decoration-thickness:2px;text-underline-offset:4px}
+
+/* kelime ve kod dokunmatikleri */
+.gl{background:none;border:0;padding:0;font-weight:inherit;cursor:pointer;border-bottom:2px dotted var(--muted);line-height:1.2}
+.gp,.cp{display:inline-block;font:600 13px/1.3 var(--f-body);background:var(--ink);color:var(--bg);border-radius:8px;padding:3px 8px;margin:0 4px;vertical-align:1px;animation:pop .15s ease-out}
+@keyframes pop{from{transform:scale(.85);opacity:0}to{transform:none;opacity:1}}
+.cd{display:inline-grid;place-items:center;min-width:28px;height:26px;padding:0 7px;border-radius:8px;border:0;font:800 14px/1 var(--f-display);cursor:pointer;vertical-align:1px}
+.cd.g{background:var(--g-soft);color:var(--g)} .cd.k{background:var(--k-soft);color:var(--k)} .cd.s{background:var(--s-soft);color:var(--s)}
+.cd.n{background:var(--sunk);color:var(--muted);cursor:default}
+
+/* kod kartları */
+.codes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.codes div{border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.codes .g{background:var(--g-soft)} .codes .k{background:var(--k-soft)} .codes .s{background:var(--s-soft)}
+.codes b{font:800 26px/1 var(--f-display)}
+.codes .g b{color:var(--g)} .codes .k b{color:var(--k)} .codes .s b{color:var(--s)}
+.codes strong{font-size:14.5px;line-height:1.25}
+.codes span{font-size:13px;color:var(--muted);line-height:1.35}
+.codes em{font-style:normal;font-size:13px;font-weight:600;white-space:nowrap}
+@media (max-width:460px){.codes{grid-template-columns:1fr}.codes div{display:grid;grid-template-columns:44px 1fr;column-gap:10px}.codes b{grid-row:span 3;align-self:center}}
+
+/* örnek cümleler */
+.ex{display:flex;flex-direction:column;gap:8px}
+.ex .it{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.ex .it .cd{grid-row:span 2;align-self:start;margin-top:2px}
+.ex .e{font-weight:600;min-width:0}
+.ex .t{color:var(--muted);font-size:15px;min-width:0}
+
+/* kimlik kartı */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.card h4{margin:0;padding:11px 14px;font:800 17px var(--f-display);display:flex;align-items:center;gap:10px}
+.card.g h4{background:var(--g-soft);color:var(--g)} .card.k h4{background:var(--k-soft);color:var(--k)} .card.s h4{background:var(--s-soft);color:var(--s)}
+.card dl{margin:0;display:grid;grid-template-columns:96px 1fr}
+.card dt,.card dd{margin:0;padding:9px 14px;border-top:1px solid var(--line);font-size:15px;min-width:0}
+.card dt{font-weight:700;color:var(--muted);font-size:13.5px;padding-right:0}
+.card dd small{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+@media (max-width:420px){.card dl{grid-template-columns:1fr}.card dd{border-top:0;padding-top:0}}
+
+/* Türkçe-İngilizce eşleri */
+.pairs{display:flex;flex-direction:column;gap:6px}
+.pairs div{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:15px}
+.pairs div span:last-child{font-weight:500}
+@media (max-width:460px){.pairs div{grid-template-columns:auto 1fr}.pairs div span:first-child{grid-column:1/-1;color:var(--muted)}}
+
+/* soru */
+.q{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.q .tag{align-self:flex-start;font:700 11.5px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--sunk);padding:4px 9px;border-radius:999px}
+.q .ask{font-size:14.5px;color:var(--muted);margin:0}
+.q .stem{font-size:18px;font-weight:600;line-height:1.5;margin:0}
+.q .stem.trs{font-weight:500}
+.q .stem.trs::before{content:"TR";font:800 11px var(--f-body);letter-spacing:.08em;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:2px 5px;margin-right:8px;vertical-align:2px}
+.cebi{font-size:13.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px;margin:-4px 0 0}
+.cebi::before{content:"Kelime cebi";font-weight:700;color:var(--ink)}
+.cebi b{color:var(--ink);font-weight:600}
+.opts{display:flex;flex-direction:column;gap:8px}
+.op{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;cursor:pointer;transition:border-color .15s,background .15s;font-size:16px;line-height:1.45}
+.op:hover:not([disabled]){border-color:var(--accent)}
+.op .l{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font:800 13px var(--f-display);background:var(--sunk);color:var(--muted);margin-top:-1px}
+.op .x{flex:1;min-width:0}
+.op.wrong{border-color:var(--bad);background:var(--bad-soft)} .op.wrong .l{background:var(--bad);color:var(--surface)}
+.op.right{border-color:var(--ok);background:var(--ok-soft)} .op.right .l{background:var(--ok);color:var(--surface)}
+.op[disabled]{cursor:default}
+.op.dim{opacity:.55}
+.op .lt{flex:none;font:800 12px var(--f-display);color:var(--muted);border:1px dashed var(--line);border-radius:6px;padding:2px 6px;align-self:center}
+.opts.codes3{flex-direction:row}
+.opts.codes3 .op{flex:1 1 0;min-width:0;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:11px 6px;font-size:14px;line-height:1.25}
+.opts.codes3 .op .cd{pointer-events:none}
+.opts.who .op .l{width:auto;padding:0 9px;border-radius:999px;color:#fff}
+.opts.who .op:nth-child(1) .l{background:#D6304F}.opts.who .op:nth-child(2) .l{background:#0B7FC0}.opts.who .op:nth-child(3) .l{background:#7A3AE0}
+.opts.wire .op .l{width:34px;height:10px;border-radius:5px;margin-top:8px}
+.opts.wire .op:nth-child(1) .l{background:#DC2626}.opts.wire .op:nth-child(2) .l{background:#2563EB}.opts.wire .op:nth-child(3) .l{background:#16A34A}
+.opts.wire .op.right .l,.opts.wire .op.wrong .l{color:transparent}
+.fb{border-radius:12px;padding:11px 13px;font-size:15.5px;line-height:1.55;display:flex;gap:10px;animation:pop .18s ease-out}
+.fb::before{flex:none;font:800 13px/1 var(--f-display);width:24px;height:24px;border-radius:50%;display:grid;place-items:center;margin-top:1px}
+.fb.ok{background:var(--ok-soft)} .fb.ok::before{content:"✓";background:var(--ok);color:var(--surface)}
+.fb.no{background:var(--bad-soft)} .fb.no::before{content:"!";background:var(--bad);color:var(--surface)}
+.fb.info{background:var(--accent-soft)} .fb.info::before{content:"i";background:var(--accent);color:var(--accent-ink)}
+.fb .xpg{font-weight:700;color:var(--xp);white-space:nowrap}
+.hintb{align-self:flex-start;background:none;border:1px dashed var(--accent);color:var(--accent);border-radius:999px;padding:5px 12px;font-size:14px;font-weight:600;cursor:pointer}
+.bomb .stem::before{content:"00:59";font:800 13px/1 ui-monospace,Menlo,monospace;color:var(--bad);margin-right:10px;letter-spacing:.06em}
+.chat{background:var(--sunk);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:6px}
+.bub{max-width:85%;background:var(--surface);border-radius:12px;padding:7px 11px;font-size:15.5px}
+.bub b{display:block;font-size:12px;color:var(--g)}
+.bub.me{align-self:flex-end;background:var(--accent-soft)}
+.bub.gap{border:1.5px dashed var(--muted);background:transparent;color:var(--muted);text-align:center}
+
+/* yüklem avı */
+.toks{display:flex;flex-wrap:wrap;gap:6px}
+.tk{border:1.5px solid var(--line);background:var(--bg);border-radius:10px;padding:7px 11px;font-size:17px;font-weight:500;cursor:pointer}
+.tk:hover:not([disabled]){border-color:var(--accent)}
+.tk.miss{border-color:var(--bad);background:var(--bad-soft)}
+.tk.hit{border-color:var(--ok);background:var(--ok-soft);color:var(--ok);font-weight:700}
+.tk.subj{border-color:transparent;color:var(--accent);background:var(--accent-soft)}
+.tk[disabled]{cursor:default}
+
+/* gerçek mi efsane mi */
+.ge{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:0 4px}
+.ge span{font-size:14.5px;color:var(--muted);margin-right:4px}
+.ge button{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-weight:700;cursor:pointer}
+.ge button.sel{border-color:var(--ink)}
+.ge+.fb{margin-top:-6px}
+
+/* kaydırmalı kart */
+.sw{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.sw .e{font-weight:600;font-size:17px}
+.sw .t{color:var(--muted)}
+.sw .bt{display:flex;gap:10px}
+.sw .bt button{flex:1;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);padding:10px;font-weight:700;cursor:pointer}
+.sw .bt button.n{color:var(--bad)} .sw .bt button.y{color:var(--ok)}
+.sw .bt button.sel.y{background:var(--ok-soft);border-color:var(--ok)} .sw .bt button.sel.n{background:var(--bad-soft);border-color:var(--bad)}
+.sw .bt button.wr{background:var(--bad-soft);border-color:var(--bad)}
+
+/* V2 kartları */
+.v2{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.v2 button{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 4px;cursor:pointer;font-size:15px;min-width:0}
+.v2 button b{color:var(--k)}
+@media (max-width:420px){.v2{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* zaman şeridi */
+.tl{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;overflow-x:auto}
+.tl svg{display:block;width:100%;min-width:300px;height:auto}
+.tl .ax{stroke:var(--muted)} .tl .ink{fill:var(--ink)} .tl .mut{fill:var(--muted)}
+.tl .gb{fill:var(--g-soft);stroke:var(--g)} .tl .gt{fill:var(--g)}
+.tl .kb{fill:var(--k-soft);stroke:var(--k)} .tl .kt{fill:var(--k)}
+.tl .sbx{fill:var(--s-soft);stroke:var(--s)} .tl .st{fill:var(--s)}
+.tl .now{stroke:var(--ink)}
+
+/* adım adım çözüm */
+.steps{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.steps .stem{margin:0;font-size:18px;font-weight:600;line-height:1.5}
+.steps ol.so{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.steps ol.so li{display:flex;gap:10px;font-size:16px;padding:6px 8px;border-radius:10px}
+.steps ol.so li b{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:var(--sunk);color:var(--muted);font:800 13px var(--f-display)}
+.steps ol.so li.mk{background:var(--ok-soft)} .steps ol.so li.mk b{background:var(--ok);color:var(--surface)}
+.steps ol.so li.out{opacity:.5;text-decoration:line-through;text-decoration-thickness:1px}
+.steps .st{display:flex;gap:10px;background:var(--accent-soft);border-radius:12px;padding:11px 13px;font-size:15.5px;animation:pop .18s ease-out}
+.steps .st i{flex:none;font:800 13px var(--f-display);font-style:normal;color:var(--accent);margin-top:2px}
+
+/* boss can barı */
+.hp{display:flex;align-items:center;gap:10px;background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:10px 14px;font:800 14px var(--f-display)}
+.hp .b{flex:1;display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.hp .b i{height:14px;border-radius:4px;background:var(--bad);transition:opacity .3s,transform .3s}
+.hp .b i.off{opacity:.15;transform:scaleY(.6)}
+
+/* şifre kutuları */
+.ci{display:flex;gap:8px;flex-wrap:wrap}
+.ci span{width:44px;height:50px;border:2px solid var(--accent);border-radius:10px;display:grid;place-items:center;font:800 24px var(--f-display);color:var(--accent);background:var(--surface)}
+.ci span.e{border-style:dashed;color:transparent}
+
+/* kontrol noktası */
+.chk{border:2px solid var(--accent);border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.chk .row{display:flex;gap:8px;flex-wrap:wrap}
+.btn{align-self:flex-start;background:var(--accent);color:var(--accent-ink);border:0;border-radius:12px;padding:13px 20px;font:700 16px var(--f-body);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn::after{content:"→";font-weight:800}
+.btn.sec{background:var(--surface);color:var(--accent);border:1.5px solid var(--accent)}
+.btn.sec::after{content:none}
+.btn[hidden]{display:none}
+
+/* özet */
+.sum{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.sum div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.sum b{font:800 26px/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.sum span{font-size:13px;color:var(--muted)}
+.sum .rk{grid-column:1/-1;background:var(--xp-soft);border-color:transparent}
+.sum .rk b{color:var(--xp)}
+.clist{display:flex;flex-direction:column;gap:8px}
+.clist label{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:15.5px;cursor:pointer}
+.clist input{width:20px;height:20px;margin-top:2px;accent-color:var(--ok);flex:none}
+.clist span{flex:1;min-width:0}
+.clist a{flex-basis:100%;margin-left:30px;font-size:13.5px;color:var(--accent);font-weight:600;text-decoration:none}
+.login{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px}
+.login label{font-weight:700;font-size:14.5px;margin-top:6px}
+.login input{font:inherit;font-size:17px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+.login input:focus{border-color:var(--accent);outline:none}
+.login .btn{margin-top:10px}
+.lgerr{margin:0;color:var(--bad);font-weight:600;font-size:14.5px}
+.lgnote{margin:4px 0 0;color:var(--muted);font-size:13.5px}
+.who-l{margin:0 0 10px;color:var(--muted);font-size:14px}
+
+/* diğer kodlar (Aşama 2–5) */
+.cd.d{background:var(--d-soft);color:var(--d)} .cd.h{background:var(--h-soft);color:var(--h)} .cd.c{background:var(--c-soft);color:var(--c)} .cd.o{background:var(--o-soft);color:var(--o)} .cd.oh{background:var(--oh-soft);color:var(--oh)} .cd.i{background:var(--i-soft);color:var(--i)} .cd.gi{background:var(--gi-soft);color:var(--gi)}
+.pr.d{color:var(--d)} .pr.h{color:var(--h)} .pr.c{color:var(--c)} .pr.o{color:var(--o)} .pr.oh{color:var(--oh)} .pr.i{color:var(--i)} .pr.gi{color:var(--gi)}
+.codes .d{background:var(--d-soft)} .codes .h{background:var(--h-soft)} .codes .c{background:var(--c-soft)} .codes .o{background:var(--o-soft)} .codes .oh{background:var(--oh-soft)} .codes .i{background:var(--i-soft)} .codes .gi{background:var(--gi-soft)}
+.codes .d b{color:var(--d)} .codes .h b{color:var(--h)} .codes .c b{color:var(--c)} .codes .o b{color:var(--o)} .codes .oh b{color:var(--oh)} .codes .i b{color:var(--i)} .codes .gi b{color:var(--gi)}
+.card.d h4{background:var(--d-soft);color:var(--d)} .card.h h4{background:var(--h-soft);color:var(--h)} .card.c h4{background:var(--c-soft);color:var(--c)} .card.o h4{background:var(--o-soft);color:var(--o)} .card.oh h4{background:var(--oh-soft);color:var(--oh)} .card.i h4{background:var(--i-soft);color:var(--i)} .card.gi h4{background:var(--gi-soft);color:var(--gi)}
+.svgbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;overflow-x:auto}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="hud" id="hud"><div class="hud-in">
+  <div class="hud-t"><b id="hudT"></b><span id="hudS"></span></div>
+  <span class="xp-pill" id="hudXP">0 XP</span>
+  <button class="menu-b" id="menuB" type="button" aria-label="Bölümler"><i></i></button>
+</div><div class="bar"><i id="hudBar"></i></div></div>
+<div class="menu" id="menu" hidden><div class="menu-p" role="dialog" aria-label="Bölümler">
+  <h3>Bölümler</h3><nav id="menuNav"></nav><div class="sp"></div>
+  <button class="ghost" id="resetB" type="button">Baştan başla</button>
+</div></div>
+<main id="main"></main>
+
+<script>
+const TRACK_URL='https://script.google.com/macros/s/AKfycbz-kcR7bO8k8hWOJYp0uh0hCxt2aNLqXB4ehusKWhkjovavQuHkkfBx_huTTWBA_3cH4w/exec';
+/* ===== AŞAMA 1 · İÇERİK =====
+   Biçim kısaltmaları (motor çevirir):
+   {kelime|anlam}  dokununca anlamı açılan kelime
+   [G] [K] [S]     dokununca açıklaması açılan kod
+   <e>…</e>        İngilizce parça
+   <pg> <pk> <ps>  renkli yüklem (G/K/S)
+   <sb>…</sb>      özne
+*/
+const STAGE = {
+  key: 'ydt-tense-a1-v1',
+  no: 1,
+  topic: 'Tenses',
+  study: 'Aşama 1 · Yüklemi Yakala',
+  kicker: 'YDT Tense · Self-study',
+  hero: 'Aşama 1. Yüklemi gör, zamanını oku. Üç kod, iki tuzak, bi boss.',
+  codes: {
+    G:['g','Genel geçer','Present Simple','-r','"Hep böyle."'],
+    K:['k','Kapanmış geçmiş','Past Simple','-dı','"Oldu, bitti, kapı kapandı."'],
+    S:['s','Süren süreç','Present Continuous','-yor','"Bu aralar oluyor, değişiyor."']
+  },
+  title: 'Aşama 1 · Yüklemi Yakala',
+  ranks: [[0,'Çaylak'],[0.5,'Zaman Yolcusu'],[0.75,'Zaman Dedektifi'],[0.9,'KRONOS']]
+};
+
+const SCREENS = [
+
+/* ---------- GİRİŞ ---------- */
+{ sec:'giris', title:'Giriş', btn:'Başla', blocks:[
+  {t:'hero'},
+  {t:'say', h:`Selam! Bu sayfa senin özel dersin. Ben anlatıcam, sen dokunucaksın. Acelemiz yok; istediğin yerde bırak, aynı telefondan açınca kaldığın yerden devam edersin.`},
+  {t:'say', h:`Bi itirafla başlıyım. Tense'i hepimiz ortaokuldan beri biliyoruz sanıyoruz. Sonra YDT'de beş şık açılıyor, beşi de neredeyse aynı cümle. Biri -ed, biri -ing, biri <e>had</e> falan. "Ben bunu biliyodum ya" kısmı tam orda bitiyor.`},
+  {t:'say', h:`Mesela 2026 YDT'nin 4. sorusu şöyle başlıyordu: <e>In 1876, Alexander Graham Bell patented a method…</e> O <e>1876</e>'yı görünce kafanda bi kapının kapanması lazım. Hangi kapı? Birazdan.`},
+  {t:'say', h:`Burda formül ezberletmicem, söz. Tek bi alışkanlık kazandırıcam: yüklemi gördün mü, "bu ne zaman oluyor?" diye soracaksın. Gerisi arkasından geliyor.`}
+]},
+
+{ sec:'giris', btn:'Tamamdır', blocks:[
+  {t:'say', h:`Önce oyunun kuralları, kısa kısa.`},
+  {t:'say', h:`Sorularda şıkka dokunuyorsun. Doğruysa yeşil yanar. Yanlışsa nerde kaydığını söylerim, bi daha denersin. Puan (XP) sadece ilk denemede geliyor. O yüzden acele etme, bi saniye düşün, sonra dokun.`},
+  {t:'say', h:`Altı noktalı kelimeler var ya, onlara dokun, anlamı çıkar. Dene bak: {plague|veba}. Bi daha dokunursan kapanır.`},
+  {t:'say', h:`Bi de bu aşama boyunca peşini bırakmayacak üç kodumuz var:`},
+  {t:'codes'},
+  {t:'say', h:`Unutursan dert değil. Metnin içinde bi kod gördüğünde ona dokun, ne olduğunu hatırlatırım. Bak: [G]`}
+]},
+
+/* ---------- SEZGİ TESTİ ---------- */
+{ sec:'sezgi', title:'Sezgi Testi', btn:'Kime soruyoruz?', blocks:[
+  {t:'h', eb:'Bölüm 1', h:'Sezgi Testi'},
+  {t:'say', h:`İlk iş, kural yok. Sadece sezgine güven. Her cümleye bak ve karar ver: [G] hep böyle mi, [K] bitmiş gitmiş mi, [S] bu aralar mı oluyor?`},
+  {t:'mcq', id:'sz1', xp:1, codes:true, stem:`The {plague|veba} killed many people in London in 1665.`, a:1, f:[
+    `Hmm, veba hâlâ Londra'da insan öldürmüyor, neyse ki. 1665 tarihine bi bak.`,
+    `Evet. 1665 geldi geçti, kapı kapandı.`,
+    `Bu aralar mı? Yok yok, 1665 diyor. Çoktan bitmiş bi olay.`]},
+  {t:'mcq', id:'sz3', xp:1, codes:true, stem:`More and more students are using AI apps.`, a:2, f:[
+    `Yakın ama <e>more and more</e> var: "gittikçe daha çok". Bu bi değişim ve hâlâ sürüyor.`,
+    `Bitmiş bi şey yok burda, tam tersine her gün artıyor.`,
+    `Aynen. <e>More and more</e> görünce "bu aralar artıyor" diye oku.`]},
+  {t:'mcq', id:'sz2', xp:1, codes:true, stem:`{Whale sharks|balina köpekbalıkları} eat very small sea animals.`, a:0, f:[
+    `Doğru. Balina köpekbalığı dün de böyle beslendi, yarın da böyle beslenir. Karakteri bu.`,
+    `Cümlede ne tarih var ne geçmiş. Hem <e>eat</e> V2 değil, V1.`,
+    `<e>are eating</e> deseydi düşünürdük. <e>eat</e> diyor, bu hayvanın hep yaptığı bi şey.`]},
+  {t:'mcq', id:'sz6', xp:1, codes:true, stem:`Los Angeles is {getting ready|hazırlanmak} for the 2028 Olympics.`, a:2, f:[
+    `Şehir her zaman olimpiyata hazırlanmıyor ya, bu dönem hazırlanıyor.`,
+    `Bitmemiş bi şey bu, hazırlık sürüyor.`,
+    `Doğru. Hazırlık bu aralar sürüyor, bitmedi.`]},
+  {t:'mcq', id:'sz5', xp:1, codes:true, stem:`Europeans brought {foxes|tilkiler} to Australia in the 1800s.`, a:1, f:[
+    `<e>brought</e> V2 ya, <e>bring</e>'in geçmişi. Bi de "1800'lerde" diyor.`,
+    `Bingo. <e>in the 1800s</e> + <e>brought</e>: kapanmış geçmiş. Bu cümle bu arada 2026 YDT'deki bi diyalogdan.`,
+    `Avrupalılar hâlâ tilki taşımıyor :) <e>in the 1800s</e> bitti gitti.`]},
+  {t:'mcq', id:'sz4', xp:1, codes:true, stem:`Red {foxes|tilkiler} {hunt|avlanmak} at night.`, a:0, f:[
+    `Evet. Tilki dediğin gece avlanır, olay bu.`,
+    `<e>hunt</e> geçmiş hali değil, V1. Tarih de yok.`,
+    `Burda bi değişim yok, tilki hep böyle. Sezgin -ing'e gitti, normal. Birazdan bunun adını koyucaz.`]}
+ ], after:[
+  {t:'say', h:`Kaç tane tutturdun? Bak, daha hiç kural konuşmadık ama çoğunu yaptın. Çünkü beynin ipuçlarını zaten topluyor: 1665, 1800'ler, <e>more and more</e>, <e>getting ready</e>.`},
+  {t:'say', h:`Ama dikkat ettin mi, tilki cümlesinde hiç ipucu yoktu ve yine de karar verdin. Nasıl oldu bu? Onu da çözücez. Önce bi adım geri: zamanı kime soruyoruz?`}
+]},
+
+/* ---------- YÜKLEMİ BUL ---------- */
+{ sec:'yuklem', title:'Yüklemi Bul', btn:"G'ye geçelim", blocks:[
+  {t:'h', eb:'Bölüm 2', h:'Yüklemi Bul'},
+  {t:'say', h:`Zamanı cümledeki herkese sormuyoruz. Tek muhatabımız yüklem, yani zamanı taşıyan fiil.`},
+  {t:'say', h:`YDT cümleleri uzun olur, özne bazen yarım satır sürer. O yüzden taktik basit: önce özneyi komple geç, sonra ilk zaman taşıyan fiili yakala.`},
+  {t:'ex', items:[['G',`<sb>[Young people in big cities]</sb> <pg>use</pg> AI every day.`,`Büyük şehirlerdeki gençler her gün yapay zekâ kullanır.`]]},
+  {t:'say', h:`<e>cities</e>'i görünce durma, o hâlâ özne. İlk zaman taşıyan fiil <e>use</e>. Yüklem o.`},
+  {t:'say', h:`Olumsuzda <e>don't, doesn't, didn't, isn't</e> da yüklemin parçası. <e>A bull <pg>doesn't see</pg> red.</e> Yüklem sadece <e>see</e> değil, <e>doesn't see</e>.`},
+  {t:'say', h:`Sıra sende. Yükleme dokun.`},
+  {t:'tap', id:'tp1', xp:2, q:'Yüklem hangisi?', toks:[['The','s'],['number','s'],['of','s'],['old','s'],['people','s'],['is','p1'],['growing.','p1']],
+    fs:`O öznenin parçası. <e>The number of old people</e> komple özne, devam et.`, fo:`Bu kelime zaman taşımıyor. Fiili ara.`,
+    done:`Tamam. <e>is growing</e>: yaşlıların sayısı artıyor. Bu arada bu bi [S].`},
+  {t:'tap', id:'tp2', xp:2, q:'Yüklem hangisi? Olumsuzsa hepsini al.', toks:[['Most','s'],['people','s'],['today','o'],["don't",'p1'],['eat','p1'],['enough','o'],['vegetables.','o']],
+    fs:`Bu özne, yüklem değil.`, fo:`Bu kelime zaman taşımıyor. Fiili ara; olumsuzsa <e>don't</e>'u da unutma.`,
+    done:`Evet, <e>don't eat</e>, ikisi birlikte yüklem. [G]: çoğu insan sebze yemiyor, genel durum.`},
+  {t:'tap', id:'tp3', xp:2, q:'Yüklem hangisi?', cebi:'plague|veba; fever|ateş', toks:[['People','s'],['with','s'],['the','s'],['plague','s'],['had','p1'],['a','o'],['high','o'],['fever.','o']],
+    fs:`<e>with the plague</e> özneye takılan bi ek: "vebalı insanlar". Hâlâ öznedeyiz.`, fo:`Bu kelime zaman taşımıyor. Fiili ara.`,
+    done:`Evet, <e>had</e>. Özne uzundu ama yakaladın. Bu da bi [K].`},
+  {t:'say', h:`Son bi şey: <e>that, because, when, but</e> gibi bağlaçlardan sonra yeni bi yüklem gelebilir. <e>Scientists <pg>think</pg> that bees <pg>feel</pg> stress.</e> Burda iki yüklem var.`},
+  {t:'tap', id:'tp4', xp:2, q:'Bu cümlede iki yüklem var. İkisini de bul.', cebi:'crash|düşmek (uçak); cause|neden', toks:[['When','o'],['the','s'],['plane','s'],['crashed,','p1'],['nobody','s'],['knew','p2'],['the','o'],['cause.','o']],
+    fs:`Bu özne. Ondan sonra gelen fiile bak.`, fo:`Bu kelime zaman taşımıyor.`, part:`Bi tane buldun, bi tane daha var.`,
+    done:`İkisi de tamam: <e>crashed</e> ve <e>knew</e>. İkisi de [K], çünkü aynı olayın içindeler. Bunu not et, birazdan işimize yarıcak.`}
+]},
+
+/* ---------- G ---------- */
+{ sec:'g', title:'G · Genel Geçer', btn:'Pekiştirelim', blocks:[
+  {t:'h', eb:'Bölüm 3', h:'G · Genel geçer', code:'G'},
+  {t:'say', h:`Şimdi tilkiye geri dönüyoruz. Söz vermiştim, neden ipucu olmadan bildiğini çözücez.`},
+  {t:'ex', items:[['G',`Red {foxes|tilkiler} <pg>hunt</pg> at night.`,`Kızıl tilkiler geceleri avlanır.`]]},
+  {t:'say', h:`Bu cümle tilkinin karakteri. Dün gece avlandı, yarın gece de avlanır. Sen şu an bunu okurken muhtemelen yatmış uyuyordur. Fark etmez, tilki dediğin gece avlanır. İşte bu [G].`},
+  {t:'say', h:`Sezgin bunu bildi, çünkü cümlede zaman yok. Ne tarih var ne "bu aralar". Zaman ifadesi yoksa ilk şüphelin hep G.`},
+  {t:'say', h:`YDT'de G en çok bilimsel metinlerde çıkar: tanımlar, olgular, "araştırmacılar şöyle düşünüyor" cümleleri. <e>say, think, believe, suggest</e> gibi fiiller de çoğunlukla G'yle gelir.`},
+  {t:'card', code:'G', title:"G'nin kimliği", rows:[
+    ['Olumlu','V1 · <i>he/she/it</i> ile V1-s','Bees <b>visit</b> flowers. · A bull <b>sees</b> two colours.'],
+    ['Olumsuz',"don't / doesn't + V1",`Whale sharks <b>don't attack</b> people.`],
+    ['Türkçesi','-r / -ar / -ir · olumsuz -maz / -mez · resmî dilde -mektedir',''],
+    ['İpuçları','çoğu zaman zaman ifadesi yok · <i>usually, often, every day</i>','']]},
+  {t:'say', h:`Türkçe kısmına dikkat. Resmî metinlerde "inanır" yerine "inanmaktadır" görürsün. İkisi de G. Kılık değiştirmiş, o kadar.`}
+]},
+
+{ sec:'g', btn:"K'ye geçelim", blocks:[
+  {t:'h', eb:'Pekiştir', h:'Gerçek mi, efsane mi?', small:true},
+  {t:'say', h:`Küçük bi oyun. Her cümle genel bi bilgi iddia ediyor. Önce yüklemin doğru Türkçesini seç. Sonra iddia sence gerçek mi efsane mi, onu tahmin et. Bazıları seni şaşırtıcak.`},
+  {t:'mcq', id:'ge1', xp:1, stem:`Bulls {hate|nefret etmek} the colour red.`, q:'Yüklemin Türkçesi?', o:['nefret etti','nefret ediyordu','nefret eder'], a:2, f:[
+    `Bu K oldu, geçmişte bitmiş bi olay gibi. Cümlede ne tarih var ne geçmiş; genel bi iddia bu.`,
+    `-yordu nerden çıktı? O başka bi zaman, Aşama 3'te tanışıcaksınız. Burda iddia genel: G.`,
+    `Evet, "nefret eder". Genel bi iddia, G.`]},
+  {t:'ge', id:'gx1', a:'E', fact:`Efsane! Boğa kırmızıyı zaten iyi seçemiyor. Onu kızdıran rengin kendisi değil, pelerinin hareketi. Bu bilgi aynen böyle 2026 YDT'de diyalog sorusu olarak çıktı.`},
+  {t:'mcq', id:'ge2', xp:1, stem:`{Whale sharks|balina köpekbalıkları} don't {attack|saldırmak} people.`, q:'Yüklemin Türkçesi?', o:['saldırmaz','saldırmadı','saldırmıyordu'], a:0, f:[
+    `Evet, "saldırmaz". <e>don't</e> + V1: olumsuz G.`,
+    `<e>didn't</e> deseydi bu olurdu. <e>don't</e> diyor: genel durum, bugün de geçerli.`,
+    `-yordu yok, olmaz. Basit: <e>don't attack</e> = saldırmaz.`]},
+  {t:'ge', id:'gx2', a:'G', fact:`Gerçek. Dünyanın en büyük balığı ama minicik deniz canlılarıyla besleniyor, insan menüde yok. 2025 YDT'nin 5. sorusu da tam bu balıkla başlıyordu.`},
+  {t:'mcq', id:'ge3', xp:1, stem:`Bees sleep at night.`, q:'Yüklemin Türkçesi?', o:['uyudu','uyur','uyuyordu'], a:1, f:[
+    `Dün gece uyudular mı bilmiyoruz ama cümle bunu sormuyor. Genel bilgi: uyur.`,
+    `Doğru, "uyur". Hem de tatlı tatlı.`,
+    `-yordu bi önceki gece ne yaptıklarını anlatırdı. Burda genel bilgi var.`]},
+  {t:'ge', id:'gx3', a:'G', fact:`Gerçek. Arılar da uyuyor. Hatta uykusuz kalan arının dansı bozuluyor, yani yemeğin yerini arkadaşlarına yanlış tarif ediyor.`},
+  {t:'mcq', id:'ge4', xp:1, stem:`{Goldfish|japon balığı} remember things for only three seconds.`, q:'Yüklemin Türkçesi?', o:['hatırlar','hatırladı','hatırlıyordu'], a:0, f:[
+    `Evet, "hatırlar". Genel iddia, G.`,
+    `Geçmişte bi kere hatırlamış gibi oldu. Cümle genel bi iddia.`,
+    `-yordu yok. <e>remember</e> V1, iddia genel.`]},
+  {t:'ge', id:'gx4', a:'E', fact:`Efsane. Japon balıkları bi şeyi aylarca hatırlayabiliyor. Üç saniye olayı balığa resmen iftira.`},
+  {t:'mcq', id:'ge5', xp:1, stem:`Our {brain|beyin} doesn't stop working {during|sırasında} sleep.`, q:'Yüklemin Türkçesi?', o:['durmadı','durmuyordu','durmaz'], a:2, f:[
+    `<e>doesn't</e> var, <e>didn't</e> değil. Genel durum: durmaz.`,
+    `-yordu değil. <e>doesn't stop</e> = durmaz.`,
+    `Evet, "durmaz". Olumsuz G.`]},
+  {t:'ge', id:'gx5', a:'G', fact:`Gerçek. Sen uyurken beynin gün içinde öğrendiklerini düzenliyor. Yani bu sayfayı bitirip yatarsan beynin gece mesaiye kalıyor.`},
+  {t:'mcq', id:'ge6', xp:1, stem:`Humans use only 10% of their {brain|beyin}.`, q:'Yüklemin Türkçesi?', o:['kullandı','kullanır','kullanıyordu'], a:1, f:[
+    `Geçmiş yok burda. Genel bi iddia: kullanır.`,
+    `Evet, "kullanır". Genel iddia.`,
+    `-yordu olmaz, iddia genel.`]},
+  {t:'ge', id:'gx6', a:'E', fact:`Efsane. Gün içinde beynin neredeyse tamamı bi şekilde çalışıyor. %10 olayı film senaryosu.`}
+ ], after:[
+  {t:'say', h:`Gördün mü? Gerçek de olsa efsane de olsa, cümle genel bi bilgi iddia ediyorsa zaman G. Yüklemin zamanı bilginin doğru mu yanlış mı olduğunu söylemez, ne tür bi bilgi olduğunu söyler.`}
+]},
+
+/* ---------- K ---------- */
+{ sec:'k', title:'K · Kapanmış Geçmiş', btn:'Pekiştirelim', blocks:[
+  {t:'h', eb:'Bölüm 4', h:'K · Kapanmış geçmiş', code:'K'},
+  {t:'say', h:`Şimdi geçmişe gidiyoruz. Ama her geçmişe değil, kapısı kapanmış geçmişe.`},
+  {t:'ex', items:[['K',`In 1953, David Warren <pk>invented</pk> the black box.`,`1953'te David Warren kara kutuyu icat etti.`]]},
+  {t:'say', h:`Bu cümlede bi kapı var: <e>In 1953</e>. 1953 geldi, geçti, bitti. O tarihte olan her şey o tarihte kaldı. Kapı kapandı: [K].`},
+  {t:'say', h:`Bu arada Warren boş bi örnek değil. Kara kutunun hikâyesi 2026 YDT'de okuma parçası olarak çıktı, parçada da tam bu cümle vardı: <e>In 1953, Australian aviation scientist David Warren invented…</e>`},
+  {t:'say', h:`Kapıyı kapatan ifadeler şunlar: <e>in 1953, in the 1800s, 100 years ago, last year, in the past, in the Middle Ages, at that time</e>. Bunlardan birini gördün mü, aklına ilk K gelsin.`},
+  {t:'card', code:'K', title:"K'nin kimliği", rows:[
+    ['Olumlu','V2 (-ed ya da düzensiz)','The Egyptians <b>built</b> pyramids.'],
+    ['Olumsuz',"didn't + V1","The Romans <b>didn't use</b> paper money."],
+    ['Türkçesi','-dı / -madı · geçmiş alışkanlıkta -rdı / -mazdı',''],
+    ['İpuçları','<i>in</i> + yıl · <i>… ago</i> · <i>last …</i> · <i>in the past</i>','']]},
+  {t:'say', h:`Olumsuza dikkat: <e>didn't</e>'ten sonra fiil V1'e döner. <e>didn't used</e> diye bi şey yok, çünkü geçmiş yükünü <e>didn't</e> zaten sırtlamış.`},
+  {t:'say', h:`Bi de düzensiz V2'ler var. YDT metinlerinde en çok bunlar dolaşır. Kartlara dokun, V2'yi gör:`},
+  {t:'v2', items:[['begin','began'],['become','became'],['bring','brought'],['build','built'],['find','found'],['grow','grew'],['know','knew'],['lead','led'],['make','made'],['rise','rose'],['see','saw'],['take','took'],['think','thought'],['fall','fell'],['hold','held'],['give','gave']]},
+  {t:'say', h:`Ve en sinsileri: <e>put, cut, spread, set, cost</e>. Bunların V1'i ile V2'si aynı. O zaman nasıl anlıcaz? Bi bak:`},
+  {t:'mcq', id:'ksp', xp:2, q:'Hangisi K?', cebi:'spread|yayılmak; plague|veba', o:[
+    `In 1347, the plague spread fast across Europe.`,
+    `The disease spreads fast in crowded cities.`,
+    `Bad news always spreads fast.`], a:0, f:[
+    `Evet. -s yok, üstüne <e>In 1347</e> var. İkisi birlikte kapıyı kapatıyor.`,
+    `<e>spreads</e>'teki -s'ye bak: <e>he/she/it</e> + V1-s. Bu G.`,
+    `<e>always</e> ve <e>spreads</e>: tam bi G. Kötü haber hep hızlı yayılır, ne yazık ki.`]}
+]},
+
+{ sec:'k', btn:"S'ye geçelim", blocks:[
+  {t:'h', eb:'Pekiştir', h:'Zaman makinesi', small:true},
+  {t:'say', h:`Zaman makinesi bozuldu. Her cümle ya bugünün biliminden [G] ya da tarihten [K]. Boşluğa uyan yüklemi seç. Taktik: önce zaman ifadesini ara.`},
+  {t:'mcq', id:'zm1', xp:1, stem:`In 1876, Bell ____ the telephone.`, o:['invents','invented',"doesn't invent"], a:1, f:[
+    `1876'da hâlâ icat ediyor olamaz. Kapı kapalı.`,
+    `Evet. <e>In 1876</e> kapıyı kapattı.`,
+    `Hem olumsuz hem G. İkisi de yanlış; adam icat etti.`]},
+  {t:'mcq', id:'zm2', xp:1, stem:`Bees ____ honey from {nectar|çiçek özü}.`, o:['made',"didn't make",'make'], a:2, f:[
+    `Arılar bunu geçmişte bi kere yapıp bırakmadı, hâlâ yapıyor. G.`,
+    `Neden yapmasınlar? Hem cümlede geçmiş yok.`,
+    `Doğru. Arılar bal yapar, bilim böyle diyor.`]},
+  {t:'mcq', id:'zm3', xp:1, stem:`The {ancient|antik} Egyptians ____ paper from a plant called {papyrus|papirüs}.`, o:['made','make',"don't make"], a:0, f:[
+    `Evet. Antik Mısırlılar artık yok, olay kapandı.`,
+    `Antik Mısırlılar bugün kâğıt yapmıyor :) <e>ancient</e> kelimesi kapıyı kapatıyor.`,
+    `Hem olumsuz hem G. Yapıyorlardı ve bitti: K.`]},
+  {t:'mcq', id:'zm4', xp:1, stem:`Dogs ____ colours in the same way as humans.`, o:["didn't see","don't see",'saw'], a:1, f:[
+    `Köpekler bugün de renkleri bizim gibi görmüyor. Genel bilgi: G.`,
+    `Doğru. Köpek renk görür ama bizim gibi değil. Genel bilgi.`,
+    `Geçmiş yok burda; bu köpeklerin hep böyle olduğu bi bilgi.`]},
+  {t:'mcq', id:'zm5', xp:1, stem:`In 1665, the {plague|veba} ____ thousands of people in London.`, o:['kills',"doesn't kill",'killed'], a:2, f:[
+    `1665 diyor, kapı kapalı.`,
+    `Keşke. Ama öldürdü ve <e>In 1665</e> geçmiş.`,
+    `Evet. 1665: K.`]},
+  {t:'mcq', id:'zm6', xp:1, stem:`{Whale sharks|balina köpekbalıkları} ____ big animals; they only eat {tiny|minicik} sea creatures.`, o:["don't eat",'ate',"didn't eat"], a:0, f:[
+    `Doğru. Noktalı virgülden sonraki <e>eat</e>'e bak: G. Yüklemler birbirini takip ediyor.`,
+    `İkinci yüklem <e>eat</e>, yani G. İlki de G olmalı.`,
+    `<e>didn't</e> geçmiş; ama ikinci yarı <e>they only eat</e> diyor, G.`]}
+ ], after:[
+  {t:'say', h:`6. soruyu fark ettin mi? İkinci yüklem birinciyi ele verdi. Buna "zaman uyumu" diyoruz, birazdan tam tekmil anlatıcam.`}
+]},
+
+/* ---------- S ---------- */
+{ sec:'s', title:'S · Süren Süreç', btn:'Pekiştirelim', blocks:[
+  {t:'h', eb:'Bölüm 5', h:'S · Süren süreç', code:'S'},
+  {t:'say', h:`Şimdi en çok ters köşe yapan zamana geldik: [S].`},
+  {t:'say', h:`Okulda bunu "şu an, konuşurken" diye öğrendin. "Annem şu an yemek yapıyor." Doğru ama YDT'de neredeyse hiç işine yaramıyor. Çünkü YDT metinleri kimin şu an ne pişirdiğiyle ilgilenmiyor.`},
+  {t:'say', h:`YDT'de S'nin anlamı şu: bu dönem süren bi değişim, bi gidişat. Tilkiye bi daha dönelim:`},
+  {t:'ex', items:[['S',`Red {foxes|tilkiler} <ps>are killing</ps> more and more local animals.`,`Kızıl tilkiler giderek daha fazla yerel hayvanı öldürüyor.`]]},
+  {t:'say', h:`Bu tilkinin karakteri değil, bi haber. Avustralya'da son yıllarda tilkiler yerli hayvanları gittikçe daha çok öldürüyor. Yani bu aralar olan, değişen bi mevzu. Bu da [S].`},
+  {t:'say', h:`Aynı hayvan, iki zaman. Biri ansiklopediden çıkma [G], öbürü akşam haberlerinden [S].`},
+  {t:'card', code:'S', title:"S'nin kimliği", rows:[
+    ['Olumlu','am / is / are + V-ing','{Obesity|obezite} <b>is increasing</b>.'],
+    ['Olumsuz',"isn't / aren't + V-ing","Bee numbers <b>aren't increasing</b>."],
+    ['Türkçesi','-yor / -mıyor · resmî dilde -makta(dır)',''],
+    ['İpuçları','<i>now, today, these days, currently, at present, more and more</i>','']]},
+  {t:'say', h:`Değişim fiillerini sev: <e>increase, rise, grow, fall, change, get warmer</e>. Bunlar -ing'le gelince neredeyse her zaman "bu aralar değişiyor" demek.`},
+  {t:'say', h:`Bi uyarı daha: bazı fiiller -ing sevmez. <e>believe, know, need, want, like, see, mean, contain</e>. Bunlar bi süreç değil, bi durum anlatır. "Doktorlar buna inanıyor" → <e>Doctors believe this.</e> <e>are believing</e> diye bi şey duyarsan kulağın kaşınsın.`}
+]},
+
+{ sec:'s', btn:'Üçünü yan yana koyalım', blocks:[
+  {t:'h', eb:'Pekiştir', h:'Ansiklopedi mi, son dakika mı?', small:true},
+  {t:'say', h:`Bazı cümleler ansiklopediden [G], bazıları son dakika haberinden [S]. Boşluğa uyan yüklemi seç.`},
+  {t:'mcq', id:'as1', xp:1, stem:`These days, many cities ____ their centres to cars.`, o:['close','closed','are closing'], a:2, f:[
+    `<e>These days</e>'i atladın. Bu bi gidişat, şehirler yeni yeni kapatıyor.`,
+    `<e>These days</e> geçmiş değil, bu günler.`,
+    `Evet. <e>These days</e> + değişim: S.`]},
+  {t:'mcq', id:'as2', xp:1, stem:`Bulls ____ the colour red.`, o:["don't see","aren't seeing",'saw'], a:0, f:[
+    `Doğru. Genel bilgi, olumsuz G.`,
+    `<e>see</e> -ing sevmeyenlerden. Hem bu bi değişim değil, boğanın karakteri.`,
+    `Geçmiş yok. Boğalar bugün de kırmızıyı iyi görmüyor.`]},
+  {t:'mcq', id:'as3', xp:1, stem:`{Global|küresel} temperatures ____ faster than ever.`, o:['rose','are rising','rise'], a:1, f:[
+    `<e>than ever</e> "şimdiye kadar hiç olmadığı kadar" demek. Olay bitmedi, sürüyor.`,
+    `Evet. <e>rise</e> değişim fiili, <e>faster than ever</e> da bu dönemi anlatıyor.`,
+    `Sıcaklıklar hep böyle artmıyordu; bu bi gidişat, S.`]},
+  {t:'mcq', id:'as4', xp:1, stem:`Bees usually ____ flowers in the morning.`, o:['visit','are visiting','visited'], a:0, f:[
+    `Evet. <e>usually</e>: alışkanlık, G.`,
+    `<e>usually</e> var, bu arıların alışkanlığı; değişim değil.`,
+    `Geçmiş yok, <e>usually</e> genel.`]},
+  {t:'mcq', id:'as5', xp:1, stem:`{At present|şu anda}, the number of young newspaper readers ____; it is falling.`, o:["doesn't grow","isn't growing","didn't grow"], a:1, f:[
+    `<e>At present</e> ve <e>it is falling</e>: ikisi de bu dönemi anlatıyor. S lazım.`,
+    `Doğru. İkinci yüklem <e>is falling</e>, birinci de S olmalı.`,
+    `<e>At present</e> geçmiş değil.`]},
+  {t:'mcq', id:'as6', xp:1, stem:`Today, doctors ____ that teenagers need about nine hours of sleep.`, o:['are believing','believed','believe'], a:2, f:[
+    `<e>believe</e> -ing almaz, unuttun mu? :)`,
+    `<e>Today</e> var; doktorlar bugün böyle düşünüyor.`,
+    `Evet. <e>Today</e> var ama <e>believe</e> -ing almıyor. G.`]}
+ ], after:[
+  {t:'say', h:`Son soruda ince bi şey vardı: <e>today</e> gördün diye S'ye koşmadın. <e>today</e> her zaman -ing istemez, karar veren fiilin kendisi. Değişim fiiliyse S, alışkanlık ya da görüşse G.`}
+]},
+
+/* ---------- ÜÇ KATMAN ---------- */
+{ sec:'uc', title:'Üç Katman', btn:'Tuzaklara geç', blocks:[
+  {t:'h', eb:'Bölüm 6', h:'Üç katman yan yana'},
+  {t:'say', h:`Şimdi üç kodu yan yana koyalım. Aynı tilki, üç ayrı zaman:`},
+  {t:'timeline'},
+  {t:'ex', items:[
+    ['G',`Red {foxes|tilkiler} <pg>hunt</pg> at night.`,`Kızıl tilkiler geceleri avlanır.`],
+    ['K',`Europeans <pk>brought</pk> red foxes to Australia in the 1800s.`,`Avrupalılar kızıl tilkileri 1800'lerde Avustralya'ya getirdi.`],
+    ['S',`Red foxes <ps>are killing</ps> more and more local animals.`,`Kızıl tilkiler giderek daha fazla yerel hayvanı öldürüyor.`]]},
+  {t:'say', h:`Fark ettin mi, konu hiç değişmedi; değişen bilginin türü. Yüklemin zamanını değiştirdiğin an cümle başka bi şey anlatmaya başlıyor. YDT'nin yakın anlam ve çeviri sorularında çeldiriciler tam bunu yapıyor: aynı cümleyi alıp zamanını kaydırıyor.`},
+  {t:'mcq', id:'uc1', xp:2, q:'Hangi cümle tilkilerle ilgili bu dönem süren bi değişimi anlatıyor?', o:[
+    `Red foxes are killing more and more local animals.`,
+    `Red foxes hunt at night.`,
+    `Europeans brought foxes to Australia.`], a:0, f:[
+    `Evet. <e>are killing</e> + <e>more and more</e>: bu dönem, değişim.`,
+    `Bu tilkinin karakteri, değişim yok. G.`,
+    `Bu bitmiş bi olay, K.`]}
+]},
+
+/* ---------- TUZAKLAR ---------- */
+{ sec:'tuzak', title:'Tuzaklar', btn:'Tuzak 2', blocks:[
+  {t:'h', eb:'Bölüm 7', h:'Tuzak 1 · -yor her zaman -ing değil'},
+  {t:'say', h:`Şimdi işin en eğlenceli kısmı. Türkçe seni bazen bilerek yanıltıyor. YDT de bunu çok iyi biliyor ve şıkları buna göre diziyor.`},
+  {t:'say', h:`Türkçede genel gerçekleri de -yor'la söyleriz: "Penguenler uçmuyor." "Kuşlar kışın güneye göç ediyor." Sohbet ederken kimse "penguenler uçmaz" demiyor. Ama İngilizcede genel gerçek G ister.`},
+  {t:'mcq', id:'tz1', xp:2, stem:`Kızıl tilkiler geceleri avlanıyor.`, tr:true, o:[
+    `Red foxes are hunting at night.`,
+    `Red foxes hunt at night.`,
+    `Red foxes hunted at night.`], a:1, f:[
+    `Ahh, olmadı. Ama neden oraya gittiğini biliyorum. Türkçede "avlanıyor" diyoruz ya, -yor'u görünce el direkt -ing'e kayıyor. Herkesin kayıyor, takma. Ama tilki bunu bu aralar yapmıyor ki, hep yapıyor. Hep yapılan şey G, yani <e>hunt</e>. Bu tuzak bi daha çıkacak karşına, yazıyorum bunu. O zaman "hah, yine mi sen" dersin.`,
+    `Tamamdır, hızlı kapıyorsun mevzuyu. Tilki gece avlanır, nokta. Sonraki bu kadar kolay olmayacak ama.`,
+    `Geçmiş yok burda. Türkçedeki -yor seni olsa olsa -ing'e götürürdü; ikisi de değil, G.`]},
+  {t:'pairs', items:[
+    ['Kuşlar her kış güneye uçuyor.','G','Birds <b>fly</b> south every winter.'],
+    ['Penguenler uçmuyor.','G',"Penguins <b>don't fly</b>."],
+    ['Doktorlar uykunun önemli olduğunu söylüyor.','G','Doctors <b>say</b> that sleep is important.'],
+    ['Obezite hızla artıyor.','S','Obesity <b>is increasing</b> fast.']]},
+  {t:'say', h:`Sorulacak soru hep aynı: bu genel geçer bi bilgi mi, yoksa bu dönem süren bi değişim mi? Türkçedeki ek kararı vermiyor, bilginin türü veriyor.`},
+  {t:'mcq', id:'tz2', xp:2, stem:`Doktorlar uykunun önemli olduğunu söylüyor.`, tr:true, o:[
+    `Doctors are saying that sleep is important.`,
+    `Doctors said that sleep was important.`,
+    `Doctors say that sleep is important.`], a:2, f:[
+    `Doktorlar bunu yeni yeni söylemeye başlamadı. Bu bi görüş, genel: G.`,
+    `Geçmiş yok. Görüş bugün de geçerli.`,
+    `Evet. Görüş fiilleri G sever.`]},
+  {t:'say', h:`Bi YDT ipucu da bedava: <e>no longer</e> + V1 = "artık … -mıyor". <e>People no longer write letters.</e> → İnsanlar artık mektup yazmıyor. Türkçede -mıyor var ama yüklem yine G.`}
+]},
+
+{ sec:'tuzak', btn:'İki küçük ipucu', blocks:[
+  {t:'h', eb:'Bölüm 7', h:'Tuzak 2 · -mıştır görünce hemen <i>have + V3</i> deme'},
+  {t:'say', h:`Haber ve akademik Türkçede geçmişte olup bitmiş şeyler de -mıştır'la anlatılır: "Bell telefonu 1876'da icat etmiştir." Kulağa çok resmî geliyor, insanın hemen <e>has invented</e> yazası geliyor.`},
+  {t:'say', h:`Ama bak: cümlede <e>1876</e> var. Kapı kapalı. Kapı kapalıysa Türkçe ek ne derse desin, İngilizcesi K.`},
+  {t:'mcq', id:'tz3', xp:2, stem:`Bell telefonu 1876'da icat etmiştir.`, tr:true, o:[
+    `Bell invented the telephone in 1876.`,
+    `Bell has invented the telephone in 1876.`,
+    `Bell invents the telephone in 1876.`], a:0, f:[
+    `Evet. -mıştır seni kandıramadı, kapı 1876'da kapanmıştı.`,
+    `İşte tuzak bu! -mıştır'ı görünce <e>has invented</e>'a gittin. Ama <e>in 1876</e> kapalı bi zaman ve <e>has invented</e> ile yan yana gelemez. K.`,
+    `1876'da bi şey icat ettiyse G olamaz, tarih var.`]},
+  {t:'mcq', id:'tz4', xp:2, stem:`Eski Mısırlılar 4500 yıl önce kâğıt para kullanmamıştır.`, tr:true, cebi:'ancient|antik, eski; paper money|kâğıt para', o:[
+    `The ancient Egyptians haven't used paper money 4,500 years ago.`,
+    `The ancient Egyptians don't use paper money 4,500 years ago.`,
+    `The ancient Egyptians didn't use paper money 4,500 years ago.`], a:2, f:[
+    `-mamıştır tuzağı. <e>4,500 years ago</e> kapıyı kapatıyor, K lazım.`,
+    `<e>ago</e> ile G olmaz; 4500 yıl önceden bahsediyoruz.`,
+    `Doğru. <e>ago</e> görünce K.`]},
+  {t:'say', h:`-mıştır'ın gerçekten <e>have + V3</e>'e denk geldiği durumlar da var tabii. Ama o Aşama 2'nin konusu. Orda bunun tam tersini de göstericem, şimdiden söyliyim.`}
+]},
+
+/* ---------- İPUÇLARI ---------- */
+{ sec:'ipucu', title:'İki İpucu', btn:'Kontrol noktası', blocks:[
+  {t:'h', eb:'Bölüm 8', h:'İpucu 1 · <i>today</i> her zaman -ing istemez'},
+  {t:'ex', items:[
+    ['G',`Most people today <pg>eat</pg> too much sugar.`,`alışkanlık`],
+    ['S',`{Obesity|obezite} <ps>is increasing</ps> today.`,`değişim`]]},
+  {t:'say', h:`<e>today</e> sadece "bugünlerde" der. Karar veren fiilin kendisi: alışkanlık ya da durumsa G, değişimse S.`},
+  {t:'h', eb:'Bölüm 8', h:'İpucu 2 · Yüklemler birbirini takip eder', small:true},
+  {t:'say', h:`Hatırlarsan uçak cümlesinde iki yüklem de K'ydı. Bu tesadüf değil. Bi cümledeki yüklemler genelde aynı zaman çerçevesinde kalır. Zaman ancak yeni bi zaman ifadesiyle (<e>today, now, in the past</e>) ya da zıtlık bağlacıyla (<e>but, however, while</e>) değişir.`},
+  {t:'ex', items:[
+    ['K',`When the plane <pk>crashed</pk>, nobody <pk>knew</pk> the cause.`,`K + K: aynı olay`],
+    ['G',`In the past, people <pk>walked</pk> a lot, but today they <pg>drive</pg> everywhere.`,`K → G: <i>but today</i> zamanı çevirdi`]]},
+  {t:'say', h:`Bu kural YDT'de cümle tamamlama sorularında şık eletir. Dene bak:`},
+  {t:'mcq', id:'ip1', xp:2, stem:`In the past, people walked a lot, but today they ____.`, o:['drive everywhere','were driving everywhere','drove everywhere'], a:0, f:[
+    `Evet. <e>but today</e> zamanı çevirdi; bugünkü alışkanlık G.`,
+    `Bugünden bahsediyoruz, -yordu olmaz.`,
+    `<e>but today</e> geldi, geçmiş bitti. Bugün ne yapıyorlar?`]}
+]},
+
+/* ---------- KONTROL NOKTASI ---------- */
+{ sec:'kontrol', title:'Kontrol Noktası', btn:'Çeviriye geç', blocks:[
+  {t:'h', eb:'Mini sınav', h:'Kontrol noktası'},
+  {t:'say', h:`Buraya kadar bence çok iyi. Ama dur, daha molaya var. Seni mini bi sınava sokucam. Beş sorudan dördünü ilk denemede yaparsan devam. Yapamazsan önceki konulara bi dönüyorsun. Sonuçta tilkiler orda, bi yere kaçmıyorlar.`},
+  {t:'check', id:'chk1', need:4, back:'g', backLabel:"G'ye geri dön",
+   pass:`Geçtin, hem de rahat. Devam.`,
+   fail:`Bu sefer olmadı, olsun. G'den başlayıp Tuzak 2'ye kadar bi göz gezdir, sonra bu beş soruyu baştan çöz.`,
+   pass2:`Tamamdır, şimdi oturdu. Devam ediyoruz.`,
+   fail2:`Tamam, devam edelim ama Tuzak 1 ve 2'yi aklında tut. Boss'ta ikisi de karşına çıkacak.`,
+   items:[
+    {id:'ck1', xp:2, stem:`In the mid-1800s, Europeans ____ red {foxes|tilkiler} to Australia.`, o:['bring','brought','are bringing'], a:1, f:[
+      `<e>In the mid-1800s</e>: kapı kapalı.`,
+      `Evet, K.`,
+      `1800'lerde süren bi süreç değil bu, bitmiş.`]},
+    {id:'ck2', xp:2, stem:`{Whale sharks|balina köpekbalıkları} ____ the largest fish in the ocean.`, o:['are','were','are being'], a:0, f:[
+      `Doğru. Hâlâ en büyükler, genel bilgi.`,
+      `Hâlâ en büyük balık onlar, geçmişe atma.`,
+      `<e>be</e> burda bi durum anlatıyor, -ing almaz.`]},
+    {id:'ck3', xp:2, stem:`These days, more and more people ____ online.`, o:['study','studied','are studying'], a:2, f:[
+      `<e>these days</e> + <e>more and more</e>: değişim. S.`,
+      `<e>these days</e> geçmiş değil.`,
+      `Evet, S.`]},
+    {id:'ck4', xp:2, stem:`Doktorlar bu yöntemin işe yaradığına inanıyor.`, tr:true, o:[
+      `Doctors believe that this method works.`,
+      `Doctors are believing that this method works.`,
+      `Doctors believed that this method worked.`], a:0, f:[
+      `Evet. -yor'a kanmadın, <e>believe</e> -ing almaz.`,
+      `Tuzak 1 + -ing sevmeyen fiil. İki kere tuzak :)`,
+      `Geçmiş yok, doktorlar bugün inanıyor.`]},
+    {id:'ck5', xp:2, stem:`Romalılar o dönemde kâğıt para kullanmamıştır.`, tr:true, o:[
+      `The Romans don't use paper money at that time.`,
+      `The Romans aren't using paper money at that time.`,
+      `The Romans didn't use paper money at that time.`], a:2, f:[
+      `<e>at that time</e> kapıyı kapatıyor, G olmaz.`,
+      `-ing hiç olmaz; <e>at that time</e> geçmiş.`,
+      `Evet. -mamıştır'a rağmen K, çünkü kapı kapalı.`]}
+  ]}
+]},
+
+/* ---------- ÇEVİR ---------- */
+{ sec:'cevir', title:'Kim Doğru Çevirdi?', btn:'Biraz hızlanalım', blocks:[
+  {t:'h', eb:'Bölüm 9', h:'Kim doğru çevirdi?'},
+  {t:'say', h:`Şimdi YDT'nin en çok puan getiren tiplerinden birine geldik: çeviri. Ece, Mert ve Defne aynı cümleyi çevirmiş ama zamanı sadece biri doğru aktarmış. Doğru çevireni bul.`},
+  {t:'say', h:`Taktik: Türkçelere bakmadan önce kafanda karar ver. Bu cümle G mi, K mı, S mi? Sonra o zamanı taşıyan çeviriyi ara.`},
+  {t:'mcq', id:'kc1', xp:2, who:true, stem:`Natural foods contain some {toxic|zehirli} {chemicals|kimyasallar}.`, o:[
+    `Doğal gıdalar bazı zehirli kimyasallar içerdi.`,
+    `Doğal gıdalar bazı zehirli kimyasallar içerir.`,
+    `Doğal gıdalar bazı zehirli kimyasallar içeriyordu.`], a:1, f:[
+    `Ece geçmişe atmış. Doğal gıdalar bunları bugün de içeriyor.`,
+    `Evet, Mert. <e>contain</e> G, "içerir".`,
+    `-yordu nerden çıktı? Hem <e>contain</e> -ing sevmeyenlerden.`]},
+  {t:'mcq', id:'kc2', xp:2, who:true, stem:`In 1665, the {plague|veba} killed thousands of people.`, o:[
+    `1665'te veba binlerce insanı öldürür.`,
+    `1665'te veba binlerce insanı öldürüyor.`,
+    `1665'te veba binlerce insanı öldürdü.`], a:2, f:[
+    `1665'i Ece görmemiş galiba.`,
+    `Mert vebayı bugüne taşımış, korkunç.`,
+    `Evet, Defne. Kapı kapalı: öldürdü.`]},
+  {t:'mcq', id:'kc3', xp:2, who:true, stem:`{Methane|metan} levels are rising fast.`, o:[
+    `Metan seviyeleri hızla yükseliyor.`,
+    `Metan seviyeleri hızla yükselir.`,
+    `Metan seviyeleri hızla yükseldi.`], a:0, f:[
+    `Evet, Ece. <e>are rising</e>: bu dönem süren değişim.`,
+    `"Yükselir" genel bi kural gibi oldu. Ama bu bi gidişat.`,
+    `Bitmiş bi şey yok, hâlâ yükseliyor.`]},
+  {t:'mcq', id:'kc4', xp:2, who:true, stem:`Most plastics don't {break down|parçalanmak} easily.`, o:[
+    `Çoğu plastik kolayca parçalanmadı.`,
+    `Çoğu plastik kolayca parçalanmıyordu.`,
+    `Çoğu plastik kolayca parçalanmaz.`], a:2, f:[
+    `<e>didn't</e> değil, <e>don't</e>.`,
+    `-yordu yok, genel bilgi.`,
+    `Evet, Defne. Olumsuz G: parçalanmaz.`]},
+  {t:'mcq', id:'kc5', xp:2, who:true, stem:`Warren took his idea to Britain.`, o:[
+    `Warren fikrini Britanya'ya götürür.`,
+    `Warren fikrini Britanya'ya götürdü.`,
+    `Warren fikrini Britanya'ya götürüyor.`], a:1, f:[
+    `<e>took</e> = <e>take</e>'in V2'si. Geçmiş.`,
+    `Evet, Mert. Tarih yok ama <e>took</e> zaten V2, olay bitti.`,
+    `-ing yok, <e>took</e> V2.`]},
+  {t:'mcq', id:'kc6', xp:2, who:true, stem:`AI tools are changing students' study {habits|alışkanlıklar}.`, o:[
+    `Yapay zekâ araçları öğrencilerin çalışma alışkanlıklarını değiştiriyor.`,
+    `Yapay zekâ araçları öğrencilerin çalışma alışkanlıklarını değiştirdi.`,
+    `Yapay zekâ araçları öğrencilerin çalışma alışkanlıklarını değiştirir.`], a:0, f:[
+    `Evet, Ece. Değişim fiili + -ing: S.`,
+    `Olay bitmedi, hâlâ değiştiriyor.`,
+    `Bu genel bi kural değil, bu dönemin gidişatı.`]}
+ ], after:[
+  {t:'say', h:`5. cümlede tarih yoktu ama <e>took</e> zaten V2. Bazen biçim kapıyı kendi kapatıyor.`}
+]},
+
+/* ---------- EŞLEŞTİR ---------- */
+{ sec:'esles', title:'Hızlı Tur', btn:'Şifreye geç', blocks:[
+  {t:'h', eb:'Bölüm 10', h:'Hızlı tur · Eşleşme mi?'},
+  {t:'say', h:`Şimdi hızlı tur. Her kartta bi İngilizce cümle ve bi çeviri var. Zaman doğru aktarılmışsa ♥, aktarılmamışsa ✕.`},
+  {t:'swipe', id:'sw1', xp:1, en:`{Obesity|obezite} increases the risk of {diabetes|şeker hastalığı}.`, tr:`Obezite diyabet riskini artırır.`, a:true,
+    ok:`Evet. <e>increases</e> G, "artırır" da G.`, no:`Bu doğru eşleşmeydi. <e>increases</e> G, "artırır" da G.`},
+  {t:'swipe', id:'sw2', xp:1, en:`Obesity is increasing in many countries.`, tr:`Obezite pek çok ülkede artar.`, a:false,
+    ok:`Doğru, yakaladın. <e>is increasing</e> S; "artar" değil "artıyor" olmalı.`, no:`<e>is increasing</e> S. Çeviri "artar" demiş, G yapmış. "Artıyor" olmalıydı.`},
+  {t:'swipe', id:'sw3', xp:1, en:`Dr O'Brien worked with HIV {patients|hastalar}.`, tr:`Dr. O'Brien HIV hastalarıyla çalışır.`, a:false,
+    ok:`Doğru. <e>worked</e> K, "çalıştı" olmalı.`, no:`<e>worked</e> K. "Çalışır" G olmuş.`},
+  {t:'swipe', id:'sw4', xp:1, en:`More and more students are using AI.`, tr:`Giderek daha fazla öğrenci yapay zekâ kullanıyor.`, a:true,
+    ok:`Evet, S = S.`, no:`Bu doğruydu: <e>are using</e> = "kullanıyor", ikisi de bu dönem.`},
+  {t:'swipe', id:'sw5', xp:1, en:`Bulls don't see the colour red.`, tr:`Boğalar kırmızı rengi görmüyordu.`, a:false,
+    ok:`Doğru. <e>don't see</e> G; "görmez" olmalı.`, no:`<e>don't see</e> G. "Görmüyordu" geçmişe atmış.`},
+  {t:'swipe', id:'sw6', xp:1, en:`The city is preparing for the Olympics.`, tr:`Şehir Olimpiyatlara hazırlanıyor.`, a:true,
+    ok:`Evet. Hazırlık sürüyor, S.`, no:`Bu doğruydu. <e>is preparing</e> = "hazırlanıyor".`},
+  {t:'swipe', id:'sw7', xp:1, en:`Europeans brought {foxes|tilkiler} to Australia.`, tr:`Avrupalılar Avustralya'ya tilki getirir.`, a:false,
+    ok:`Doğru. <e>brought</e> K, "getirdi" olmalı.`, no:`<e>brought</e> K. "Getirir" G olmuş.`},
+  {t:'swipe', id:'sw8', xp:1, en:`Early farmers didn't have machines.`, tr:`İlk çiftçilerin makineleri yoktu.`, a:true,
+    ok:`Evet. "Yoktu" burda <e>didn't have</e>'in tam karşılığı.`, no:`Bu doğruydu. "Yoktu" geçmiş, <e>didn't have</e> da.`}
+]},
+
+/* ---------- ŞİFRE ---------- */
+{ sec:'sifre', title:'Şifreyi Çöz', btn:'Bomba var', blocks:[
+  {t:'h', eb:'Bölüm 11', h:'Şifreyi çöz · Türkçe → İngilizce'},
+  {t:'say', h:`Şimdi ters yöne gidiyoruz: Türkçeden İngilizceye. Her doğru şıkkın bi harfi var. Altı harf, sana zamanla ilgili bi kelime vericek. Tüyo: bu kelime <e>chronology</e>, <e>chronic</e> ve <e>synchronise</e>'ın kökünde saklı.`},
+  {t:'cipher', id:'kron', ids:['sf1','sf2','sf3','sf4','sf5','sf6'], bonus:3,
+    reveal:`KRONOS! Yunan mitolojisinde zamanın kendisi. Şifreyi çözdüğün için +3 XP. Bu ismi aklında tut, sonda bi daha karşına çıkıcak.`},
+  {t:'mcq', id:'sf1', xp:2, tr:true, stem:`Kuşlar her kış güneye uçuyor.`, o:[
+    `Birds are flying south every winter.`,`Birds flew south every winter.`,`Birds fly south every winter.`], L:['T','M','K'], a:2, f:[
+    `Tuzak 1! <e>every winter</e>: her kış tekrar eden bi şey. G.`,
+    `Geçmiş yok; kuşlar her kış hâlâ uçuyor.`,
+    `Evet. İlk harf geldi.`]},
+  {t:'mcq', id:'sf2', xp:2, tr:true, stem:`Bell telefonu 1876'da icat etmiştir.`, o:[
+    `Bell invented the telephone in 1876.`,`Bell has invented the telephone in 1876.`,`Bell invents the telephone in 1876.`], L:['R','E','L'], a:0, f:[
+    `Tuzak 2'yi yendin.`,
+    `-mıştır yine kandırdı. <e>in 1876</e> → K.`,
+    `1876 ve G? Olmaz.`]},
+  {t:'mcq', id:'sf3', xp:2, tr:true, stem:`Okyanuslar giderek ısınıyor.`, cebi:'get warmer|ısınmak', o:[
+    `The oceans get warmer.`,`The oceans are getting warmer.`,`The oceans got warmer.`], L:['I','O','U'], a:1, f:[
+    `"Giderek" değişim demek; S.`,
+    `Evet. <e>get warmer</e> değişim fiili, -ing'le S.`,
+    `Bitmiş değil, hâlâ ısınıyor.`]},
+  {t:'mcq', id:'sf4', xp:2, tr:true, stem:`Doktorlar uykunun önemli olduğuna inanıyor.`, o:[
+    `Doctors believe that sleep is important.`,`Doctors are believing that sleep is important.`,`Doctors believed that sleep was important.`], L:['N','P','D'], a:0, f:[
+    `Evet. <e>believe</e> -ing almaz.`,
+    `Kulağın kaşınmadı mı? <e>are believing</e> olmaz.`,
+    `Geçmiş yok, bugün inanıyorlar.`]},
+  {t:'mcq', id:'sf5', xp:2, tr:true, stem:`Eski Mısırlılar 4500 yıl önce kâğıt para kullanmamıştır.`, o:[
+    `The ancient Egyptians don't use paper money 4,500 years ago.`,`The ancient Egyptians aren't using paper money 4,500 years ago.`,`The ancient Egyptians didn't use paper money 4,500 years ago.`], L:['E','A','O'], a:2, f:[
+    `<e>ago</e> ile G olmaz.`,
+    `<e>ago</e> ile -ing hiç olmaz.`,
+    `Evet. Bi harf kaldı.`]},
+  {t:'mcq', id:'sf6', xp:2, tr:true, stem:`Penguenler uçmuyor.`, o:[
+    `Penguins aren't flying.`,`Penguins don't fly.`,`Penguins didn't fly.`], L:['Z','S','Y'], a:1, f:[
+    `Tuzak 1, son kez! Penguen hiç uçmaz, bu genel bilgi.`,
+    `Evet. Son harf!`,
+    `Penguenler geçmişte de uçmuyordu, bugün de uçmuyor. Genel bilgi: G.`]}
+]},
+
+/* ---------- BOMBA ---------- */
+{ sec:'bomba', title:'Bombayı İmha Et', btn:'Birlikte çözelim', blocks:[
+  {t:'h', eb:'Bölüm 12', h:'Bombayı imha et'},
+  {t:'say', h:`Her bombada altı çizili yüklemin zamanı yanlış. Doğru yüklemi taşıyan kabloyu kes. Taktik: önce seni uyaran zaman ifadesini bul. Yanlış kablo: bom.`},
+  {t:'mcq', id:'bm1', xp:2, bomb:true, stem:`In 1953, David Warren <u>is inventing</u> the black box.`, o:['invents','will invent','invented'], a:2, f:[
+    `💥 Bom. <e>In 1953</e> kapıyı kapattı, G olmaz.`,
+    `💥 1953'ten bahsediyoruz, gelecek olmaz.`,
+    `Kesildi, bomba sustu. <e>In 1953</e> → K.`]},
+  {t:'mcq', id:'bm2', xp:2, bomb:true, stem:`Our bodies <u>are needing</u> water every day.`, o:['need','needed','were needing'], a:0, f:[
+    `Kesildi. <e>need</e> -ing sevmez, hem <e>every day</e> alışkanlık.`,
+    `💥 <e>every day</e>: bugün de her gün.`,
+    `💥 İki kere yanlış: hem geçmiş hem -ing.`]},
+  {t:'mcq', id:'bm3', xp:2, bomb:true, stem:`These days, more and more people <u>bought</u> electric cars.`, o:['were buying','are buying','will buy'], a:1, f:[
+    `💥 <e>These days</e> geçmiş değil.`,
+    `Kesildi. <e>These days</e> + <e>more and more</e> = S.`,
+    `💥 Gelecek değil, bu aralar.`]},
+  {t:'mcq', id:'bm4', xp:2, bomb:true, stem:`Some years ago, {archaeologists|arkeologlar} <u>find</u> a 9,000-year-old {grave|mezar}.`, o:['found','are finding','will find'], a:0, f:[
+    `Kesildi. <e>ago</e> = K.`,
+    `💥 <e>ago</e> varken -ing olmaz.`,
+    `💥 <e>ago</e> geçmiş.`]},
+  {t:'mcq', id:'bm5', xp:2, bomb:true, stem:`In 1950, most families <u>don't have</u> a television.`, o:["aren't having",'have',"didn't have"], a:2, f:[
+    `💥 <e>have</e> burda "sahip olmak", -ing almaz. Hem 1950.`,
+    `💥 1950 → K.`,
+    `Kesildi. Olumsuz K: <e>didn't have</e>.`]},
+  {t:'mcq', id:'bm6', xp:2, bomb:true, stem:`In the 1700s, John Newbery <u>begins</u> {publishing|yayımlamak} books for children.`, o:['is beginning','began','will begin'], a:1, f:[
+    `💥 1700'ler bitti.`,
+    `Kesildi. <e>begin → began</e>, düzensiz V2 radarından.`,
+    `💥 Geçmiş, gelecek değil.`]}
+ ], after:[
+  {t:'say', h:`Altı bomba, altı kapı. Newbery bu arada uydurma değil: çocuk kitaplarının hikâyesi 2026 YDT'de paragraf olarak çıktı.`}
+]},
+
+/* ---------- BİRLİKTE ÇÖZELİM ---------- */
+{ sec:'birlikte', title:'Birlikte Çözelim', btn:"Boss'a gir", blocks:[
+  {t:'h', eb:'Bölüm 13', h:'Bi soruyu birlikte çözelim'},
+  {t:'say', h:`Boss'a girmeden önce bi YDT sorusunu birlikte çözelim. Ben sesli düşünücem, sen izle. Her adımda "Sonraki adım"a dokun.`},
+  {t:'steps', id:'wk1', cebi:'react to|tepki vermek; cape|pelerin; bullfight|boğa güreşi; matador|boğa güreşçisi',
+    stem:`Many people believe that the colour red makes bulls angry, but ----.`,
+    o:[`matadors used red capes in the past`,
+       `bulls actually react to the movement of the cape`,
+       `bulls were very angry in ancient times`,
+       `people are using more colours in bullfights these days`,
+       `the colour red made bulls angry for centuries`],
+    steps:[
+      `İlk iş yüklemler: <e>believe</e> ve <e>makes</e>. İkisi de [G]. Genel bi iddia anlatılıyor: "insanlar kırmızının boğaları kızdırdığına inanır".`,
+      `Sonra bağlaca bak: <e>but</e>. Demek ki boşluk bu iddiaya itiraz edicek. <e>but</e>'tan sonra yeni bi zaman ifadesi yok, yani çerçeve değişmiyor. Yine genel bi bilgi, [G] arıyoruz.`,
+      `Şimdi şıkları zamanlarına göre tara. A <e>used</e>, C <e>were</e>, E <e>made</e>: üçü de [K]. Genel bi iddiaya geçmişten itiraz edilmez, üçü de gitti. D <e>are using</e>: [S], bu dönem bi değişim. Ama konu renk çeşitliliği değil, boğanın neye kızdığı. O da gitti.`,
+      `Geriye B kaldı: <e>react</e>, [G]. Anlam da tutuyor: "insanlar kırmızı sanıyor ama boğa aslında pelerinin hareketine tepki veriyor". Cevap B.`,
+      `Gördün mü, beş şıktan üçünü sadece zamanlarına bakarak eledik, anlamı okumaya bile gerek kalmadan. Bu bilgi bu arada 2026 YDT'de diyalog sorusu olarak çıktı; Gerçek mi Efsane mi'de görmüştün.`],
+    mark:1},
+  {t:'say', h:`Şimdi sıra sende. Aynı yolu yürü: önce yüklem ve zaman ifadesi, sonra şıkların zamanları. Takılırsan ipucuna dokun.`},
+  {t:'mcq', id:'fd1', xp:3, five:true, cebi:'device|cihaz; record|kaydetmek',
+    stem:`In 1953, David Warren invented a {device|cihaz} that could record pilots' voices, but at first, Australian experts ----.`,
+    hint:`<e>In 1953</e> ve <e>at first</e> ("ilk başta"): ikisi de kapıyı kapatıyor. Hangi şıklar K?`,
+    o:[`don't like the idea`,`aren't liking the idea`,`never like new ideas`,`didn't like the idea`,`are rejecting the idea`], a:3, f:[
+    `<e>at first</e> + 1953: geçmiş. <e>don't</e> G.`,
+    `<e>like</e> -ing sevmez, hem olay geçmişte.`,
+    `Genel bi kural gibi oldu, G. Ama bu bi tarih anlatısı.`,
+    `Evet. Gerçekten de öyle olmuş: Avustralyalı uzmanlar fikri ilk başta reddetmiş, Warren da fikrini Britanya'ya götürmüş. 2026 YDT'deki parça tam bunu anlatıyordu.`,
+    `Bu aralar reddetmiyorlar, 1953'te reddettiler.`]}
+]},
+
+/* ---------- BOSS ---------- */
+{ sec:'boss', title:'Boss · Zaman Bükücü', btn:'Çıkışa git', blocks:[
+  {t:'h', eb:'Bölüm 14', h:'Boss · Zaman Bükücü'},
+  {t:'say', h:`Ve geldik boss'a. Beş can barı var, her doğru cevap bi barı siliyor. Sorular gerçek YDT soru tiplerinin kısa versiyonları; beş şık, tıpkı sınavdaki gibi. Her soruda önce yüklemlere bak.`},
+  {t:'hp', ids:['bs1','bs2','bs3','bs4','bs5']},
+  {t:'mcq', id:'bs1', xp:5, five:true, tag:'Cümle tamamlama', cebi:'warn|uyarmak; rarely|nadiren; obesity|obezite',
+    stem:`----, so {obesity|obezite} is increasing around the world.`,
+    o:[`Doctors warned people about fast food many years ago`,
+       `People in the past walked a lot`,
+       `Most people today eat too much sugar and fast food`,
+       `Many people stopped eating sugar last year`,
+       `Our grandparents rarely ate fast food`], a:2, f:[
+    `Bu K: yıllar önce uyarmışlar. Ama obezitenin bugün neden arttığını açıklamıyor. <e>so</e>'dan önce bugünün sebebi lazım.`,
+    `K, hem de ters yönde: eskiden çok yürümeleri bugünkü artışı açıklamaz.`,
+    `Evet. Bugünün alışkanlığı (G) → bugün süren sonuç (S). Sebep-sonuç da zaman da tutuyor.`,
+    `K, anlam da ters: şekeri bırakmak obeziteyi artırmaz.`,
+    `K ve ters anlam. Büyükanne-büyükbabanın az fast food yemesi bugünü açıklamaz.`]},
+  {t:'mcq', id:'bs2', xp:5, five:true, tag:'İngilizce → Türkçe', cebi:'affect|etkilemek',
+    stem:`In the past, the weather {affected|etkiledi} farmers' lives a lot.`,
+    o:[`Geçmişte hava durumu çiftçilerin hayatını çok etkiledi.`,
+       `Geçmişte hava durumu çiftçilerin hayatını çok etkiler.`,
+       `Hava durumu bugün de çiftçilerin hayatını çok etkiliyor.`,
+       `Geçmişte çiftçiler hava durumunu çok etkiledi.`,
+       `Hava durumu çiftçilerin hayatını giderek daha çok etkiliyor.`], a:0, f:[
+    `Evet. <e>In the past</e> + <e>affected</e>: K, "etkiledi".`,
+    `"Etkiler" G oldu, <e>In the past</e>'i kaybettik.`,
+    `"Bugün de" nerden çıktı? Cümle geçmişten bahsediyor.`,
+    `Zaman doğru ama anlam ters dönmüş: çiftçiler havayı değil, hava çiftçileri etkiledi. YDT bunu da yapar, dikkat.`,
+    `"Giderek daha çok etkiliyor" S oldu. Cümlede ne değişim var ne bugün.`]},
+  {t:'mcq', id:'bs3', xp:5, five:true, tag:'Türkçe → İngilizce',
+    stem:`Dijital teknoloji artık bilimden daha hızlı değişiyor.`, tr:true,
+    o:[`Digital technology changed faster than science.`,
+       `Digital technology always changes faster than science.`,
+       `Science is now changing faster than digital technology.`,
+       `Digital technology was changing faster than science in the past.`,
+       `Digital technology is now changing faster than science.`], a:4, f:[
+    `<e>changed</e> K. Türkçede "değişiyor" var, bitmiş bi şey yok.`,
+    `<e>always</e> bunu genel bi kural yaptı. "Artık" ise bu dönemde başlayan bi değişimi anlatıyor.`,
+    `Zaman doğru ama özne ile nesne yer değiştirmiş: bilim değil, teknoloji daha hızlı.`,
+    `Geçmişe atmış; "artık" bugünü anlatıyor.`,
+    `Evet. "Artık … değişiyor" → <e>is now changing</e>. Burda -yor gerçekten bi değişim anlatıyor, yani S.`]},
+  {t:'mcq', id:'bs4', xp:5, five:true, tag:'Diyalog tamamlama', chat:[
+      ['Deniz',`Many cities are closing their centres to cars these days.`],
+      ['Arda','----'],
+      ['Deniz',`Yes! The air in those centres is getting cleaner.`]],
+    cebi:'pollution|kirlilik; ancient|antik',
+    o:[`Did they close them a long time ago?`,
+       `Is it making any difference?`,
+       `Why did they open them to cars last year?`,
+       `Do cars always cause more pollution than buses?`,
+       `Was the air cleaner in ancient cities?`], a:1, f:[
+    `Deniz <e>these days</e> diyor. "Uzun zaman önce mi kapattılar?" konuyu geçmişe atıyor, Deniz'in "Yes! The air … is getting cleaner" cevabı da buna oturmuyor.`,
+    `Evet. "Bi faydası oluyor mu?" → "Evet, hava temizleniyor." İkisi de S, ikisi de bu dönem.`,
+    `<e>last year</e> ve "açtılar": Deniz'in söylediğiyle çelişiyor.`,
+    `Genel bi soru (G). Ama Deniz'in cevabı bi değişimin sonucunu anlatıyor, bu soruya değil.`,
+    `Antik şehirler nerden çıktı? Konu bu dönem.`]},
+  {t:'mcq', id:'bs5', xp:5, five:true, tag:'Yakın anlam', cebi:'dry|kurak; prefer|tercih etmek; lack|eksiklik',
+    stem:`Dry places were good for early people, but today they aren't good for living because there isn't enough water.`,
+    q:'Anlamca en yakın cümle hangisi?',
+    o:[`Dry places were never good for living because there was never enough water.`,
+       `Today people prefer dry places, just like early people did.`,
+       `Early people didn't like dry places, but today people love them.`,
+       `Today dry places are bad for living because of the lack of water, but early people found them good.`,
+       `Dry places were bad for early people, but today they are good for living.`], a:3, f:[
+    `<e>never</e> ve hep geçmiş: "hiçbir zaman iyi değildi" kaynakla çelişiyor. Kaynakta erken insanlar için iyiydi.`,
+    `Bugün insanlar kurak yerleri tercih ediyor mu? Kaynak tam tersini söylüyor.`,
+    `Kaynakta erken insanlar bu yerleri seviyordu, bugün sevmiyoruz. Burda ters çevrilmiş.`,
+    `Evet. İki zaman da korunmuş: erken insanlar için iyiydi (K), bugün su yüzünden kötü (G).`,
+    `Zamanlar yer değiştirmiş: geçmişte kötü, bugün iyi diyor. Tam tersi.`]}
+ ], after:[
+  {t:'say', h:`Zaman Bükücü yere serildi. Beş soru, beş farklı YDT tipi ve hepsinde ilk soru aynıydı: yüklem ne zaman?`}
+]},
+
+/* ---------- ÇIKIŞ ---------- */
+{ sec:'cikis', title:'Çıkış', btn:null, blocks:[
+  {t:'h', eb:'Final', h:'Çıkış'},
+  {t:'say', h:`Bitti! Bi bakalım neler kazandın.`},
+  {t:'summary'},
+  {t:'say', h:`Şimdi kendine dürüst ol. Yapabildiğin maddeleri işaretle. İşaretleyemediğin varsa yanındaki bağlantıya dokun, o bölüme dönersin.`},
+  {t:'checklist', items:[
+    ['Uzun bi özneyi geçip yüklemi bulabiliyorum.','yuklem'],
+    ['G\'yi "genel geçer bilgi, görüş" olarak okuyabiliyorum.','g'],
+    ['Kapalı bi geçmiş ifadesi görünce K bekliyorum.','k'],
+    ['S\'yi "bu dönem süren değişim" olarak okuyabiliyorum; -ing sevmeyen fiilleri tanıyorum.','s'],
+    ['Tuzak 1 ve Tuzak 2\'yi fark edebiliyorum.','tuzak'],
+    ['Bi cümledeki yüklemlerin zaman uyumunu takip edebiliyorum.','ipucu']]},
+  {t:'say', h:`Son bi şey. Gidiyorsun ama aklında bi soru bırakıcam:`},
+  {t:'ex', items:[
+    ['K',`In 2005, researchers <pk>found</pk> 300-year-old viruses.`,`(a)`],
+    ['',`Researchers <b>have found</b> viruses up to 7,000 years old.`,`(b)`]]},
+  {t:'mcq', id:'bon', xp:3, noscore:true, q:`(b)'deki <e>have found</e> Türkçeye en iyi nasıl aktarılır? Tahmin et.`, o:[
+    `Araştırmacılar 7000 yıla kadar eski virüsler buluyor.`,
+    `Araştırmacılar 7000 yıla kadar eski virüsler bulmuş durumda.`,
+    `Araştırmacılar 7000 yıla kadar eski virüsler bulur.`], a:1, f:[
+    `Mantıklı bi tahmin ama -yor bu dönem süren bi şey anlatır. <e>have found</e> başka bi şey diyor; Aşama 2'de görücez.`,
+    `Tahmin değil, bildin! "Bulmuş durumda." Bunun neden böyle olduğu Aşama 2'nin konusu.`,
+    `Bu G olurdu; <e>have found</e> genel bi kural anlatmıyor. Aşama 2'de çözücez.`]}
+ ], after:[
+  {t:'say', h:`Aşama 1 burda bitiyor. Sonraki aşamada geçmişle bugün arasına bi köprü kuruyoruz: geçmişte olmuş ama bugün hâlâ izi duran şeyler. Görüşürüz.`},
+  {t:'restart'}
+]}
+];
+
+</script>
+<script>
+(function(){
+'use strict';
+/* Kodlar: STAGE.codes = {KOD:[cssSınıfı, ad, tense, Türkçe çekirdek, slogan]} — verilmezse G/K/S */
+const CODES=STAGE.codes||{G:['g','Genel geçer','Present Simple','-r','"Hep böyle."'],K:['k','Kapanmış geçmiş','Past Simple','-dı','"Oldu, bitti, kapı kapandı."'],S:['s','Süren süreç','Present Continuous','-yor','"Bu aralar oluyor, değişiyor."']};
+const CODE_RE=new RegExp('\\[('+Object.keys(CODES).sort((a,b)=>b.length-a.length).join('|')+')\\]','g');
+const L='ABCDE';
+const $=(s,r=document)=>r.querySelector(s);
+const el=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;};
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---- durum ---- */
+let st=load()||fresh();
+st.first=st.first||{};
+function fresh(){return {scr:0,q:{},xp:{},ge:{},sw:{},tp:{},steps:{},chk:{},v2:{},cl:{},cipher:{},first:{},finished:false};}
+function load(){try{const s=localStorage.getItem(STAGE.key);return s?JSON.parse(s):null;}catch(e){return null;}}
+function save(){try{localStorage.setItem(STAGE.key,JSON.stringify(st));}catch(e){}report(false);}
+
+/* ---- öğretmene rapor (yalnızca Google Apps Script'ten açılınca) ---- */
+const GS=(typeof google!=='undefined'&&google.script&&google.script.run)?google.script.run:null;
+/* Sayfa Google dışında (ör. GitHub Pages) barındırılınca kayıt bu adrese POST edilir (Apps Script doPost). */
+const TRACK=(typeof TRACK_URL==='string'&&/^https:\/\/script\.google\.com\//.test(TRACK_URL))?TRACK_URL:null;
+const TRACKED=!!(GS||TRACK);
+function postTrack(p,onFail){
+  const body=JSON.stringify(p);
+  if(navigator.onLine===false){onFail();return;}
+  try{fetch(TRACK,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body,keepalive:true}).then(()=>{retry=0;}).catch(onFail);}catch(e){onFail();}
+}
+let rT=null,lastSent='',retry=0;
+function stats(){
+  const scored=allQ().filter(q=>!q.cipher&&!q.noscore);
+  const ids=scored.map(q=>q.id);
+  const ans=ids.filter(id=>st.first[id]!==undefined);
+  const cor=ans.filter(id=>st.first[id]===true).length;
+  return {topic:STAGE.topic,study:STAGE.study,stage:STAGE.no,name:st.who&&st.who.name,email:st.who&&st.who.email,
+    progress:Math.round(100*Math.min(st.scr,SCREENS.length-1)/(SCREENS.length-1)),
+    finished:!!st.finished,answered:ans.length,correct:cor,total:ids.length};
+}
+function report(now){
+  if(!TRACKED||!st.who)return;
+  clearTimeout(rT);
+  rT=setTimeout(()=>{const p=stats();const k=JSON.stringify(p);if(k===lastSent)return;lastSent=k;
+    const fail=()=>{lastSent='';if(retry<5){retry++;setTimeout(()=>report(true),4000*retry);}};
+    if(GS){try{GS.withFailureHandler(fail).withSuccessHandler(()=>{retry=0;}).kaydet(p);}catch(e){}}
+    else postTrack(p,fail);},now?0:2500);
+}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')report(true);});
+function firstTry(id,ok,noscore){if(!noscore&&st.first[id]===undefined)st.first[id]=!!ok;}
+
+/* ---- metin biçimleme ---- */
+function fmt(s){
+  if(!s)return '';
+  return s
+    .replace(/\{([^|{}]+)\|([^{}]+)\}/g,(m,w,g)=>`<button type="button" class="gl" data-g="${g.replace(/"/g,'&quot;')}">${w}</button>`)
+    .replace(CODE_RE,(m,c)=>`<button type="button" class="cd ${CODES[c][0]}" data-c="${c}">${c}</button>`)
+    .replace(/<e>/g,'<span class="en">').replace(/<\/e>/g,'</span>')
+    .replace(/<p(g|k|s|d|h|c|o|oh|i|gi)>/g,'<span class="pr $1">').replace(/<\/p(g|k|s|d|h|c|o|oh|i|gi)>/g,'</span>')
+    .replace(/<sb>/g,'<span class="sb">').replace(/<\/sb>/g,'</span>');
+}
+function plain(s){return s.replace(/\{([^|{}]+)\|[^{}]+\}/g,'$1');}
+function chip(c){return c?`<span class="cd ${CODES[c][0]}" aria-hidden="true">${c}</span>`:'';}
+function cebi(str){
+  if(!str)return null;
+  const d=el('div','cebi');
+  d.innerHTML=str.split(';').map(x=>{const [w,g]=x.split('|');return `<span><b>${w.trim()}</b> ${g.trim()}</span>`;}).join('');
+  return d;
+}
+
+/* dokunmatik kelime ve kod açıklamaları (tek dinleyici) */
+document.addEventListener('click',e=>{
+  const g=e.target.closest('.gl');
+  if(g){const n=g.nextElementSibling;if(n&&n.classList.contains('gp'))n.remove();else g.insertAdjacentHTML('afterend',`<span class="gp">${g.dataset.g}</span>`);return;}
+  const c=e.target.closest('button.cd[data-c]');
+  if(c){const n=c.nextElementSibling;if(n&&n.classList.contains('cp'))n.remove();else{const d=CODES[c.dataset.c];c.insertAdjacentHTML('afterend',`<span class="cp">${d[1]} · ${d[2]} · ${d[3]}</span>`);}}
+});
+
+/* ---- XP ---- */
+let XPMAX=0;
+function allQ(){const out=[];for(const s of SCREENS)for(const b of [...s.blocks,...(s.after||[])]){if(b.t==='mcq'||b.t==='tap'||b.t==='swipe')out.push(b);if(b.t==='check')out.push(...b.items);if(b.t==='cipher')out.push({id:b.id,xp:b.bonus,cipher:true});}return out;}
+XPMAX=allQ().reduce((a,b)=>a+(b.xp||0),0);
+function xpNow(){return Object.values(st.xp).reduce((a,b)=>a+b,0);}
+function rank(){const r=xpNow()/XPMAX;let n=STAGE.ranks[0][1];for(const [t,name] of STAGE.ranks)if(r>=t)n=name;return n;}
+function hud(){
+  $('#hudXP').textContent=xpNow()+' XP';
+  $('#hudBar').style.width=Math.round(100*Math.min(st.scr,SCREENS.length-1)/(SCREENS.length-1))+'%';
+  let sec='';for(let i=st.scr;i>=0;i--){if(SCREENS[i].title){sec=SCREENS[i].title;break;}}
+  $('#hudS').textContent=sec;
+}
+function award(id,n){if(st.xp[id]==null){st.xp[id]=n;}}
+
+/* ---- ekranlar ---- */
+const main=$('#main');
+const screenObjs=[];
+function renderScreen(i,scroll){
+  const S=SCREENS[i];
+  const sec=el('section','screen');sec.id='s'+i;
+  if(S.sec&&(i===0||SCREENS[i-1].sec!==S.sec))sec.dataset.anchor=S.sec;
+  const reqs=[];
+  for(const b of S.blocks){const r=block(b,sec,()=>check());if(r&&r.req)reqs.push(r);}
+  const afterBox=el('div');afterBox.style.cssText='display:contents';
+  const nb=S.btn?el('button','btn',S.btn):null;
+  if(nb){nb.type='button';nb.hidden=true;nb.onclick=()=>{nb.hidden=true;nb.remove();next(i);};}
+  sec.appendChild(afterBox);if(nb)sec.appendChild(nb);
+  main.appendChild(sec);
+  let afterDone=false;
+  function check(){
+    if(!reqs.every(r=>r.done()))return;
+    if(!afterDone){afterDone=true;for(const b of (S.after||[]))block(b,afterBox,()=>{});}
+    if(nb&&st.scr===i)nb.hidden=false;
+    if(i===SCREENS.length-1&&!st.finished){st.finished=true;save();report(true);}
+    save();hud();
+  }
+  screenObjs[i]={sec,check};
+  check();
+  if(scroll)setTimeout(()=>sec.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}),40);
+}
+function next(i){if(st.scr===i){st.scr=i+1;save();report(true);}renderScreen(i+1,true);hud();menu();}
+
+/* ---- blok çizerleri ---- */
+function block(b,parent,changed){
+  const f=B[b.t];if(!f){console.warn('bilinmeyen blok',b.t);return null;}
+  return f(b,parent,changed);
+}
+const B={
+ hero(b,p){p.appendChild(el('div','hero',`<small>${STAGE.kicker||'YDT Grammar · Self-study'}</small><h1>${STAGE.title.split('·').pop().trim()}</h1><p>${fmt(STAGE.hero||'')}</p><div class="gks">${(STAGE.heroCodes||Object.keys(CODES)).map(c=>`<span>${c}</span>`).join('')}</div>`));},
+ say(b,p){p.appendChild(el('p','say',fmt(b.h)));},
+ h(b,p){p.appendChild(el('div','eb',b.eb));p.appendChild(el('h2','h'+(b.small?' small':''),(b.code?`<button type="button" class="cd ${CODES[b.code][0]}" data-c="${b.code}">${b.code}</button>`:'')+b.h));},
+ codes(b,p){p.appendChild(el('div','codes',(b.list||Object.keys(CODES)).map(c=>{const d=CODES[c];return `<div class="${d[0]}"><b>${c}</b><strong>${d[1]}</strong><span>${d[2]} · Türkçede çoğu zaman <em>${d[3]}</em></span>${d[4]?`<span>${d[4]}</span>`:''}</div>`;}).join('')));},
+ ex(b,p){const d=el('div','ex');for(const [c,e,t] of b.items)d.appendChild(el('div','it',(c?`<button type="button" class="cd ${CODES[c][0]}" data-c="${c}">${c}</button>`:'<span class="cd n">?</span>')+`<div class="e">${fmt(e)}</div><div class="t">${fmt(t)}</div>`));p.appendChild(d);},
+ card(b,p){p.appendChild(el('div','card '+CODES[b.code][0],`<h4>${chip(b.code)} ${b.title}</h4><dl>${b.rows.map(r=>`<dt>${r[0]}</dt><dd>${r[1]}${r[2]?`<small>${fmt(r[2])}</small>`:''}</dd>`).join('')}</dl>`));},
+ svg(b,p){p.appendChild(el('div','svgbox',b.h));},
+ pairs(b,p){p.appendChild(el('div','pairs',b.items.map(([tr,c,en])=>`<div><span>${tr}</span>${chip(c)}<span>${en}</span></div>`).join('')));},
+ timeline(b,p){p.appendChild(el('div','tl',`<svg viewBox="0 0 640 150" role="img" aria-label="Zaman şeridi: G zamandan bağımsız, K 1800'lerde, S bu dönem">
+  <rect class="gb" x="14" y="10" width="612" height="28" rx="14" stroke-width="1.5"/>
+  <text class="gt" x="320" y="29" text-anchor="middle" font-size="14" font-weight="700">G · zamandan bağımsız: tilki gece avlanır</text>
+  <line class="ax" x1="14" y1="95" x2="618" y2="95" stroke-width="2"/><polygon class="mut" points="628,95 616,89 616,101"/>
+  <rect class="kb" x="70" y="78" width="180" height="34" rx="8" stroke-width="1.5"/>
+  <text class="kt" x="160" y="100" text-anchor="middle" font-size="13.5" font-weight="700">K · in the 1800s</text>
+  <rect class="sbx" x="380" y="78" width="200" height="34" rx="17" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text class="st" x="480" y="100" text-anchor="middle" font-size="13.5" font-weight="700">S · these days</text>
+  <line class="now" x1="480" y1="64" x2="480" y2="122" stroke-width="2"/>
+  <text class="ink" x="480" y="142" text-anchor="middle" font-size="13" font-weight="800">ŞİMDİ</text>
+  <text class="mut" x="16" y="142" font-size="13">GEÇMİŞ</text><text class="mut" x="616" y="142" text-anchor="end" font-size="13">GELECEK</text></svg>`));},
+ v2(b,p){const d=el('div','v2');for(const [a,v] of b.items){const bt=el('button','',a);bt.type='button';const k=a;const show=()=>{bt.innerHTML=`${a} → <b>${v}</b>`;};if(st.v2[k])show();bt.onclick=()=>{if(st.v2[k]){st.v2[k]=0;bt.textContent=a;}else{st.v2[k]=1;show();}save();};d.appendChild(bt);}p.appendChild(d);},
+
+ mcq(b,p,changed,ctx){
+  const box=el('div','q'+(b.bomb?' bomb':''));
+  if(b.tag)box.appendChild(el('span','tag',b.tag));
+  if(b.q)box.appendChild(el('p','ask',fmt(b.q)));
+  if(b.chat){const c=el('div','chat');for(const [w,t] of b.chat){c.appendChild(el('div','bub'+(t==='----'?' me gap':''),t==='----'?`${w}: ----`:`<b>${w}</b>${fmt(t)}`));}box.appendChild(c);}
+  if(b.stem)box.appendChild(el('p','stem'+(b.tr?' trs':''),fmt(b.stem)));
+  const cb=cebi(b.cebi);if(cb)box.appendChild(cb);
+  let hb=null;if(b.hint){hb=el('button','hintb','İpucu');hb.type='button';hb.onclick=()=>{hb.replaceWith(el('div','fb info',fmt(b.hint)));};box.appendChild(hb);}
+  const opts=el('div','opts'+(b.codes?' codes3':'')+(b.who?' who':'')+(b.bomb?' wire':''));
+  const list=b.codes?(Array.isArray(b.codes)?b.codes:['G','K','S']):b.o;
+  const btns=list.map((o,i)=>{
+    const bt=el('button','op');bt.type='button';
+    let lab=b.who?['Ece','Mert','Defne'][i]:b.bomb?'':L[i];
+    if(b.codes)bt.innerHTML=`<span class="cd ${CODES[o][0]}">${o}</span><span class="x">${CODES[o][1]}</span>`;
+    else bt.innerHTML=`<span class="l">${lab}</span><span class="x">${fmt(plain(o))}</span>`+(b.L?`<span class="lt">${b.L[i]}</span>`:'');
+    bt.onclick=()=>pick(i);opts.appendChild(bt);return bt;});
+  box.appendChild(opts);
+  const fbw=el('div');fbw.style.cssText='display:contents';box.appendChild(fbw);
+  p.appendChild(box);
+  const key=b.id;
+  function rec(){return st.q[key]||(st.q[key]={tries:0,solved:false,wrong:[]});}
+  function paint(showFb){
+    const r=rec();
+    btns.forEach((bt,i)=>{bt.classList.remove('right','wrong','dim');bt.disabled=false;
+      if(r.wrong.includes(i))bt.classList.add('wrong');
+      if(r.solved){bt.disabled=true;if(i===b.a)bt.classList.add('right');else if(!r.wrong.includes(i))bt.classList.add('dim');}});
+    if(showFb!=null){fbw.innerHTML='';const ok=showFb===b.a;
+      const xpTxt=ok&&r.tries===1&&b.xp&&!(ctx&&ctx.noxp)?` <span class="xpg">+${b.xp} XP</span>`:'';
+      fbw.appendChild(el('div','fb '+(ok?'ok':'no'),`<div>${fmt(b.f[showFb])}${xpTxt}</div>`));}
+  }
+  function pick(i){
+    const r=rec();if(r.solved)return;
+    r.tries++;
+    firstTry(key,i===b.a,b.noscore);
+    if(i===b.a){r.solved=true;r.first=(r.tries===1);if(r.first&&b.xp&&!(ctx&&ctx.noxp))award(key,b.xp);}
+    else if(!r.wrong.includes(i))r.wrong.push(i);
+    paint(i);save();hud();changed();
+    if(ctx&&ctx.onAnswer)ctx.onAnswer();
+    document.dispatchEvent(new CustomEvent('qsolved',{detail:key}));
+  }
+  const r=rec();if(r.solved)paint(b.a);else if(r.wrong.length)paint(null);
+  return {req:true,done:()=>!!rec().solved,reset:()=>{st.q[key]={tries:0,solved:false,wrong:[]};fbw.innerHTML='';paint(null);if(hb===null&&b.hint){}}};
+ },
+
+ tap(b,p,changed){
+  const box=el('div','q');box.appendChild(el('p','ask',fmt(b.q)));
+  const cb=cebi(b.cebi);
+  const tk=el('div','toks');
+  const groups=[...new Set(b.toks.map(t=>t[1]).filter(r=>r[0]==='p'))];
+  const r=st.tp[b.id]||(st.tp[b.id]={found:[],tries:0,miss:0});
+  const fbw=el('div');fbw.style.cssText='display:contents';
+  const bts=b.toks.map(([w,role],i)=>{const bt=el('button','tk',w);bt.type='button';bt.onclick=()=>hit(i);tk.appendChild(bt);return bt;});
+  box.appendChild(tk);if(cb)box.appendChild(cb);box.appendChild(fbw);p.appendChild(box);
+  const done=()=>groups.every(g=>r.found.includes(g));
+  function paint(){
+    bts.forEach((bt,i)=>{const role=b.toks[i][1];bt.classList.toggle('hit',role[0]==='p'&&r.found.includes(role));if(done()){bt.disabled=true;if(role==='s')bt.classList.add('subj');bt.classList.remove('miss');}});
+  }
+  function say(cls,h){fbw.innerHTML='';fbw.appendChild(el('div','fb '+cls,`<div>${fmt(h)}</div>`));}
+  function hit(i){
+    if(done())return;const role=b.toks[i][1];r.tries++;
+    firstTry(b.id,role[0]==='p');
+    if(role[0]==='p'){if(!r.found.includes(role))r.found.push(role);
+      if(done()){if(r.miss===0)award(b.id,b.xp);say('ok',b.done+(r.miss===0?` <span class="xpg">+${b.xp} XP</span>`:''));}
+      else say('info',b.part||'Bi tane daha var.');}
+    else{r.miss++;bts[i].classList.add('miss');setTimeout(()=>bts[i].classList.remove('miss'),900);say('no',role==='s'?b.fs:b.fo);}
+    paint();save();hud();changed();
+  }
+  paint();if(done())say('ok',b.done);
+  return {req:true,done};
+ },
+
+ ge(b,p,changed){
+  const w=el('div','ge');w.appendChild(el('span','','Sence:'));
+  const fbw=el('div');fbw.style.cssText='display:contents';
+  const opts=[['G','Gerçek'],['E','Efsane']];
+  const bts=opts.map(([k,t])=>{const bt=el('button','',t);bt.type='button';bt.onclick=()=>pick(k);w.appendChild(bt);return bt;});
+  p.appendChild(w);p.appendChild(fbw);
+  function show(k){bts.forEach((bt,i)=>{bt.disabled=true;bt.classList.toggle('sel',opts[i][0]===k);});
+    fbw.innerHTML='';fbw.appendChild(el('div','fb '+(k===b.a?'ok':'info'),`<div>${k===b.a?'Tahminin tuttu. ':'Tahminin tutmadı, olsun. '}${fmt(b.fact)}</div>`));}
+  function pick(k){if(st.ge[b.id])return;st.ge[b.id]=k;show(k);save();changed();}
+  if(st.ge[b.id])show(st.ge[b.id]);
+  return {req:true,done:()=>!!st.ge[b.id]};
+ },
+
+ swipe(b,p,changed){
+  const c=el('div','sw',`<div class="e">${fmt(b.en)}</div><div class="t">${b.tr}</div>`);
+  const bt=el('div','bt');const no=el('button','n','✕ Geç');const yes=el('button','y','♥ Eşleşme');no.type=yes.type='button';bt.append(no,yes);c.appendChild(bt);
+  const fbw=el('div');fbw.style.cssText='display:contents';c.appendChild(fbw);p.appendChild(c);
+  const r=()=>st.sw[b.id];
+  function show(){const x=r();if(!x)return;
+    no.classList.toggle('wr',x.wrong&&x.wrong.includes(false));yes.classList.toggle('wr',x.wrong&&x.wrong.includes(true));
+    if(x.solved){no.disabled=yes.disabled=true;(b.a?yes:no).classList.add('sel');}
+    fbw.innerHTML='';fbw.appendChild(el('div','fb '+(x.solved?'ok':'no'),`<div>${fmt(x.solved?b.ok:b.no)}${x.solved&&x.first?` <span class="xpg">+${b.xp} XP</span>`:''}</div>`));}
+  function pick(v){const x=st.sw[b.id]||(st.sw[b.id]={tries:0,solved:false,wrong:[]});if(x.solved)return;x.tries++;firstTry(b.id,v===b.a);
+    if(v===b.a){x.solved=true;x.first=x.tries===1;if(x.first)award(b.id,b.xp);}else x.wrong.push(v);
+    show();save();hud();changed();}
+  no.onclick=()=>pick(false);yes.onclick=()=>pick(true);show();
+  return {req:true,done:()=>!!(r()&&r().solved)};
+ },
+
+ steps(b,p,changed){
+  const box=el('div','steps');
+  box.appendChild(el('p','stem',fmt(b.stem)));
+  const ol=el('ol','so');b.o.forEach((o,i)=>ol.appendChild(el('li','',`<b>${L[i]}</b><span>${fmt(o)}</span>`)));box.appendChild(ol);
+  const cb=cebi(b.cebi);if(cb)box.appendChild(cb);
+  const out=el('div');out.style.cssText='display:flex;flex-direction:column;gap:8px';box.appendChild(out);
+  const nb=el('button','btn sec','Sonraki adım');nb.type='button';box.appendChild(nb);p.appendChild(box);
+  const n=()=>st.steps[b.id]||0;
+  function paint(){out.innerHTML='';for(let i=0;i<n();i++)out.appendChild(el('div','st',`<i>${i+1}</i><div>${fmt(b.steps[i])}</div>`));
+    const lis=ol.children;for(let i=0;i<lis.length;i++){lis[i].classList.remove('out','mk');}
+    if(n()>=3){[0,2,3,4].filter(i=>i!==b.mark).forEach(i=>lis[i].classList.add('out'));}
+    if(n()>=4)lis[b.mark].classList.add('mk');
+    nb.hidden=n()>=b.steps.length;}
+  nb.onclick=()=>{st.steps[b.id]=n()+1;paint();save();changed();};
+  paint();
+  return {req:true,done:()=>n()>=b.steps.length};
+ },
+
+ hp(b,p){const d=el('div','hp','BOSS<span class="b">'+b.ids.map(()=>'<i></i>').join('')+'</span>');p.appendChild(d);
+  const f=()=>{const n=b.ids.filter(id=>st.q[id]&&st.q[id].solved).length;[...d.querySelectorAll('i')].forEach((x,i)=>x.classList.toggle('off',i<n));};
+  f();liveFns.push(f);},
+
+ cipher(b,p){const d=el('div','ci');const rv=el('div');rv.style.cssText='display:contents';p.appendChild(d);p.appendChild(rv);
+  const qs={};for(const s of SCREENS)for(const x of s.blocks)if(x.t==='mcq'&&b.ids.includes(x.id))qs[x.id]=x;
+  const f=()=>{d.innerHTML=b.ids.map(id=>{const q=qs[id];const ok=st.q[id]&&st.q[id].solved;return `<span class="${ok?'':'e'}">${ok?q.L[q.a]:'·'}</span>`;}).join('');
+    const all=b.ids.every(id=>st.q[id]&&st.q[id].solved);
+    if(all&&!rv.firstChild){award(b.id,b.bonus);save();rv.appendChild(el('div','fb ok',`<div>${fmt(b.reveal)}</div>`));$('#hudXP').textContent=xpNow()+' XP';}};
+  f();liveFns.push(f);},
+
+ check(b,p,changed){
+  const box=el('div','chk');p.appendChild(box);
+  const c=st.chk[b.id]||(st.chk[b.id]={round:1,result:null});
+  const inner=el('div');inner.style.cssText='display:flex;flex-direction:column;gap:12px';box.appendChild(inner);
+  const msg=el('div');msg.style.cssText='display:flex;flex-direction:column;gap:10px';box.appendChild(msg);
+  let objs=[];
+  function build(){inner.innerHTML='';objs=b.items.map(it=>B.mcq(it,inner,()=>{},{noxp:c.round>1,onAnswer:eval_}));}
+  function eval_(){
+    if(!b.items.every(it=>st.q[it.id]&&st.q[it.id].solved))return;
+    if(c.result)return show();
+    const n=b.items.filter(it=>st.q[it.id].tries===1).length;
+    c.score=n;c.result=(n>=b.need)?'pass':(c.round>1?'done2':'fail');save();show();changed();}
+  function show(){msg.innerHTML='';
+    if(!c.result)return;
+    const n=c.score;
+    if(c.result==='pass'){msg.appendChild(el('div','fb ok',`<div><b>${n}/5.</b> ${fmt(c.round>1?b.pass2:b.pass)}</div>`));}
+    else if(c.result==='done2'){msg.appendChild(el('div','fb info',`<div><b>${n}/5.</b> ${fmt(b.fail2)}</div>`));}
+    else{msg.appendChild(el('div','fb no',`<div><b>${n}/5.</b> ${fmt(b.fail)}</div>`));
+      const row=el('div','row');const back=el('button','btn sec',b.backLabel);back.type='button';
+      back.onclick=()=>{const t=document.querySelector(`[data-anchor="${b.back}"]`);if(t)t.scrollIntoView({behavior:reduce?'auto':'smooth'});};
+      const again=el('button','btn','Kontrolü baştan çöz');again.type='button';
+      again.onclick=()=>{c.round=2;c.result=null;for(const it of b.items)st.q[it.id]={tries:0,solved:false,wrong:[]};save();build();show();box.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});};
+      row.append(back,again);msg.appendChild(row);}
+  }
+  build();show();
+  return {req:true,done:()=>c.result==='pass'||c.result==='done2'};
+ },
+
+ summary(b,p){const d=el('div','sum');p.appendChild(d);
+  const f=()=>{const all=allQ().filter(q=>q.xp&&!q.cipher);const first=all.filter(q=>st.xp[q.id]!=null).length;
+    d.innerHTML=`<div><b>${xpNow()}</b><span>/ ${XPMAX} XP</span></div><div><b>${first}</b><span>soru ilk denemede</span></div><div><b>${Math.round(100*xpNow()/XPMAX)}%</b><span>başarı</span></div><div class="rk"><span>Rütben</span><b>${rank()}</b><span>${rankNote()}</span></div>`;};
+  f();liveFns.push(f);},
+ checklist(b,p){const d=el('div','clist');b.items.forEach(([t,a],i)=>{const lb=el('label','',`<input type="checkbox" id="cl${i}"><span>${t}</span><a href="#" data-go="${a}">bölüme dön</a>`);
+   const inp=lb.querySelector('input');inp.checked=!!st.cl[i];inp.onchange=()=>{st.cl[i]=inp.checked?1:0;save();};
+   lb.querySelector('a').onclick=e=>{e.preventDefault();go(a);};d.appendChild(lb);});p.appendChild(d);},
+ restart(b,p){const bt=el('button','btn sec','Aşamayı baştan çöz');bt.type='button';let arm=false;
+   bt.onclick=()=>{if(!arm){arm=true;bt.textContent='Emin misin? Bütün cevaplar silinir. Tekrar dokun.';return;}reset();};p.appendChild(bt);}
+};
+const liveFns=[];
+function rankNote(){const r=rank();return {'Çaylak':'Olsun, ilk tur bu. Tuzak bölümlerine bi daha bak.','Zaman Yolcusu':'Fena değil. Bi tur daha atarsan dedektif olursun.','Zaman Dedektifi':'Çok iyi. KRONOS\'a az kaldı.','KRONOS':'Zamanın efendisi sensin. Aşama 2 seni bekliyor.'}[r];}
+const _hud=hud;hud=function(){_hud();liveFns.forEach(f=>f());};
+
+/* ---- menü ---- */
+function menu(){
+  const nav=$('#menuNav');nav.innerHTML='';const seen=new Set();
+  if(st.who)nav.appendChild(el('p','who-l','Öğrenci: <b></b>')).querySelector('b').textContent=st.who.name;
+  SCREENS.forEach((s,i)=>{if(!s.title||seen.has(s.sec))return;seen.add(s.sec);
+    const a=el('a',i<=st.scr?'':'lock',s.title);a.href='#';a.onclick=e=>{e.preventDefault();closeMenu();go(s.sec);};nav.appendChild(a);});
+}
+function go(sec){const t=document.querySelector(`[data-anchor="${sec}"]`);if(t)t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});}
+function closeMenu(){$('#menu').hidden=true;}
+$('#menuB').onclick=()=>{menu();$('#menu').hidden=false;};
+$('#menu').addEventListener('click',e=>{if(e.target.id==='menu')closeMenu();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
+let armR=false;$('#resetB').onclick=()=>{if(!armR){armR=true;$('#resetB').textContent='Emin misin? Tekrar dokun.';return;}reset();};
+function reset(){const w=st.who;st=fresh();st.who=w;save();location.hash='';main.innerHTML='';liveFns.length=0;boot(true);closeMenu();armR=false;$('#resetB').textContent='Baştan başla';window.scrollTo(0,0);}
+
+/* ---- başlat ---- */
+function gate(){
+  const box=el('section','screen');
+  box.innerHTML=`<div class="hero"><small>${STAGE.kicker||'YDT Grammar · Self-study'}</small><h1>${STAGE.title.split('·').pop().trim()}</h1><p>Başlamadan önce kendini tanıt. Hocan ilerlemeni bu bilgilerle görecek.</p></div>
+  <form class="login" id="lg" novalidate>
+    <label for="lgN">Adın soyadın</label><input id="lgN" autocomplete="name" required maxlength="80">
+    <label for="lgE">E-posta adresin</label><input id="lgE" type="email" autocomplete="email" inputmode="email" required maxlength="120">
+    <p class="lgerr" id="lgX" hidden></p>
+    <button class="btn" type="submit">Derse başla</button>
+    <p class="lgnote">Aynı telefonla açtığın sürece kaldığın yerden devam edersin.</p>
+  </form>`;
+  main.appendChild(box);
+  $('#lg').addEventListener('submit',e=>{e.preventDefault();
+    const n=$('#lgN').value.trim(),m=$('#lgE').value.trim().toLowerCase();
+    const x=$('#lgX');
+    if(n.length<3){x.textContent='Adını ve soyadını yaz.';x.hidden=false;return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m)){x.textContent='E-posta adresini kontrol et, bi harf eksik gibi.';x.hidden=false;return;}
+    st.who={name:n,email:m};save();box.remove();boot();report(true);});
+}
+function boot(){
+  if(TRACKED&&!st.who){$('#hudT').textContent=STAGE.title;gate();return;}
+  $('#hudT').textContent=STAGE.title;
+  const upto=Math.min(st.scr,SCREENS.length-1);
+  for(let i=0;i<=upto;i++)renderScreen(i,false);
+  hud();menu();
+  if(upto>0){const t=document.getElementById('s'+upto);if(t)setTimeout(()=>t.scrollIntoView({block:'start'}),60);}
+}
+boot();
+})();
+
+</script>
+
+</body></html>
