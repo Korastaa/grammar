@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>YDT Grammar · Çalışma Sayfaları</title>
+<meta name="description" content="Koray Taş · YDT gramer interaktif self-study sayfaları">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700&display=swap">
+<style>
+/* Ders sayfalarıyla aynı tasarım dili: shell.html'deki token'lar */
+:root{
+  --bg:#F3F5F9; --surface:#FFFFFF; --sunk:#EBEEF4; --ink:#18202F; --muted:#5A6375; --line:#D9DEE8;
+  --accent:#2341B5; --accent-ink:#FFFFFF; --accent-soft:#E5EAFB;
+  --ok:#137A3B; --ok-soft:#E1F4E7;
+  --g:#0E7268; --g-soft:#D7F0EB; --k:#A85008; --k-soft:#FBEAD2; --s:#6526C9; --s-soft:#EDE4FB;
+  --d:#0369A1; --d-soft:#E0F2FE; --h:#BE185D; --h-soft:#FCE7F3;
+  --c:#4D7C0F; --c-soft:#ECFCCB; --o:#4338CA; --o-soft:#E0E7FF; --oh:#A21CAF; --oh-soft:#FAE8FF;
+  --i:#C2410C; --i-soft:#FFEDD5; --gi:#475569; --gi-soft:#E2E8F0;
+  --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --f-body:"Figtree","Segoe UI",system-ui,-apple-system,sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E131D; --surface:#161D2B; --sunk:#1D2536; --ink:#E7EBF3; --muted:#9BA4B6; --line:#2B3448;
+  --accent:#8EA3FF; --accent-ink:#0E131D; --accent-soft:#1E284D;
+  --ok:#5BD98A; --ok-soft:#123220;
+  --g:#5FE0CC; --g-soft:#0E2F2B; --k:#F9B84A; --k-soft:#382710; --s:#C3B1FF; --s-soft:#271D47;
+  --d:#7DD3FC; --d-soft:#0C2A3D; --h:#F9A8D4; --h-soft:#3B1027;
+  --c:#BEF264; --c-soft:#1F2C0B; --o:#A5B4FC; --o-soft:#1E1F4D; --oh:#F0ABFC; --oh-soft:#3A1240;
+  --i:#FDBA74; --i-soft:#3A1F0B; --gi:#CBD5E1; --gi-soft:#243041;
+  color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--f-body);-webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:8px}
+.w{max-width:680px;margin:0 auto;padding:0 16px calc(56px + env(safe-area-inset-bottom,0px))}
+
+/* başlık */
+.hero{background:var(--accent);color:var(--accent-ink);border-radius:0 0 22px 22px;margin:0 -16px 26px;padding:30px 22px 24px;display:flex;flex-direction:column;gap:10px}
+.hero small{font:700 12px var(--f-body);letter-spacing:.14em;text-transform:uppercase;opacity:.82}
+.hero h1{margin:0;font:800 clamp(30px,8vw,42px)/1.03 var(--f-display);letter-spacing:-.03em}
+.hero p{margin:0;opacity:.92;max-width:42ch}
+.codes{display:flex;gap:7px;flex-wrap:wrap;margin-top:4px}
+.codes span{font:800 14px var(--f-display);min-width:34px;height:34px;padding:0 7px;border-radius:11px;display:grid;place-items:center;background:color-mix(in srgb,var(--accent-ink) 16%,transparent)}
+
+/* konu başlığı */
+.eb{font:700 12px var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 4px}
+h2{margin:0 0 14px;font:800 24px var(--f-display);letter-spacing:-.01em}
+
+/* aşama kartı */
+ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.row{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 15px;display:grid;grid-template-columns:auto 1fr;gap:4px 13px}
+.no{grid-row:span 2;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--sunk);color:var(--muted);font:800 15px var(--f-display);align-self:start;margin-top:1px}
+.row.on .no{background:var(--accent-soft);color:var(--accent)}
+.ttl{font:600 17.5px/1.3 var(--f-body);min-width:0}
+.sub{color:var(--muted);font-size:14.5px;line-height:1.45;min-width:0}
+.tags{grid-column:2;display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.tags b{font:800 12.5px var(--f-display);padding:3px 8px;border-radius:7px}
+.t-g{background:var(--g-soft);color:var(--g)} .t-k{background:var(--k-soft);color:var(--k)} .t-s{background:var(--s-soft);color:var(--s)}
+.t-d{background:var(--d-soft);color:var(--d)} .t-h{background:var(--h-soft);color:var(--h)}
+.t-c{background:var(--c-soft);color:var(--c)} .t-o{background:var(--o-soft);color:var(--o)} .t-oh{background:var(--oh-soft);color:var(--oh)}
+.t-i{background:var(--i-soft);color:var(--i)} .t-gi{background:var(--gi-soft);color:var(--gi)}
+.act{grid-column:2;display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:11px}
+.go{text-decoration:none;background:var(--accent);color:var(--accent-ink);border-radius:11px;padding:9px 18px;font:700 15.5px var(--f-body)}
+.cp{background:var(--surface);border:1.5px solid var(--line);border-radius:11px;padding:8px 13px;font:600 14.5px var(--f-body);color:var(--muted);cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.cp:hover{border-color:var(--accent);color:var(--accent)}
+.cp.done{border-color:var(--ok);color:var(--ok);background:var(--ok-soft)}
+.soon{font:600 14.5px var(--f-body);color:var(--muted);background:var(--sunk);border-radius:11px;padding:8px 14px;display:inline-block}
+.row.off{opacity:.72}
+.chk{grid-column:2;font-size:13.5px;color:var(--muted);margin-top:9px}
+
+footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+footer b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="w">
+
+<header class="hero">
+  <small>Koray Taş · YDT</small>
+  <h1>Grammar Çalışma Sayfaları</h1>
+  <p>Telefondan tek başına çalışacağın interaktif dersler. Her aşamada okursun, dokunursun, puan toplarsın. Kaldığın yerden devam eder.</p>
+  <div class="codes"><span>G</span><span>K</span><span>S</span><span>D</span><span>H</span><span>Ç</span><span>Ö</span><span>ÖH</span></div>
+</header>
+
+<p class="eb">Konu 1</p>
+<h2>Tenses · Zamanlar</h2>
+
+<ol id="list">
+  <li class="row" data-file="tenses1.html">
+    <div class="no">1</div>
+    <div class="ttl">Yüklemi Yakala</div>
+    <div class="sub">Yüklemi gör, zamanını oku. Üç katman, iki tuzak, bir boss.</div>
+    <div class="tags"><b class="t-g">G</b><b class="t-k">K</b><b class="t-s">S</b></div>
+  </li>
+  <li class="row" data-file="tenses2.html">
+    <div class="no">2</div>
+    <div class="ttl">Şimdiye Bağlanan Geçmiş</div>
+    <div class="sub">Geçmişte olmuş ama bugün hâlâ izi duran şeyler. Kilitli pencere, açık pencere.</div>
+    <div class="tags"><b class="t-d">D</b><b class="t-h">H</b></div>
+  </li>
+  <li class="row" data-file="tenses3.html">
+    <div class="no">3</div>
+    <div class="ttl">Geçmişin Geçmişi</div>
+    <div class="sub">Referans noktası geçmişe taşınıyor: o zaman ne oluyordu, o zamana kadar ne olmuştu?</div>
+    <div class="tags"><b class="t-c">Ç</b><b class="t-o">Ö</b><b class="t-oh">ÖH</b></div>
+  </li>
+  <li class="row" data-file="tenses4.html">
+    <div class="no">4</div>
+    <div class="ttl">Henüz Olmamış</div>
+    <div class="sub">Gelecek, planlar ve geçmişte kalmış gelecekler.</div>
+    <div class="tags"><b class="t-i">İ</b><b class="t-gi">Gİ</b></div>
+  </li>
+  <li class="row" data-file="tenses5.html">
+    <div class="no">5</div>
+    <div class="ttl">Zaman Haritası</div>
+    <div class="sub">Sekiz katman bir arada; paragraf sentezi.</div>
+    <div class="tags"><b class="t-g">G</b><b class="t-k">K</b><b class="t-s">S</b><b class="t-d">D</b><b class="t-h">H</b><b class="t-c">Ç</b><b class="t-o">Ö</b><b class="t-oh">ÖH</b></div>
+  </li>
+</ol>
+
+<footer>
+  Sayfalar <b>Koray Taş</b> tarafından YDT 2024–2026 analizinden hazırlandı.
+  Bir aşamayı bitirince ilerlemen hocana ulaşır; aynı telefondan açtığın sürece kaldığın yerden devam edersin.
+</footer>
+
+</div>
+
+<script>
+/* Her aşama için dosya gerçekten yayında mı, onu sorup satırı ona göre kuruyoruz.
+   Böylece yeni bir aşama yüklendiğinde bu sayfayı güncellemeye gerek kalmıyor. */
+(function(){
+  var rows = document.querySelectorAll('#list .row');
+  Array.prototype.forEach.call(rows, function(row){
+    var file = row.dataset.file;
+    var act = document.createElement('div');
+    act.className = 'act';
+    row.appendChild(act);
+
+    function soon(){
+      row.classList.add('off');
+      var s = document.createElement('span');
+      s.className = 'soon';
+      s.textContent = 'Yakında';
+      act.appendChild(s);
+    }
+
+    function live(){
+      row.classList.add('on');
+      var a = document.createElement('a');
+      a.className = 'go';
+      a.href = file;
+      a.textContent = 'Derse başla';
+      act.appendChild(a);
+
+      var b = document.createElement('button');
+      b.className = 'cp';
+      b.type = 'button';
+      b.textContent = 'Linki kopyala';
+      b.addEventListener('click', function(){
+        var url = new URL(file, location.href).href;
+        function ok(){
+          b.textContent = 'Kopyalandı ✓';
+          b.classList.add('done');
+          setTimeout(function(){ b.textContent = 'Linki kopyala'; b.classList.remove('done'); }, 1800);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(ok, fallback);
+        } else { fallback(); }
+        function fallback(){
+          var t = document.createElement('textarea');
+          t.value = url; t.setAttribute('readonly','');
+          t.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+          document.body.appendChild(t); t.select();
+          try { document.execCommand('copy'); ok(); }
+          catch(e){ window.prompt('Linki kopyala:', url); }
+          document.body.removeChild(t);
+        }
+      });
+      act.appendChild(b);
+    }
+
+    /* file:// ile açıldığında (yerel önizleme) fetch çalışmaz; hepsini yayında say. */
+    if (location.protocol === 'file:') { live(); return; }
+
+    fetch(file, { method: 'HEAD', cache: 'no-store' })
+      .then(function(r){ r.ok ? live() : soon(); })
+      .catch(function(){ soon(); });
+  });
+})();
+</script>
+</body>
+</html>
