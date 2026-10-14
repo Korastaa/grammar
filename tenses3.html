@@ -1,0 +1,1520 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>:root{color-scheme:light dark}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Aşama 3 · Geçmişin Geçmişi</title>
+</head><body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+<style>
+/* Layout: tek sütunlu ders akışı; üstte sabit ilerleme şeridi, ekranlar dokundukça alta eklenir */
+:root{
+  --bg:#F3F5F9; --surface:#FFFFFF; --sunk:#EBEEF4; --ink:#18202F; --muted:#5A6375; --line:#D9DEE8;
+  --accent:#2341B5; --accent-ink:#FFFFFF; --accent-soft:#E5EAFB;
+  --ok:#137A3B; --ok-soft:#E1F4E7; --bad:#B8233A; --bad-soft:#FBE6EA;
+  --g:#0E7268; --g-soft:#D7F0EB; --k:#A85008; --k-soft:#FBEAD2; --s:#6526C9; --s-soft:#EDE4FB;
+  --xp:#8F5A04; --xp-soft:#FDF0C8;
+  --d:#0369A1; --d-soft:#E0F2FE; --h:#BE185D; --h-soft:#FCE7F3; --c:#4D7C0F; --c-soft:#ECFCCB; --o:#4338CA; --o-soft:#E0E7FF; --oh:#A21CAF; --oh-soft:#FAE8FF; --i:#C2410C; --i-soft:#FFEDD5; --gi:#475569; --gi-soft:#E2E8F0;
+  --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --f-body:"Figtree","Segoe UI",system-ui,-apple-system,sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E131D; --surface:#161D2B; --sunk:#1D2536; --ink:#E7EBF3; --muted:#9BA4B6; --line:#2B3448;
+  --accent:#8EA3FF; --accent-ink:#0E131D; --accent-soft:#1E284D;
+  --ok:#5BD98A; --ok-soft:#123220; --bad:#FF8597; --bad-soft:#3A1621;
+  --g:#5FE0CC; --g-soft:#0E2F2B; --k:#F9B84A; --k-soft:#382710; --s:#C3B1FF; --s-soft:#271D47;
+  --xp:#F8CF5B; --xp-soft:#352A0E;
+  --d:#7DD3FC; --d-soft:#0C2A3D; --h:#F9A8D4; --h-soft:#3B1027; --c:#BEF264; --c-soft:#1F2C0B; --o:#A5B4FC; --o-soft:#1E1F4D; --oh:#F0ABFC; --oh-soft:#3A1240; --i:#FDBA74; --i-soft:#3A1F0B; --gi:#CBD5E1; --gi-soft:#243041;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E131D; --surface:#161D2B; --sunk:#1D2536; --ink:#E7EBF3; --muted:#9BA4B6; --line:#2B3448;
+  --accent:#8EA3FF; --accent-ink:#0E131D; --accent-soft:#1E284D;
+  --ok:#5BD98A; --ok-soft:#123220; --bad:#FF8597; --bad-soft:#3A1621;
+  --g:#5FE0CC; --g-soft:#0E2F2B; --k:#F9B84A; --k-soft:#382710; --s:#C3B1FF; --s-soft:#271D47;
+  --xp:#F8CF5B; --xp-soft:#352A0E;
+  --d:#7DD3FC; --d-soft:#0C2A3D; --h:#F9A8D4; --h-soft:#3B1027; --c:#BEF264; --c-soft:#1F2C0B; --o:#A5B4FC; --o-soft:#1E1F4D; --oh:#F0ABFC; --oh-soft:#3A1240; --i:#FDBA74; --i-soft:#3A1F0B; --gi:#CBD5E1; --gi-soft:#243041;
+  color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.62 var(--f-body);-webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+/* üst şerit */
+.hud{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hud-in{max-width:680px;margin:0 auto;padding:10px 16px 8px;display:flex;align-items:center;gap:12px}
+.hud-t{flex:1;min-width:0}
+.hud-t b{display:block;font:800 15px/1.2 var(--f-display);letter-spacing:-.01em}
+.hud-t span{display:block;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.xp-pill{flex:none;font:700 13px/1 var(--f-body);background:var(--xp-soft);color:var(--xp);padding:7px 11px;border-radius:999px;font-variant-numeric:tabular-nums}
+.menu-b{flex:none;width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer}
+.menu-b i{display:block;width:16px;height:2px;background:var(--ink);box-shadow:0 -5px 0 var(--ink),0 5px 0 var(--ink)}
+.bar{height:4px;background:var(--sunk)}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .4s}
+
+.menu{position:fixed;inset:0;z-index:40;background:rgba(10,14,22,.45);display:flex;justify-content:flex-end}
+.menu-p{width:min(320px,86vw);height:100%;background:var(--surface);padding:calc(env(safe-area-inset-top,0px) + 18px) 18px 18px;overflow:auto;display:flex;flex-direction:column;gap:6px}
+.menu-p h3{margin:0 0 8px;font:800 18px var(--f-display)}
+.menu-p a{display:block;padding:10px 12px;border-radius:10px;color:var(--ink);text-decoration:none;font-weight:600}
+.menu-p a.lock{color:var(--muted);pointer-events:none;font-weight:400}
+.menu-p a:not(.lock):hover{background:var(--sunk)}
+.menu-p .sp{flex:1}
+.ghost{background:none;border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;text-align:left}
+
+/* akış */
+main{max-width:680px;margin:0 auto;padding-inline:16px;padding-block:8px 120px}
+.screen{display:flex;flex-direction:column;gap:14px;padding-top:22px;scroll-margin-top:84px}
+.screen+.screen{border-top:1px dashed var(--line);margin-top:22px}
+p.say{margin:0;max-width:62ch}
+.eb{font:700 12px/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:6px 0 -6px}
+h2.h{margin:0;font:800 clamp(26px,6vw,34px)/1.1 var(--f-display);letter-spacing:-.02em;text-wrap:balance}
+h2.h.small{font-size:clamp(21px,5vw,25px)}
+h2.h .cd{vertical-align:6px;margin-right:8px}
+
+.hero{background:var(--accent);color:var(--accent-ink);border-radius:20px;padding:26px 22px 22px;display:flex;flex-direction:column;gap:10px;overflow:hidden;position:relative}
+.hero small{font:700 12px var(--f-body);letter-spacing:.14em;text-transform:uppercase;opacity:.8}
+.hero h1{margin:0;font:800 clamp(34px,9vw,48px)/1 var(--f-display);letter-spacing:-.03em}
+.hero p{margin:0;opacity:.9;max-width:40ch}
+.hero .gks{display:flex;gap:8px;margin-top:6px}
+.hero .gks span{font:800 15px var(--f-display);width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.16);background:color-mix(in srgb,var(--accent-ink) 16%,transparent)}
+
+.en{font-weight:600}
+.pr{font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+.pr.g{color:var(--g)} .pr.k{color:var(--k)} .pr.s{color:var(--s)}
+.sb{color:var(--accent)}
+u{text-decoration-color:var(--bad);text-decoration-thickness:2px;text-underline-offset:4px}
+
+/* kelime ve kod dokunmatikleri */
+.gl{background:none;border:0;padding:0;font-weight:inherit;cursor:pointer;border-bottom:2px dotted var(--muted);line-height:1.2}
+.gp,.cp{display:inline-block;font:600 13px/1.3 var(--f-body);background:var(--ink);color:var(--bg);border-radius:8px;padding:3px 8px;margin:0 4px;vertical-align:1px;animation:pop .15s ease-out}
+@keyframes pop{from{transform:scale(.85);opacity:0}to{transform:none;opacity:1}}
+.cd{display:inline-grid;place-items:center;min-width:28px;height:26px;padding:0 7px;border-radius:8px;border:0;font:800 14px/1 var(--f-display);cursor:pointer;vertical-align:1px}
+.cd.g{background:var(--g-soft);color:var(--g)} .cd.k{background:var(--k-soft);color:var(--k)} .cd.s{background:var(--s-soft);color:var(--s)}
+.cd.n{background:var(--sunk);color:var(--muted);cursor:default}
+
+/* kod kartları */
+.codes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.codes div{border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.codes .g{background:var(--g-soft)} .codes .k{background:var(--k-soft)} .codes .s{background:var(--s-soft)}
+.codes b{font:800 26px/1 var(--f-display)}
+.codes .g b{color:var(--g)} .codes .k b{color:var(--k)} .codes .s b{color:var(--s)}
+.codes strong{font-size:14.5px;line-height:1.25}
+.codes span{font-size:13px;color:var(--muted);line-height:1.35}
+.codes em{font-style:normal;font-size:13px;font-weight:600;white-space:nowrap}
+@media (max-width:460px){.codes{grid-template-columns:1fr}.codes div{display:grid;grid-template-columns:44px 1fr;column-gap:10px}.codes b{grid-row:span 3;align-self:center}}
+
+/* örnek cümleler */
+.ex{display:flex;flex-direction:column;gap:8px}
+.ex .it{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.ex .it .cd{grid-row:span 2;align-self:start;margin-top:2px}
+.ex .e{font-weight:600;min-width:0}
+.ex .t{color:var(--muted);font-size:15px;min-width:0}
+
+/* kimlik kartı */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.card h4{margin:0;padding:11px 14px;font:800 17px var(--f-display);display:flex;align-items:center;gap:10px}
+.card.g h4{background:var(--g-soft);color:var(--g)} .card.k h4{background:var(--k-soft);color:var(--k)} .card.s h4{background:var(--s-soft);color:var(--s)}
+.card dl{margin:0;display:grid;grid-template-columns:96px 1fr}
+.card dt,.card dd{margin:0;padding:9px 14px;border-top:1px solid var(--line);font-size:15px;min-width:0}
+.card dt{font-weight:700;color:var(--muted);font-size:13.5px;padding-right:0}
+.card dd small{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+@media (max-width:420px){.card dl{grid-template-columns:1fr}.card dd{border-top:0;padding-top:0}}
+
+/* Türkçe-İngilizce eşleri */
+.svgbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 10px;overflow:hidden}
+.svgbox svg{width:100%;height:auto;display:block}
+.pairs{display:flex;flex-direction:column;gap:6px}
+.pairs div{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:15px}
+.pairs div span:last-child{font-weight:500}
+@media (max-width:460px){.pairs div{grid-template-columns:auto 1fr}.pairs div span:first-child{grid-column:1/-1;color:var(--muted)}}
+
+/* soru */
+.q{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.q .tag{align-self:flex-start;font:700 11.5px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--sunk);padding:4px 9px;border-radius:999px}
+.q .ask{font-size:14.5px;color:var(--muted);margin:0}
+.q .stem{font-size:18px;font-weight:600;line-height:1.5;margin:0}
+.q .stem.trs{font-weight:500}
+.q .stem.trs::before{content:"TR";font:800 11px var(--f-body);letter-spacing:.08em;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:2px 5px;margin-right:8px;vertical-align:2px}
+.cebi{font-size:13.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px;margin:-4px 0 0}
+.cebi::before{content:"Kelime cebi";font-weight:700;color:var(--ink)}
+.cebi b{color:var(--ink);font-weight:600}
+.opts{display:flex;flex-direction:column;gap:8px}
+.op{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;cursor:pointer;transition:border-color .15s,background .15s;font-size:16px;line-height:1.45}
+.op:hover:not([disabled]){border-color:var(--accent)}
+.op .l{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font:800 13px var(--f-display);background:var(--sunk);color:var(--muted);margin-top:-1px}
+.op .x{flex:1;min-width:0}
+.op.wrong{border-color:var(--bad);background:var(--bad-soft)} .op.wrong .l{background:var(--bad);color:var(--surface)}
+.op.right{border-color:var(--ok);background:var(--ok-soft)} .op.right .l{background:var(--ok);color:var(--surface)}
+.op[disabled]{cursor:default}
+.op.dim{opacity:.55}
+.op .lt{flex:none;font:800 12px var(--f-display);color:var(--muted);border:1px dashed var(--line);border-radius:6px;padding:2px 6px;align-self:center}
+.opts.codes3{flex-direction:row}
+.opts.codes3 .op{flex:1 1 0;min-width:0;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:11px 6px;font-size:14px;line-height:1.25}
+.opts.codes3 .op .cd{pointer-events:none}
+.opts.who .op .l{width:auto;padding:0 9px;border-radius:999px;color:#fff}
+.opts.who .op:nth-child(1) .l{background:#D6304F}.opts.who .op:nth-child(2) .l{background:#0B7FC0}.opts.who .op:nth-child(3) .l{background:#7A3AE0}
+.opts.wire .op .l{width:34px;height:10px;border-radius:5px;margin-top:8px}
+.opts.wire .op:nth-child(1) .l{background:#DC2626}.opts.wire .op:nth-child(2) .l{background:#2563EB}.opts.wire .op:nth-child(3) .l{background:#16A34A}
+.opts.wire .op.right .l,.opts.wire .op.wrong .l{color:transparent}
+.fb{border-radius:12px;padding:11px 13px;font-size:15.5px;line-height:1.55;display:flex;gap:10px;animation:pop .18s ease-out}
+.fb::before{flex:none;font:800 13px/1 var(--f-display);width:24px;height:24px;border-radius:50%;display:grid;place-items:center;margin-top:1px}
+.fb.ok{background:var(--ok-soft)} .fb.ok::before{content:"✓";background:var(--ok);color:var(--surface)}
+.fb.no{background:var(--bad-soft)} .fb.no::before{content:"!";background:var(--bad);color:var(--surface)}
+.fb.info{background:var(--accent-soft)} .fb.info::before{content:"i";background:var(--accent);color:var(--accent-ink)}
+.fb .xpg{font-weight:700;color:var(--xp);white-space:nowrap}
+.hintb{align-self:flex-start;background:none;border:1px dashed var(--accent);color:var(--accent);border-radius:999px;padding:5px 12px;font-size:14px;font-weight:600;cursor:pointer}
+.bomb .stem::before{content:"00:59";font:800 13px/1 ui-monospace,Menlo,monospace;color:var(--bad);margin-right:10px;letter-spacing:.06em}
+.chat{background:var(--sunk);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:6px}
+.bub{max-width:85%;background:var(--surface);border-radius:12px;padding:7px 11px;font-size:15.5px}
+.bub b{display:block;font-size:12px;color:var(--g)}
+.bub.me{align-self:flex-end;background:var(--accent-soft)}
+.bub.gap{border:1.5px dashed var(--muted);background:transparent;color:var(--muted);text-align:center}
+
+/* yüklem avı */
+.toks{display:flex;flex-wrap:wrap;gap:6px}
+.tk{border:1.5px solid var(--line);background:var(--bg);border-radius:10px;padding:7px 11px;font-size:17px;font-weight:500;cursor:pointer}
+.tk:hover:not([disabled]){border-color:var(--accent)}
+.tk.miss{border-color:var(--bad);background:var(--bad-soft)}
+.tk.hit{border-color:var(--ok);background:var(--ok-soft);color:var(--ok);font-weight:700}
+.tk.subj{border-color:transparent;color:var(--accent);background:var(--accent-soft)}
+.tk[disabled]{cursor:default}
+
+/* gerçek mi efsane mi */
+.ge{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:0 4px}
+.ge span{font-size:14.5px;color:var(--muted);margin-right:4px}
+.ge button{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-weight:700;cursor:pointer}
+.ge button.sel{border-color:var(--ink)}
+.ge+.fb{margin-top:-6px}
+
+/* kaydırmalı kart */
+.sw{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.sw .e{font-weight:600;font-size:17px}
+.sw .t{color:var(--muted)}
+.sw .bt{display:flex;gap:10px}
+.sw .bt button{flex:1;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);padding:10px;font-weight:700;cursor:pointer}
+.sw .bt button.n{color:var(--bad)} .sw .bt button.y{color:var(--ok)}
+.sw .bt button.sel.y{background:var(--ok-soft);border-color:var(--ok)} .sw .bt button.sel.n{background:var(--bad-soft);border-color:var(--bad)}
+.sw .bt button.wr{background:var(--bad-soft);border-color:var(--bad)}
+
+/* V2 kartları */
+.v2{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.v2 button{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 4px;cursor:pointer;font-size:15px;min-width:0}
+.v2 button b{color:var(--k)}
+@media (max-width:420px){.v2{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* zaman şeridi */
+.tl{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;overflow-x:auto}
+.tl svg{display:block;width:100%;min-width:300px;height:auto}
+.tl .ax{stroke:var(--muted)} .tl .ink{fill:var(--ink)} .tl .mut{fill:var(--muted)}
+.tl .gb{fill:var(--g-soft);stroke:var(--g)} .tl .gt{fill:var(--g)}
+.tl .kb{fill:var(--k-soft);stroke:var(--k)} .tl .kt{fill:var(--k)}
+.tl .sbx{fill:var(--s-soft);stroke:var(--s)} .tl .st{fill:var(--s)}
+.tl .now{stroke:var(--ink)}
+
+/* adım adım çözüm */
+.steps{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.steps .stem{margin:0;font-size:18px;font-weight:600;line-height:1.5}
+.steps ol.so{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.steps ol.so li{display:flex;gap:10px;font-size:16px;padding:6px 8px;border-radius:10px}
+.steps ol.so li b{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:var(--sunk);color:var(--muted);font:800 13px var(--f-display)}
+.steps ol.so li.mk{background:var(--ok-soft)} .steps ol.so li.mk b{background:var(--ok);color:var(--surface)}
+.steps ol.so li.out{opacity:.5;text-decoration:line-through;text-decoration-thickness:1px}
+.steps .st{display:flex;gap:10px;background:var(--accent-soft);border-radius:12px;padding:11px 13px;font-size:15.5px;animation:pop .18s ease-out}
+.steps .st i{flex:none;font:800 13px var(--f-display);font-style:normal;color:var(--accent);margin-top:2px}
+
+/* boss can barı */
+.hp{display:flex;align-items:center;gap:10px;background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:10px 14px;font:800 14px var(--f-display)}
+.hp .b{flex:1;display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.hp .b i{height:14px;border-radius:4px;background:var(--bad);transition:opacity .3s,transform .3s}
+.hp .b i.off{opacity:.15;transform:scaleY(.6)}
+
+/* şifre kutuları */
+.ci{display:flex;gap:8px;flex-wrap:wrap}
+.ci span{width:44px;height:50px;border:2px solid var(--accent);border-radius:10px;display:grid;place-items:center;font:800 24px var(--f-display);color:var(--accent);background:var(--surface)}
+.ci span.e{border-style:dashed;color:transparent}
+
+/* kontrol noktası */
+.chk{border:2px solid var(--accent);border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.chk .row{display:flex;gap:8px;flex-wrap:wrap}
+.btn{align-self:flex-start;background:var(--accent);color:var(--accent-ink);border:0;border-radius:12px;padding:13px 20px;font:700 16px var(--f-body);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn::after{content:"→";font-weight:800}
+.btn.sec{background:var(--surface);color:var(--accent);border:1.5px solid var(--accent)}
+.btn.sec::after{content:none}
+.btn[hidden]{display:none}
+
+/* özet */
+.sum{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.sum div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.sum b{font:800 26px/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.sum span{font-size:13px;color:var(--muted)}
+.sum .rk{grid-column:1/-1;background:var(--xp-soft);border-color:transparent}
+.sum .rk b{color:var(--xp)}
+.clist{display:flex;flex-direction:column;gap:8px}
+.clist label{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:15.5px;cursor:pointer}
+.clist input{width:20px;height:20px;margin-top:2px;accent-color:var(--ok);flex:none}
+.clist span{flex:1;min-width:0}
+.clist a{flex-basis:100%;margin-left:30px;font-size:13.5px;color:var(--accent);font-weight:600;text-decoration:none}
+.login{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px}
+.login label{font-weight:700;font-size:14.5px;margin-top:6px}
+.login input{font:inherit;font-size:17px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+.login input:focus{border-color:var(--accent);outline:none}
+.login .btn{margin-top:10px}
+.lgerr{margin:0;color:var(--bad);font-weight:600;font-size:14.5px}
+.lgnote{margin:4px 0 0;color:var(--muted);font-size:13.5px}
+.who-l{margin:0 0 10px;color:var(--muted);font-size:14px}
+
+/* diğer kodlar (Aşama 2–5) */
+.cd.d{background:var(--d-soft);color:var(--d)} .cd.h{background:var(--h-soft);color:var(--h)} .cd.c{background:var(--c-soft);color:var(--c)} .cd.o{background:var(--o-soft);color:var(--o)} .cd.oh{background:var(--oh-soft);color:var(--oh)} .cd.i{background:var(--i-soft);color:var(--i)} .cd.gi{background:var(--gi-soft);color:var(--gi)}
+.pr.d{color:var(--d)} .pr.h{color:var(--h)} .pr.c{color:var(--c)} .pr.o{color:var(--o)} .pr.oh{color:var(--oh)} .pr.i{color:var(--i)} .pr.gi{color:var(--gi)}
+.codes .d{background:var(--d-soft)} .codes .h{background:var(--h-soft)} .codes .c{background:var(--c-soft)} .codes .o{background:var(--o-soft)} .codes .oh{background:var(--oh-soft)} .codes .i{background:var(--i-soft)} .codes .gi{background:var(--gi-soft)}
+.codes .d b{color:var(--d)} .codes .h b{color:var(--h)} .codes .c b{color:var(--c)} .codes .o b{color:var(--o)} .codes .oh b{color:var(--oh)} .codes .i b{color:var(--i)} .codes .gi b{color:var(--gi)}
+.card.d h4{background:var(--d-soft);color:var(--d)} .card.h h4{background:var(--h-soft);color:var(--h)} .card.c h4{background:var(--c-soft);color:var(--c)} .card.o h4{background:var(--o-soft);color:var(--o)} .card.oh h4{background:var(--oh-soft);color:var(--oh)} .card.i h4{background:var(--i-soft);color:var(--i)} .card.gi h4{background:var(--gi-soft);color:var(--gi)}
+.svgbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;overflow-x:auto}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="hud" id="hud"><div class="hud-in">
+  <div class="hud-t"><b id="hudT"></b><span id="hudS"></span></div>
+  <span class="xp-pill" id="hudXP">0 XP</span>
+  <button class="menu-b" id="menuB" type="button" aria-label="Bölümler"><i></i></button>
+</div><div class="bar"><i id="hudBar"></i></div></div>
+<div class="menu" id="menu" hidden><div class="menu-p" role="dialog" aria-label="Bölümler">
+  <h3>Bölümler</h3><nav id="menuNav"></nav><div class="sp"></div>
+  <button class="ghost" id="resetB" type="button">Baştan başla</button>
+</div></div>
+<main id="main"></main>
+
+<script>
+const TRACK_URL='https://script.google.com/macros/s/AKfycbz-kcR7bO8k8hWOJYp0uh0hCxt2aNLqXB4ehusKWhkjovavQuHkkfBx_huTTWBA_3cH4w/exec';
+/* ===== AŞAMA 3 · İÇERİK =====
+   Biçim kısaltmaları (motor çevirir):
+   {kelime|anlam}            dokununca anlamı açılan kelime
+   [G][K][S][D][H][Ç][Ö][ÖH] dokununca açıklaması açılan kod
+   <e>…</e>                  İngilizce parça
+   <pc> <po> <poh> …         renkli yüklem
+   <sb>…</sb>                özne
+*/
+const STAGE = {
+  key: 'ydt-tense-a3-v1',
+  no: 3,
+  topic: 'Tenses',
+  study: 'Aşama 3 · Geçmişin Geçmişi',
+  kicker: 'YDT Tense · Self-study',
+  hero: 'Aşama 3. Referans noktası geçmişe taşınıyor. Üç yeni kod, iki tuzak, yedi canlı bi boss.',
+  heroCodes: ['Ç','Ö','ÖH'],
+  codes: {
+    G:['g','Genel geçer','Present Simple','-r','"Hep böyle."'],
+    K:['k','Kapanmış geçmiş','Past Simple','-dı','"Oldu, bitti, kapı kapandı."'],
+    S:['s','Süren süreç','Present Continuous','-yor','"Bu aralar oluyor, değişiyor."'],
+    D:['d','Bugüne bağlı durum','Present Perfect','-mış durumda','"Olmuş, ve bugün durum bu."'],
+    H:['h','Hâlâ süren','Present Perfect Cont.','-mış durumda ve hâlâ da -yor','"Başladı, sürdü, hâlâ sürüyor."'],
+    'Ç':['c','O anda sürüyordu','Past Continuous','-yordu (o anda)','"O sırada oluyordu."'],
+    'Ö':['o','O zamana kadar olmuştu','Past Perfect','-mış durumdaydı (o zaman)','"O zamana gelindiğinde çoktan olmuştu."'],
+    'ÖH':['oh','O zamana kadar sürüyordu','Past Perfect Cont.','-mış durumdaydı ve hâlâ da -yordu','"O zamana kadar sürüyordu."']
+  },
+  title: 'Aşama 3 · Geçmişin Geçmişi',
+  ranks: [[0,'Çaylak'],[0.5,'Zaman Yolcusu'],[0.75,'Zaman Dedektifi'],[0.9,'KRONOS']],
+  rankNotes: {
+    'Çaylak':'Olsun, ilk tur bu. Kart 10\'a ve Tuzak 5\'e bi daha bak.',
+    'Zaman Yolcusu':'Fena değil. Bi tur daha atarsan dedektif olursun.',
+    'Zaman Dedektifi':'Çok iyi. KRONOS\'a az kaldı.',
+    'KRONOS':'Zamanın efendisi sensin. Aşama 4 seni bekliyor.'
+  }
+};
+
+const SCREENS = [
+
+/* ---------- GİRİŞ ---------- */
+{ sec:'giris', title:'Giriş', btn:'Başla', blocks:[
+  {t:'hero'},
+  {t:'say', h:`Selam. Aşama 2'de pencereyi açmayı öğrendik: [D] ve [H] geçmişi bugüne bağlıyordu. Şimdi tam tersini yapıcaz. Bugünü bırakıp geçmişte bi yere kamp kuruyoruz.`},
+  {t:'say', h:`Sana gerçek bi soru göstericem. 2024 YDT, 7. soru. Aynen şöyleydi:`},
+  {t:'ex', items:[['',`By about 7000 BCE, the tools and skills of Stone Age people ---- sufficiently to enable {cultivating|tarım yapan} groups ---- towns with more than 1,000 people, such as Çatalhöyük in present-day Türkiye.`,`(2024 YDT · 7)`]]},
+  {t:'say', h:`Şıklardan ikisi şunlardı: <e>were advancing</e> ve <e>had advanced</e>. Biri doğru, biri çeldirici. Aradaki farkı bu aşamanın sonunda gözün kapalı göreceksin; hatta bu soruyu birlikte çözücez.`},
+  {t:'say', h:`Bi de şunu bil: analiz ettiğimiz son üç YDT'nin 6-8. dilbilgisi sorularında 9 tane doğrudan tense sorusu vardı. Dördünün doğru cevabında <e>had</e> geçiyordu. <e>was/were + V-ing</e> ise bi kez bile doğru cevap olmadı, hep çeldiriciydi. Yani bu aşama sınavda doğrudan puan.`}
+]},
+
+{ sec:'giris', btn:'Tamamdır', blocks:[
+  {t:'say', h:`Kurallar aynı: şıkka dokun, yanlışsa nerde kaydığını söylerim, puan sadece ilk denemede gelir. Altı noktalı kelimelere dokun: {empire|imparatorluk}.`},
+  {t:'say', h:`Bu aşamanın üç yeni kodu:`},
+  {t:'codes', list:['Ç','Ö','ÖH']},
+  {t:'say', h:`Beşi de yanımızda tabii: [G] [K] [S] [D] [H]. Koda dokununca hatırlatırım.`},
+  {t:'say', h:`Korkutucu göründüğünü biliyorum. Ama birazdan göreceksin ki yeni bi şey ezberlemiyorsun. Bildiğin üç zamanı bi adım geriye taşıyorsun, o kadar.`}
+]},
+
+/* ---------- SEZGİ: HANGİSİ ÖNCE OLDU ---------- */
+{ sec:'sira', title:'Hangisi Önce Oldu?', btn:'Devam', blocks:[
+  {t:'h', eb:'Bölüm 1', h:'Hangisi önce oldu?'},
+  {t:'say', h:`Yine kuralsız başlıyoruz. Her cümlede iki olay var. Senin işin sadece sırayı söylemek: hangisi önce oldu, yoksa biri sürerken mi öbürü oldu?`},
+  {t:'say', h:`İlk üç cümleye dikkat et, üçü de aynı kelimelerle başlıyor. Değişen tek şey yüklemin biçimi. Bak bakalım o küçük fark neyi değiştiriyor.`},
+  {t:'mcq', id:'sr1', xp:1, cebi:'firefighter|itfaiyeci; destroy|yok etmek', stem:`When the firefighters <b>arrived</b>, the fire <b>had completely destroyed</b> the old library.`,
+    q:'Sıra ne?', o:['Önce itfaiye geldi','Önce yangın işini bitirdi','İkisi aynı anda'], a:1, f:[
+    `Tam tersi. <e>had destroyed</e> "çoktan yok etmişti" diyor; iş itfaiye gelmeden bitmiş.`,
+    `Evet. İtfaiye geldiğinde iş işten geçmişti. Kütüphane yok.`,
+    `Aynı anda olsaydı yangın hâlâ sürüyor olurdu. Burda "bitmişti" deniyor.`]},
+  {t:'mcq', id:'sr2', xp:1, stem:`When the firefighters <b>arrived</b>, the library <b>was burning</b>.`,
+    q:'Sıra ne?', o:['Önce itfaiye geldi','Önce yangın işini bitirdi','İkisi aynı anda'], a:2, f:[
+    `Yangın itfaiyeden önce başlamıştı tabii, ama cümlenin söylediği şu: geldiklerinde yangın <b>sürüyordu</b>.`,
+    `İşini bitirmemiş, hâlâ yanıyor.`,
+    `Evet. <e>was burning</e>: onlar geldiğinde yangın devam ediyordu. Bi öncekiyle tek farkı bu.`]},
+  {t:'mcq', id:'sr3', xp:1, stem:`When the firefighters <b>arrived</b>, everyone quickly <b>left</b> the building.`,
+    q:'Sıra ne?', o:['Önce itfaiye geldi','Önce herkes çıktı','İkisi aynı anda'], a:0, f:[
+    `Evet. İki düz geçmiş art arda: geldiler, sonra herkes çıktı.`,
+    `İkisi de düz geçmiş. Cümlede "önce çıkmıştı" diyen bi işaret yok.`,
+    `Art arda iki olay bunlar, aynı anda değil.`]}
+ ], after:[
+  {t:'say', h:`Üç cümle, aynı başlangıç, üç ayrı sıra. Kelimeler değil, <b>yüklemin biçimi</b> karar verdi. Bu aşamanın tamamı bu cümlede saklı aslında.`}
+]},
+
+{ sec:'sira', btn:'Sırrı söyle', blocks:[
+  {t:'say', h:`Altı tane daha. Hızlı git, sezgine güven.`},
+  {t:'mcq', id:'sr4', xp:1, cebi:'pass away|vefat etmek; enormous|devasa; empire|imparatorluk', stem:`<b>By the time</b> Alexander the Great <b>passed away</b>, he <b>had created</b> an enormous empire.`,
+    q:'Sıra ne?', o:['Önce vefat etti','Önce imparatorluğu kurdu','İkisi aynı anda'], a:1, f:[
+    `Öldükten sonra imparatorluk kurmak zor olurdu :)`,
+    `Evet. Öldüğünde iş çoktan bitmişti.`,
+    `"Ölürken kuruyordu" değil. <e>had created</e> tamamlanmış diyor.`]},
+  {t:'mcq', id:'sr5', xp:1, cebi:'crash|düşmek', stem:`The plane suddenly <b>crashed</b> while it <b>was flying</b> over the sea.`,
+    q:'Sıra ne?', o:['Önce düştü','Önce uçuyordu','Biri sürerken öbürü oldu'], a:2, f:[
+    `Düşmeden önce uçuyordu tabii, ama cümle bi sıra değil bi kesinti anlatıyor.`,
+    `Yakın ama cümlenin yapısı bu değil: uçuş sürerken düşme oldu.`,
+    `Evet. Uzun olay sürüyor, kısa olay onu kesiyor. <e>while</e> bunu haber veriyor.`]},
+  {t:'mcq', id:'sr6', xp:1, cebi:'vaccine|aşı', stem:`Scientists <b>had carefully tested</b> the vaccine on animals <b>before</b> they <b>tried</b> it on humans.`,
+    q:'Sıra ne?', o:['Önce hayvanlarda denediler','Önce insanlarda denediler','İkisi aynı anda'], a:0, f:[
+    `Evet. Hem <e>had tested</e> hem <e>before</e>: iki işaret aynı yöne bakıyor.`,
+    `<e>before</e> diyor ki insan denemesi sonra.`,
+    `Aynı anda olsaydı bu sıralama anlamsız olurdu.`]},
+  {t:'mcq', id:'sr7', xp:1, cebi:'native people|yerli halklar', stem:`When Columbus <b>reached</b> America, native people <b>had lived</b> there for thousands of years.`,
+    q:'Sıra ne?', o:['Önce Kolomb geldi','Önce yerli halklar oradaydı','İkisi aynı anda'], a:1, f:[
+    `Kolomb "keşfetti" deniyor ama orası binlerce yıldır doluydu.`,
+    `Evet, hem de binlerce yıl önce. <e>had lived</e> bunu söylüyor.`,
+    `Aynı anda değil; biri çok daha önce başlamış.`]},
+  {t:'mcq', id:'sr8', xp:1, stem:`Warren's father <b>had died</b> in a plane crash, so Warren <b>wanted</b> to understand why planes crash.`,
+    q:'Sıra ne?', o:['Önce babası öldü','Önce anlamak istedi','İkisi aynı anda'], a:0, f:[
+    `Evet. Warren'ı hatırladın mı, kara kutuyu icat eden adam. Hikâyesi bu.`,
+    `<e>so</e> var: biri öbürünün sebebi. Sebep önce gelir, yani ölüm.`,
+    `Sebep-sonuç var burda, aynı an değil.`]},
+  {t:'mcq', id:'sr9', xp:1, cebi:'inventor|mucit; similar|benzer', stem:`<b>While</b> Bell <b>was working</b> on the telephone, another inventor <b>was doing</b> similar research.`,
+    q:'Sıra ne?', o:['Önce Bell çalıştı','Önce öbür mucit çalıştı','İkisi aynı anda'], a:2, f:[
+    `İki yüklem de aynı biçimde. Cümle sıra değil, eşzamanlılık anlatıyor.`,
+    `Cümlede kimin önce başladığı yazmıyor; ikisi birlikte yürüyor.`,
+    `Evet. <e>While</e> + iki tane <e>was/were + V-ing</e>: paralel iki süreç.`]}
+ ], after:[
+  {t:'say', h:`Dikkat ettiysen hep aynı iki biçim dönüp durdu: <e>had + V3</e> önce olanı, <e>was/were + V-ing</e> o anda süreni işaretledi. Şimdi bunların adını koyalım.`}
+]},
+
+/* ---------- KART 10 · İKİ AİLE ---------- */
+{ sec:'aile', title:'İki Aile', btn:"Ç'ye geçelim", blocks:[
+  {t:'h', eb:'Bölüm 2', h:'Bir adım geri'},
+  {t:'say', h:`Şimdiye kadar öğrendiğin zamanların hepsi bi noktaya bakıyordu: ŞİMDİ. "Bugün durum ne?" sorusunu cevaplıyorlardı.`},
+  {t:'say', h:`Bu aşamadaki üç zaman tam aynı işi yapıyor, ama baktıkları nokta geçmişte bi <b>O ZAMAN</b> anı. Yani yeni bi mantık yok; bildiğin şeyi bi adım geri taşıyorsun.`},
+  {t:'svg', h:`<svg viewBox="0 0 360 206" role="img" aria-label="Simdi ailesi ve gecmis ailesi karsilastirmasi">
+    <line x1="10" y1="178" x2="340" y2="178" stroke="var(--line)" stroke-width="2"/>
+    <polygon points="352,178 338,172 338,184" fill="var(--line)"/>
+    <line x1="120" y1="18" x2="120" y2="192" stroke="var(--ink)" stroke-width="2" stroke-dasharray="4 4"/>
+    <text x="120" y="202" text-anchor="middle" font-size="11.5" font-weight="800" fill="var(--ink)">O ZAMAN</text>
+    <line x1="300" y1="18" x2="300" y2="192" stroke="var(--ink)" stroke-width="2"/>
+    <text x="300" y="202" text-anchor="middle" font-size="11.5" font-weight="800" fill="var(--ink)">ŞİMDİ</text>
+    <rect x="12" y="24" width="104" height="24" rx="12" fill="var(--c-soft)" stroke="var(--c)" stroke-width="1.5"/>
+    <text x="64" y="41" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--c)">Ç was rising</text>
+    <rect x="192" y="24" width="104" height="24" rx="12" fill="var(--s-soft)" stroke="var(--s)" stroke-width="1.5"/>
+    <text x="244" y="41" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--s)">S is rising</text>
+    <rect x="12" y="58" width="104" height="24" rx="12" fill="var(--o-soft)" stroke="var(--o)" stroke-width="1.5"/>
+    <text x="64" y="75" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--o)">Ö had found</text>
+    <rect x="192" y="58" width="104" height="24" rx="12" fill="var(--d-soft)" stroke="var(--d)" stroke-width="1.5"/>
+    <text x="244" y="75" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--d)">D have found</text>
+    <rect x="4" y="92" width="112" height="24" rx="12" fill="var(--oh-soft)" stroke="var(--oh)" stroke-width="1.5"/>
+    <text x="60" y="109" text-anchor="middle" font-size="11" font-weight="700" fill="var(--oh)">ÖH had been rising</text>
+    <rect x="186" y="92" width="112" height="24" rx="12" fill="var(--h-soft)" stroke="var(--h)" stroke-width="1.5"/>
+    <text x="242" y="109" text-anchor="middle" font-size="11" font-weight="700" fill="var(--h)">H have been rising</text>
+    <text x="64" y="138" text-anchor="middle" font-size="12" font-weight="800" fill="var(--muted)">GEÇMİŞ AİLESİ</text>
+    <text x="244" y="138" text-anchor="middle" font-size="12" font-weight="800" fill="var(--muted)">ŞİMDİ AİLESİ</text>
+    <text x="178" y="160" text-anchor="middle" font-size="12" fill="var(--muted)">← bir adım geri ←</text>
+  </svg>`},
+  {t:'pairs', items:[
+    ['S <e>is rising</e> · o anda süren','Ç','Ç <b>was rising</b> · -yordu (o anda)'],
+    ['D <e>have found</e> · o noktaya kadar olmuş','Ö','Ö <b>had found</b> · -mış durumdaydı (o zaman)'],
+    ['H <e>have been rising</e> · o noktaya kadar süren','ÖH','ÖH <b>had been rising</b> · -mış durumdaydı ve hâlâ da -yordu']]},
+  {t:'say', h:`Ve bu aşamanın <b>altın kuralı</b>: [Ç], [Ö] ve [ÖH] tek başına durmaz. Cümlede ya da paragrafta mutlaka bi <b>O ZAMAN çapası</b> vardır: <e>by 1900, by the time he died, when they arrived, at that moment, before the flight</e>… Önce çapayı bul, sonra yükleme bak.`},
+  {t:'mcq', id:'al1', xp:2, q:'Bu cümlede O ZAMAN çapası hangisi?', stem:`<b>By 1900</b>, many European cities <b>had built</b> public libraries.`, o:[
+    `many European cities`,
+    `By 1900`,
+    `public libraries`], a:1, f:[
+    `Bu özne, zaman bilgisi taşımıyor.`,
+    `Evet. <e>By 1900</e> geçmişte bi nokta koyuyor: "1900'e gelindiğinde". Yüklem o noktaya bakıyor.`,
+    `Bu nesne. Çapa zaman bilgisi verir.`]}
+]},
+
+/* ---------- Ç ---------- */
+{ sec:'c', title:'Ç · O Anda Sürüyordu', btn:'Pekiştirelim', blocks:[
+  {t:'h', eb:'Bölüm 3', h:'Ç · O anda sürüyordu', code:'Ç'},
+  {t:'say', h:`En kolayı bu. [S]'in geçmişteki hâli. <e>is rising</e> → <e>was rising</e>, o kadar.`},
+  {t:'card', code:'Ç', title:"Ç'nin kimliği", rows:[
+    ['Olumlu','was / were + V-ing','The plane <b>was flying</b> over the sea.'],
+    ['Olumsuz',"wasn't / weren't + V-ing",'The cameras <b>weren\'t working</b>.'],
+    ['Soru','Was / Were + özne + V-ing?','<b>Were</b> you <b>working</b> at that time?'],
+    ['Çözümleme','-yordu (o anda) · olumsuz -mıyordu',''],
+    ['Sınavdaki Türkçesi','-yordu · resmî dilde -mekteydi · <i>while</i> ile …-ırken',''],
+    ['Sinyaller','<i>when</i> + K, <i>while, as, at that time, at that moment, at 9 p.m. yesterday, all night</i>','']]},
+  {t:'say', h:`YDT'de üç işi var: tarih anlatısında <b>arka planı kurmak</b>, bi olayla <b>kesilen süreci</b> anlatmak, ve <b>aynı anda süren iki şeyi</b> yan yana koymak.`},
+  {t:'ex', items:[
+    ['Ç',`The plane <pc>was flying</pc> over the sea when it <pk>crashed</pk>.`,`Uçak denizin üzerinde uçarken düştü. · Uzun olay Ç, kısa olay K.`],
+    ['Ç',`At that time, most people <pc>weren't paying</pc> close attention to the problem.`,`O zamanlar çoğu insan soruna dikkat etmiyordu.`]]},
+  {t:'say', h:`Kesilen süreç kalıbını aklında tut, çok çıkıyor: <b>uzun olan [Ç], kısa olan [K]</b>. <e>When the alarm <pk>rang</pk>, the thief <pc>was climbing</pc> out of the window.</e>`},
+  {t:'say', h:`Bi de durum fiilleri burda da -ing almıyor: <e>know, believe, need, exist</e>. Aşama 2'deki arkadaşlarımız.`}
+]},
+
+{ sec:'c', btn:"Ö'ye geçelim", blocks:[
+  {t:'h', eb:'Pekiştir', h:'Kamera kayıtları · Saat 21.00', small:true},
+  {t:'say', h:`Aşama 2'deki müze soygununu hatırladın mı? Carlos'u içeri atmıştık. Kamera kayıtları yeni çıktı. Her olay için: o anda mı sürüyordu [Ç], yoksa tamamlanmış bi olay mı [K]?`},
+  {t:'mcq', id:'km1', xp:1, cebi:'security guard|güvenlik görevlisi', stem:`At 9 p.m. yesterday, the security guard ____ TV in his room.`, o:['watched','has watched','was watching'], a:2, f:[
+    `Bi anlık fotoğraf istiyoruz: saat tam 21.00'de ne yapıyordu?`,
+    `Present perfect bugüne bağlanır; burda dün gece var.`,
+    `Evet. <e>At 9 p.m.</e> bi an veriyor, o anda süren eylem Ç.`]},
+  {t:'mcq', id:'km2', xp:1, cebi:'alarm|alarm; run away|kaçmak', stem:`When the alarm ____, the thief immediately ran away.`, o:['rang','was ringing','rings'], a:0, f:[
+    `Evet. Alarm kısa bi olay, hemen ardından kaçma geliyor. İkisi de K.`,
+    `Yakın ama burda alarm arka plan değil, tetikleyen olay.`,
+    `Geçmiş anlatıyoruz, G olmaz.`]},
+  {t:'mcq', id:'km3', xp:1, stem:`While the security guard ____, the thief opened the window.`, o:['has slept','sleeps','was sleeping'], a:2, f:[
+    `<e>While</e> bi arka plan istiyor; present perfect orda duramaz.`,
+    `<e>While</e> + geçmiş anlatı: G olmaz.`,
+    `Evet. <e>While</e> gördün mü uzun olanı ara: Ç.`]},
+  {t:'mcq', id:'km4', xp:1, cebi:'power cut|elektrik kesintisi', stem:`The cameras ____ at that moment because of a power cut.`, o:["weren't working","don't work","haven't worked"], a:0, f:[
+    `Evet. <e>at that moment</e> çapası + olumsuz Ç.`,
+    `<e>at that moment</e> geçmişte bi an; G olmaz.`,
+    `Present perfect bugüne bağlanır, bu kayıt dünden.`]},
+  {t:'mcq', id:'km5', xp:1, cebi:'valuable|değerli; escape|kaçmak', stem:`The thief ____ the valuable clock and quietly escaped through the window.`, o:['was taking','took','takes'], a:1, f:[
+    `Art arda iki tamamlanmış olay var: aldı ve kaçtı. Süren bi şey değil.`,
+    `Evet. <e>took … and escaped</e>: ikisi de K.`,
+    `Geçmiş anlatı, G olmaz.`]},
+  {t:'mcq', id:'km6', xp:1, cebi:'heavily|şiddetle', stem:`It ____ heavily, so nobody saw the thief outside.`, o:['has rained','rains','was raining'], a:2, f:[
+    `Bugüne bağlı değil, o gecenin sahnesi anlatılıyor.`,
+    `Genel bi bilgi değil, o anın hâli.`,
+    `Evet. Sahnenin arka planı: Ç. Hırsızın işine yaramış.`]}
+]},
+
+/* ---------- Ö ---------- */
+{ sec:'o', title:'Ö · O Zamana Kadar Olmuştu', btn:'Dört kalıbını gör', blocks:[
+  {t:'h', eb:'Bölüm 4', h:'Ö · O zamana kadar olmuştu', code:'Ö'},
+  {t:'say', h:`Geldik yıldıza. YDT'nin 6-8. sorularında en çok sorulan tense bu. Giriş ekranındaki sayıyı hatırla: dokuz sorudan dördünün cevabında <e>had</e> vardı.`},
+  {t:'say', h:`Mantığı [D] ile birebir aynı, sadece baktığı nokta değişiyor:`},
+  {t:'ex', items:[
+    ['D',`Scientists <pd>have found</pd> 7,000-year-old viruses.`,`Bugün elimizde bu bilgi var. Referans: ŞİMDİ.`],
+    ['Ö',`By 2018, scientists <po>had found</po> 7,000-year-old viruses.`,`2018'e gelindiğinde bulmuşlardı. Referans: O ZAMAN.`]]},
+  {t:'say', h:`Aşama 2'nin çıkışında bu soruyu sormuştum, hatırlıyor musun? Cevabı buydu işte.`},
+  {t:'card', code:'Ö', title:"Ö'nün kimliği", rows:[
+    ['Olumlu','had + V3','Alexander <b>had created</b> an enormous {empire|imparatorluk}.'],
+    ['Olumsuz',"hadn't + V3",'The fire <b>hadn\'t reached</b> the second floor.'],
+    ['Soru','Had + özne + V3?','<b>Had</b> the guard <b>noticed</b> anything?'],
+    ['Çözümleme','-mış durumdaydı (o zaman) · olumsuz -mamış durumdaydı',''],
+    ['Sınavdaki Türkçesi','-mıştı / -mamıştı · …-dığında çoktan …-mıştı','…-e gelindiğinde …-mıştı'],
+    ['Sinyaller','<i>by</i> + geçmiş tarih, <i>by the time</i> + K, <i>when</i> + K … <i>already</i>','<i>before, after, until then, never … before</i>']]},
+  {t:'say', h:`İyi haber: <e>had</e> kişiye göre değişmiyor. <e>I had, he had, they had</e>, hepsi aynı. V3 de Aşama 2'den tanıdığın biçim.`}
+]},
+
+{ sec:'o', btn:'Pekiştirelim', blocks:[
+  {t:'h', eb:'Bölüm 4', h:"Ö'nün YDT'deki dört kalıbı", small:true},
+  {t:'ex', items:[
+    ['Ö',`<b>1 · by + geçmiş tarih</b><br>By about 7000 BCE, farming <po>had gradually spread</po> to many parts of the world.`,`MÖ 7000 civarına gelindiğinde tarım dünyanın pek çok yerine yayılmıştı.`],
+    ['Ö',`<b>2 · by the time + K</b><br>By the time Alexander <pk>passed away</pk>, he <po>had created</po> an enormous empire.`,`İskender öldüğünde devasa bi imparatorluk kurmuştu.`],
+    ['Ö',`<b>3 · when + K … already</b><br>When the firefighters <pk>arrived</pk>, the fire <po>had already destroyed</po> the library.`,`İtfaiyeciler geldiğinde yangın kütüphaneyi çoktan yok etmişti.`],
+    ['Ö',`<b>4 · never … before</b><br>Europeans <po>had never seen</po> a {kangaroo|kanguru} before they <pk>reached</pk> Australia.`,`Avrupalılar Avustralya'ya ulaşmadan önce hiç kanguru görmemişti.`]]},
+  {t:'say', h:`Dördünde de aynı şey var: bi çapa, bi de ondan önce tamamlanmış bi olay. Çapa [K] ile kurulur, önceki olay [Ö] ile.`},
+  {t:'mcq', id:'od1', xp:2, q:'Bu cümlede hangisi çapa, hangisi ondan önce olan?', stem:`By the time the mechanics finished, the plane <b>had already left</b> the gate.`, o:[
+    `Çapa: the mechanics finished · Önce olan: the plane had left`,
+    `Çapa: the plane had left · Önce olan: the mechanics finished`,
+    `İkisi de aynı anda oldu`], a:0, f:[
+    `Evet. <e>By the time</e> hangisinin çapa olduğunu söylüyor; <e>had</e> da hangisinin daha önce olduğunu.`,
+    `Ters. <e>had</e> taşıyan yüklem hep daha <b>önce</b> olanıdır.`,
+    `<e>had</e> varsa aynı an değildir; bi sıra var demektir.`]}
+]},
+
+{ sec:'o', btn:"ÖH'ye geçelim", blocks:[
+  {t:'h', eb:'Pekiştir', h:"Elif'in YDT yılı", small:true},
+  {t:'say', h:`Elif'in bi yılı. Çizelgeye bak, sonra her cümle için çapayı bul ve uyan yüklemi seç.`},
+  {t:'pairs', items:[
+    ['Eylül 2024','K','Elif YDT kursuna başlıyor'],
+    ['Ocak 2025','Ö','2000 kelime öğrenmiş oluyor'],
+    ['Mart 2025','K','İlk denemesine giriyor'],
+    ['Mayıs 2025','K','Telefonunu satıyor 📵'],
+    ['Haziran 2025','K','YDT\'ye giriyor'],
+    ['Temmuz 2025','K','Üniversite tercihlerini yapıyor'],
+    ['Ağustos 2025','K','Sonuçlar açıklanıyor 🎉']]},
+  {t:'mcq', id:'el1', xp:1, stem:`By January 2025, Elif ____ 2,000 words.`, o:['has learned','had learned','was learning'], a:1, f:[
+    `<e>has learned</e> bugüne bağlanır. Ama çapa Ocak 2025, geçmişte bi nokta.`,
+    `Evet. <e>By January 2025</e> çapası + o noktaya kadar tamamlanmış iş.`,
+    `"Öğreniyordu" değil, "öğrenmişti". Sayı var: 2000 kelime, yani sonuç.`]},
+  {t:'mcq', id:'el2', xp:1, cebi:'mock exam|deneme sınavı', stem:`When she took her first mock exam in March, she ____ her phone yet.`, o:["hadn't sold","didn't sell","hasn't sold"], a:0, f:[
+    `Evet. Mart'ta telefon hâlâ duruyordu; satış Mayıs'ta. Olumsuz Ö.`,
+    `<e>yet</e> ile düz geçmiş olmaz; burda "o ana kadar henüz" deniyor.`,
+    `Present perfect bugüne bakar. Çapa Mart 2025.`]},
+  {t:'mcq', id:'el3', xp:1, stem:`Elif ____ the YDT course in September 2024.`, o:['had started','started','has started'], a:1, f:[
+    `Burda çapa yok. Tek bi olay, kapalı tarih. Ö'ye gerek yok.`,
+    `Evet. Çapa yoksa düz [K] yeter. Ö'yü her yere serpmiyoruz.`,
+    `<e>In September 2024</e> kapalı tarih; present perfect olmaz.`]},
+  {t:'mcq', id:'el4', xp:1, stem:`By the time she took the YDT, she ____ her phone.`, o:['sold','was selling','had sold'], a:2, f:[
+    `<e>By the time</e> çapası var; o noktadan önce olanı Ö ile söyleriz.`,
+    `"Satıyordu" değil; satış Mayıs'ta bitmişti.`,
+    `Evet. Haziran çapası, Mayıs'taki satış ondan önce.`]},
+  {t:'mcq', id:'el5', xp:1, cebi:'from start to finish|baştan sona', stem:`Before she started the course, Elif ____ a grammar book from start to finish.`, o:['had never read','has never read','was never reading'], a:0, f:[
+    `Evet. <e>Before</e> + <e>never</e>: dördüncü kalıp.`,
+    `Bugüne bağlanıyor. Ama çapa Eylül 2024.`,
+    `"Okumuyordu" tuhaf olurdu; burda "hiç okumamıştı" deniyor.`]},
+  {t:'mcq', id:'el6', xp:1, cebi:'results came out|sonuçlar açıklandı', stem:`When the results came out, Elif ____ her university choices.`, o:['has already made','had already made','was already making'], a:1, f:[
+    `Bugüne bağlanır. Çapa Ağustos 2025.`,
+    `Evet. <e>already</e> + çapa: üçüncü kalıp. Elif'e kolay gelsin.`,
+    `"Yapıyordu" değil; tercihler Temmuz'da bitmişti.`]}
+]},
+
+/* ---------- ÖH ---------- */
+{ sec:'oh', title:'ÖH · O Zamana Kadar Sürüyordu', btn:'Komşularından ayır', blocks:[
+  {t:'h', eb:'Bölüm 5', h:'ÖH · O zamana kadar sürüyordu', code:'ÖH'},
+  {t:'say', h:`Son katman. [H]'nin geçmişteki hâli: geçmişte bi noktaya kadar sürmüş ve o noktada hâlâ süren bi şey. Vurgu yine <b>sürede</b>.`},
+  {t:'card', code:'ÖH', title:"ÖH'nin kimliği", rows:[
+    ['Olumlu','had been + V-ing','People <b>had been living</b> there for thousands of years.'],
+    ['Olumsuz',"hadn't been + V-ing",'The pilots <b>hadn\'t been sleeping</b> well.'],
+    ['Soru','Had + özne + been + V-ing?','How long <b>had</b> they <b>been studying</b> it?'],
+    ['Çözümleme','-mış durumdaydı ve hâlâ da …-yordu (o zaman)',''],
+    ['Sınavdaki Türkçesi','…dır …-yordu · …den beri …-yordu','resmî dilde …-mekteydi'],
+    ['Sinyaller','<i>for</i> + süre, <i>since</i>, <i>by the time / when</i> + K, <i>how long, all day</i>','']]},
+  {t:'ex', items:[
+    ['ÖH',`When Columbus <pk>reached</pk> America, native people <poh>had been living</poh> there for thousands of years.`,`Kolomb Amerika'ya vardığında yerli halklar binlerce yıldır orada yaşıyordu.`],
+    ['ÖH',`The pilots were exhausted because they <poh>hadn't been sleeping</poh> well for days.`,`Pilotlar bitkindi çünkü günlerdir iyi uyumuyorlardı.`]]},
+  {t:'say', h:`İkinci cümleye dikkat: ÖH bazen bi durumun <b>görünür nedenini</b> anlatır. "Pist ıslaktı çünkü bütün gün yağmur yağıyordu." Sebep uzun sürmüş, sonucu o anda görüyorsun.`},
+  {t:'say', h:`Bi dürüst olayım: ÖH nadir. Üç yılın YDT'sini taradım, <e>had been + V-ing</e> toplam <b>bi kez</b> geçiyor. 2025'teki Kara Ölüm okuma parçasında: <e>He <poh>had been working</poh> with HIV patients…</e> Ama o bi kez tam da anlatının "geriye dönüş" anıydı. Nadir ama can alıcı.`}
+]},
+
+{ sec:'oh', btn:'Kara kutuyu aç', blocks:[
+  {t:'h', eb:'Bölüm 5', h:"ÖH'yi komşularından ayır", small:true},
+  {t:'pairs', items:[
+    ['Ç ↔ ÖH · ikisi de Türkçede "-yordu"','Ç','He <b>was working</b> when I called. · süre yok, sadece o an'],
+    ['Ç ↔ ÖH · süre eklenince ÖH olur','ÖH','He <b>had been working</b> for ten hours when I called.'],
+    ['Ö ↔ ÖH · Ö sonucu ve sayıyı anlatır','Ö','By 1900, she <b>had written</b> five books.'],
+    ['Ö ↔ ÖH · ÖH süreci ve süreyi anlatır','ÖH','She <b>had been writing</b> for years.'],
+    ['Durum fiilleri ÖH olmaz','Ö','They <b>had known</b> each other for years. ✗ had been knowing']]},
+  {t:'say', h:`Tanıdık geldi mi? Aşama 2'de [S], [D] ve [H] için tam aynı üç kuralı konuşmuştuk. Gerçekten tek yaptığımız şey her şeyi bi adım geri taşımak.`},
+  {t:'mcq', id:'oh1', xp:2, codes:['Ç','Ö','ÖH'], stem:`By 1990, scientists <b>had been studying</b> the ozone hole for five years.`, q:'Hangi katman?', a:2, f:[
+    `Ç olsaydı <e>were studying</e> derdi, hem süre de olmazdı.`,
+    `Ö bi sonuç verirdi ("üç makale yazmışlardı" gibi). Burda vurgu beş yıllık süreçte.`,
+    `Evet. Çapa <e>By 1990</e>, süre <e>for five years</e>, eylem o noktada hâlâ sürüyor.`]}
+]},
+
+{ sec:'oh', btn:'Anlatıyı kur', blocks:[
+  {t:'h', eb:'Pekiştir', h:'Kara kutu çözüldü', small:true},
+  {t:'say', h:`Kurgusal bi uçuşun kara kutu raporu okunuyor. Her satır için karar ver: o anda mı [Ç], o zamana kadar olmuş mu [Ö], yoksa o zamana kadar sürüyor muydu [ÖH]?`},
+  {t:'mcq', id:'kk1', xp:1, cebi:'engine|motor', stem:`The plane ____ for three hours when the engine suddenly stopped.`, o:['was flying','had been flying','has been flying'], a:1, f:[
+    `Yakın, ama <e>for three hours</e> var. Süre girince Ç yetmez.`,
+    `Evet. O ana kadarki süre: ÖH.`,
+    `Bugüne bağlanıyor. Bu rapor geçmişten.`]},
+  {t:'mcq', id:'kk2', xp:1, cebi:'control tower|kontrol kulesi', stem:`At 22:14, the pilots ____ to the control tower.`, o:['were talking','had been talking','have talked'], a:0, f:[
+    `Evet. Süre yok, tek bi an var: 22:14'te ne yapıyorlardı.`,
+    `Süre verilmemiş. <e>had been talking for twenty minutes</e> deseydi bu olurdu.`,
+    `Bugüne bağlanır; rapor geçmişten.`]},
+  {t:'mcq', id:'kk3', xp:1, stem:`The two pilots ____ each other for ten years before the flight.`, o:['had been knowing','had known','were knowing'], a:1, f:[
+    `<e>know</e> durum fiili, -ing almaz. Aşama 2'deki kural geçmişte de geçerli.`,
+    `Evet. Süre var ama fiil durum fiili olduğu için ÖH değil Ö.`,
+    `Yine -ing. <e>know</e> hiçbir zaman -ing almıyor.`]},
+  {t:'mcq', id:'kk4', xp:1, cebi:'mechanic|teknisyen; take off|kalkış yapmak', stem:`By the time the plane took off, the mechanics ____ the engine three times.`, o:['had been checking','were checking','had checked'], a:2, f:[
+    `<e>three times</e> bi sayı. Sayı varsa sonuç anlatılıyor demektir.`,
+    `Çapa var: <e>By the time</e>. Ç bu çapayla çalışmaz.`,
+    `Evet. Kaç kere sorusu (how many) → Ö.`]},
+  {t:'mcq', id:'kk5', xp:1, cebi:'runway|pist; heavily|şiddetle', stem:`The runway was wet because it ____ heavily all day.`, o:['had been raining','rained','has rained'], a:0, f:[
+    `Evet. Islaklığın görünür nedeni, üstüne <e>all day</e> süresi: ÖH.`,
+    `Mümkün ama "bütün gün süren ve hâlâ etkisi duran" vurgusu kaybolur.`,
+    `Bugüne bağlanır; bu sahne geçmişte.`]},
+  {t:'mcq', id:'kk6', xp:1, cebi:'co-pilot|yardımcı pilot; exhausted|bitkin', stem:`The co-pilot was exhausted because he ____ well for days.`, o:["wasn't sleeping","hasn't slept","hadn't been sleeping"], a:2, f:[
+    `<e>for days</e> var; Ç bu süreyi taşımaz.`,
+    `Bugüne bağlanır, ama yorgunluk o uçuşta.`,
+    `Evet. Olumsuz ÖH: günlerdir süren uykusuzluk, o anki bitkinliğin nedeni.`]}
+]},
+
+/* ---------- ANLATI ---------- */
+{ sec:'anlati', title:'Bir Anlatının Katmanları', btn:'Kontrol noktası', blocks:[
+  {t:'h', eb:'Bölüm 6', h:'Bir tarih anlatısının katmanları'},
+  {t:'say', h:`YDT'deki tarih parçaları bu katmanları birlikte kullanır. Kara kutunun gerçek hikâyesini katman katman okuyalım. Warren'ı Aşama 1'den tanıyorsun.`},
+  {t:'ex', items:[
+    ['K',`In 1934, David Warren's father <pk>died</pk> in a plane crash.`,`Anlatının omurgası: olaylar sırayla K ile ilerler.`],
+    ['Ç',`In 1953, Warren <pc>was working</pc> at a research lab in Australia.`,`Sahne kuruluyor: o yıllarda ne yapıyordu.`],
+    ['Ç',`At that time, experts <pc>were trying</pc> to understand a series of plane crashes.`,`Arka plan devam ediyor.`],
+    ['Ö',`Several new planes <po>had crashed</po>, and nobody <pk>knew</pk> why.`,`Geriye dönüş: bu sahneden önce olanlar.`],
+    ['ÖH',`{Investigators|müfettişler} <poh>had been looking</poh> for an explanation for months.`,`O ana kadar süren arayış.`],
+    ['K',`Eventually, Warren <pk>came up with</pk> a simple idea.`,`Anlatı yeniden ilerliyor: yeni olay K.`]]},
+  {t:'say', h:`Kural şu: <b>omurga [K]</b>, <b>sahne [Ç]</b>, <b>geriye dönüş [Ö] ve [ÖH]</b>. Bi paragrafta K'den sonra Ö görürsen "şimdi geriye bakıyoruz" diye oku.`},
+  {t:'say', h:`Bu uydurma bi şema değil. 2025 YDT'nin Kara Ölüm parçası bire bir böyleydi: <e>In 2005, Dr O'Brien <pk>searched</pk> for descendants…</e> diye ilerliyor, sonra birden <e>He <poh>had been working</poh> with HIV patients…</e> diyip geriye dönüyor. O cümle neden orada? Çünkü adamın o keşfi yapabilmesinin sebebi, daha önceden HIV üzerinde çalışıyor olması.`},
+  {t:'mcq', id:'an1', xp:2, q:'Bu paragrafta boşluğa hangi katman gelir?', stem:`In 1953, Warren <b>was working</b> at a research lab. At that time, experts <b>were trying</b> to understand a series of crashes. ---- Warren believed that a machine recording the pilots' voices could help.`, o:[
+    `Today, every passenger plane carries a black box.`,
+    `Several planes had crashed, and nobody knew why.`,
+    `Warren will become famous for his invention.`], a:1, f:[
+    `Bugüne atlıyor. Sahne 1953'te kurulmuş, zincir kopar.`,
+    `Evet. Sahneden önceye bakan bi geriye dönüş lazımdı: [Ö].`,
+    `Gelecek. Geçmiş anlatının ortasına oturmaz.`]}
+]},
+
+/* ---------- KONTROL NOKTASI ---------- */
+{ sec:'kontrol', title:'Kontrol Noktası', btn:'Tuzaklara geç', blocks:[
+  {t:'h', eb:'Mini sınav', h:'Kontrol noktası'},
+  {t:'say', h:`Dur bakalım. Beş soru, dördünü ilk denemede yaparsan devam. Yapamazsan Ö bölümüne geri dönüp bi tur atıyorsun. İskender orda, bi yere kaçmıyor.`},
+  {t:'check', id:'chk1', need:4, back:'o', backLabel:"Ö bölümüne dön",
+   pass:`Geçtin. Zor kısmı da bitti bu arada.`,
+   fail:`Bu sefer olmadı. Ö ve ÖH kartlarına bi göz gezdir, sonra bu beş soruyu baştan çöz.`,
+   pass2:`Tamamdır, oturdu. Yürüyoruz.`,
+   fail2:`Tamam, devam edelim ama altın kuralı aklında tut: önce çapayı bul. Boss'ta lazım olacak.`,
+   items:[
+    {id:'ck1', xp:2, stem:`By 1900, many European cities ____ public libraries.`, o:['had built','were building','have built'], a:0, f:[
+      `Evet. <e>By 1900</e> çapası + tamamlanmış iş.`,
+      `İşte İpucu 7'deki çeldirici. <e>by</e> çapası tamamlanmış bi sonuç istiyor.`,
+      `Present perfect bugüne bağlanır; çapa 1900.`]},
+    {id:'ck2', xp:2, stem:`When the alarm rang, the thief ____ out of the window.`, o:['had climbed','was climbing','climbed'], a:1, f:[
+      `"Çoktan çıkmıştı" olurdu; ama alarm onu iş üstünde yakalıyor.`,
+      `Evet. Kesilen süreç: kısa olay K, uzun olay Ç.`,
+      `İki düz geçmiş olsaydı art arda iki olay olurdu; burda biri öbürünü kesiyor.`]},
+    {id:'ck3', xp:2, stem:`The two pilots ____ each other for ten years before the flight.`, o:['had been knowing','were knowing','had known'], a:2, f:[
+      `<e>know</e> -ing almaz.`,
+      `Yine -ing. Durum fiili.`,
+      `Evet. Süre var ama durum fiili olduğu için Ö.`]},
+    {id:'ck4', xp:2, stem:`Elif ____ the YDT course in September 2024.`, o:['started','had started','has started'], a:0, f:[
+      `Evet. Çapa yok, tek olay: düz K yeter.`,
+      `Ö'yü her yere koymuyoruz; ortada çapa yok.`,
+      `Kapalı tarih var, present perfect olmaz.`]},
+    {id:'ck5', xp:2, stem:`The runway was wet because it ____ heavily all day.`, o:['has rained','had been raining','rained'], a:1, f:[
+      `Bugüne bağlanır; sahne geçmişte.`,
+      `Evet. O ana kadar süren ve sonucu görünen süreç: ÖH.`,
+      `Mümkün ama "bütün gün sürdü ve pist bu yüzden ıslak" vurgusu kaybolur.`]}
+  ]}
+]},
+
+/* ---------- TUZAK 5 ---------- */
+{ sec:'tuzak', title:'Tuzaklar', btn:'Tuzak 6', blocks:[
+  {t:'h', eb:'Bölüm 7', h:'Tuzak 5 · "-yordu"nun dört yüzü'},
+  {t:'say', h:`Türkçe "-yordu"yu dört ayrı iş için kullanıyor. İngilizcede dördü dört ayrı zamana gidiyor. Yani "-yordu" gördün diye <e>was/were + V-ing</e> yazarsan dörtte üç ihtimalle yanılırsın.`},
+  {t:'say', h:`Dört soru sor: <b>O anda mı? Süre var mı? Alışkanlık mı? Durum fiili mi?</b>`},
+  {t:'pairs', items:[
+    ['O sırada bekçi uyuyordu.','Ç','o anda → The guard <b>was sleeping</b>.'],
+    ['Kolomb geldiğinde yerliler binlerce yıldır yaşıyordu.','ÖH','süre var → People <b>had been living</b> there.'],
+    ['Eskiden insanlar daha çok yürüyordu.','K','alışkanlık → People <b>walked</b> more in the past.'],
+    ['Kimse bunu bilmiyordu.','K','durum fiili → Nobody <b>knew</b> this.']]},
+  {t:'mcq', id:'tz1', xp:2, tr:true, stem:`Eskiden insanlar daha çok yürüyordu.`, o:[
+    `In the past, people were walking more.`,
+    `In the past, people had been walking more.`,
+    `In the past, people walked more.`], a:2, f:[
+    `Tuzak tam burası. "-yordu" var ama bu bi alışkanlık, belli bi an değil.`,
+    `Süre ya da çapa yok. ÖH için ikisi de lazım.`,
+    `Evet. Geçmiş alışkanlık düz [K] ister.`]},
+  {t:'mcq', id:'tz2', xp:2, tr:true, stem:`Kimse kameraların çalışmadığını bilmiyordu.`, o:[
+    `Nobody knew that the cameras weren't working.`,
+    `Nobody was knowing that the cameras weren't working.`,
+    `Nobody had been knowing that the cameras weren't working.`], a:0, f:[
+    `Evet. <e>know</e> durum fiili → K. İkinci yüklem <e>weren't working</e> ise gerçekten o anda süren bi şey, o yüzden Ç.`,
+    `<e>know</e> -ing almaz, kaçıncı kez :)`,
+    `Hem -ing hem ÖH. İki kere yanlış.`]},
+  {t:'mcq', id:'tz3', xp:2, tr:true, cebi:'native people|yerli halklar', stem:`Kolomb geldiğinde yerli halklar binlerce yıldır kıtada yaşıyordu.`, o:[
+    `When Columbus arrived, native people were living on the continent for thousands of years.`,
+    `When Columbus arrived, native people had been living on the continent for thousands of years.`,
+    `When Columbus arrived, native people have been living on the continent for thousands of years.`], a:1, f:[
+    `<e>for thousands of years</e> bi süre; Ç süre taşımaz.`,
+    `Evet. Çapa + süre + o anda hâlâ sürüyor: ÖH.`,
+    `Present perfect continuous bugüne bağlanır. Ama çapa 1492.`]}
+]},
+
+/* ---------- TUZAK 6 ---------- */
+{ sec:'tuzak', btn:'İpuçlarına geç', blocks:[
+  {t:'h', eb:'Bölüm 7', h:'Tuzak 6 · -mıştır, -mış durumda, -mıştı', small:true},
+  {t:'say', h:`Aşama 1'de "-mıştır görünce <e>have + V3</e> deme" dedim. Aşama 2'de "bazen gerçekten <e>have + V3</e>" dedim. Şimdi üçüncü ihtimal geliyor. Üzgünüm, Türkçe böyle.`},
+  {t:'pairs', items:[
+    ['Bilim insanları 7000 yıllık virüsler bulmuş durumda.','D','referans ŞİMDİ → <b>have found</b>'],
+    ['2018\'e gelindiğinde 7000 yıllık virüsler bulmuşlardı.','Ö','referans O ZAMAN (2018) → <b>had found</b>'],
+    ['Bell telefonu 1876\'da icat etmiştir.','K','kapalı tarih, çapa yok → <b>invented</b>']]},
+  {t:'say', h:`Kural tek cümle: Türkçede <b>"-mıştı"</b> gördüğünde İngilizcede bi O ZAMAN çapası ara. Çapa varsa [Ö]. Çapa yoksa ve cümle tek bi geçmiş olay anlatıyorsa [K] çoğu zaman doğrudur.`},
+  {t:'mcq', id:'tz4', xp:2, tr:true, stem:`İtfaiyeciler geldiğinde yangın henüz ikinci kata ulaşmamıştı.`, o:[
+    `When the firefighters arrived, the fire didn't reach the second floor yet.`,
+    `When the firefighters arrived, the fire hasn't reached the second floor yet.`,
+    `When the firefighters arrived, the fire hadn't reached the second floor yet.`], a:2, f:[
+    `<e>yet</e> ile düz geçmiş olmaz; "o ana kadar henüz" deniyor.`,
+    `Present perfect bugüne bakar. Ama çapa itfaiyecilerin gelişi.`,
+    `Evet. Çapa var, olumsuz Ö.`]},
+  {t:'mcq', id:'tz5', xp:2, tr:true, stem:`Bell telefonu 1876'da icat etmiştir.`, o:[
+    `Bell had invented the telephone in 1876.`,
+    `Bell invented the telephone in 1876.`,
+    `Bell has invented the telephone in 1876.`], a:1, f:[
+    `Çapa yok. Ortada "1876'ya gelindiğinde" diyen bi şey yok, tek bi olay var.`,
+    `Evet. Aşama 1'den beri aynı cümle, aynı cevap. Tutarlıyız.`,
+    `<e>in 1876</e> kapalı tarih; present perfect orda duramaz.`]}
+]},
+
+/* ---------- İPUCU 6 ve 7 ---------- */
+{ sec:'ipucu', title:'Dört İpucu', btn:'İki ipucu daha', blocks:[
+  {t:'h', eb:'Bölüm 8', h:'İpucu 6 · Past perfect ne zaman zorunlu?'},
+  {t:'say', h:`Ö'yü her yere serpmek gerekmiyor. Zorunlu olduğu yerler belli:`},
+  {t:'ex', items:[
+    ['Ö',`<b>Zorunlu:</b> <e>by 1900</e> · <e>by the time</e> + K · <e>when</e> + K … <e>already</e>`,`By the time he died, he had created an empire. ✗ created ✗ was creating`],
+    ['K',`<b>Serbest:</b> <e>before</e> ve <e>after</e> sırayı zaten gösterir.`,`After he had finished / finished the book, he went to bed. İkisi de doğru.`]]},
+  {t:'say', h:`Bi de şu var, Aşama 4'te lazım olacak: <e>by the time</e> + present simple geleceği anlatır. <e>By the time you arrive, …</e> Şimdilik aklının bi köşesinde dursun.`},
+  {t:'h', eb:'Bölüm 8', h:'İpucu 7 · Progressive çeldirici alarmı', small:true},
+  {t:'say', h:`Bu ipucu sana doğrudan puan kazandıracak. Son üç YDT'nin 6-8. sorularında <e>was creating</e>, <e>were advancing</e>, <e>were mastering</e> gibi şıklar sürekli karşımıza çıktı ve <b>hiçbiri doğru cevap olmadı</b>.`},
+  {t:'say', h:`Mantığı şu: cümle tamamlanmış bi başarıyı ya da sonucu anlatıyorsa (<e>created an empire, spread farming, built a library</e>) ve ortada bi <e>by</e> çapası varsa, [Ç] o işi yapamaz. Çünkü Ç "sürüyordu" der, "bitmişti" demez.`},
+  {t:'mcq', id:'ip1', xp:2, stem:`By 1900, many European cities ____ public libraries.`, o:['were building','have built','had built'], a:2, f:[
+    `İşte alarm. <e>By 1900</e> + tamamlanmış sonuç: Ç elenir.`,
+    `Present perfect bugüne bağlanır; çapa 1900.`,
+    `Evet. Bu refleksi kazandıysan 6-8. sorularda bi şık bedavaya gitti demektir.`]}
+]},
+
+{ sec:'ipucu', btn:'Yüklem avına', blocks:[
+  {t:'h', eb:'Bölüm 8', h:"İpucu 8 · Diyaloglarda 'd kısaltması", small:true},
+  {t:'say', h:`Diyalog sorularında <e>'d</e> görürsün ve iki ayrı şey olabilir. Karar veren, ardından gelen fiilin biçimi:`},
+  {t:'ex', items:[
+    ['Ö',`<e>I<b>'d</b> already <b>left</b> when you called.</e>`,`'d + V3 = <b>had</b> → Sen aradığında çoktan çıkmıştım.`],
+    ['',`<e>I<b>'d leave</b> early if I were you.</e>`,`'d + V1 = <b>would</b> → Aşama 4'ün konusu.`]]},
+  {t:'mcq', id:'ip2', xp:1, q:"Buradaki 'd hangisi?", stem:`When the police arrived, the thief <b>'d already disappeared</b>.`, o:['had','would'], a:0, f:[
+    `Evet. <e>disappeared</e> V3 biçiminde, demek ki <e>had</e>.`,
+    `<e>would</e> olsaydı arkasından V1 gelirdi: <e>'d disappear</e>.`]},
+  {t:'h', eb:'Bölüm 8', h:'İpucu 9 · Yakın anlamda sıra korunur', small:true},
+  {t:'say', h:`Aşama 2'de "süre korunmalı" demiştik. Burda da <b>sıra korunmalı</b>. Kaynakta [Ö] ile [K] varsa doğru seçenek aynı sırayı taşır. Sırayı ters çeviren ya da iki olayı aynı ana koyan şık elenir.`},
+  {t:'mcq', id:'ip3', xp:2, q:'Anlamca en yakın cümle hangisi?', stem:`When the firefighters arrived, the fire <b>had already destroyed</b> the library.`, o:[
+    `The firefighters arrived while the fire was destroying the library.`,
+    `The library was already gone before the firefighters got there.`,
+    `The firefighters put out the fire before it reached the library.`], a:1, f:[
+    `Sıra bozuldu: "çoktan bitmişti" iken "sürerken geldiler" oldu.`,
+    `Evet. <e>already gone</e> + <e>before</e>: aynı sıra, aynı sonuç.`,
+    `Kaynakla taban tabana zıt. Kütüphane kurtulmadı ne yazık ki.`]}
+]},
+
+/* ---------- YÜKLEM AVI 3.0 ---------- */
+{ sec:'avi', title:'Yüklem Avı 3.0', btn:'Sesli rehbere', blocks:[
+  {t:'h', eb:'Bölüm 9', h:'Yüklem avı 3.0'},
+  {t:'say', h:`Yüklemler iyice uzadı: <e>had been living</e> üç kelime. Hepsini yakala. Bazı cümleler eski aşamalardan, karışık geliyor.`},
+  {t:'tap', id:'av1', xp:2, q:'Yüklem hangisi? Hepsini al.', cebi:'public library|halk kütüphanesi', toks:[['By','o'],['1900,','o'],['many','s'],['European','s'],['cities','s'],['had','p1'],['built','p1'],['public','o'],['libraries.','o']],
+    fs:`Bu özne. <e>many European cities</e> komple özne.`, fo:`Bu zaman taşımıyor. <e>By 1900</e> çapa, yüklem değil.`, part:`Bi parçası daha var.`,
+    done:`Evet, <e>had built</e>. Çapa <e>By 1900</e>, katman [Ö].`},
+  {t:'tap', id:'av2', xp:2, q:'İki yüklem var, farklı katmanlarda.', cebi:'climb out|tırmanarak çıkmak', toks:[['When','o'],['the','s'],['alarm','s'],['rang,','p1'],['the','s'],['thief','s'],['was','p2'],['climbing','p2'],['out','o'],['of','o'],['the','o'],['window.','o']],
+    fs:`Bu özne.`, fo:`Bu zaman taşımıyor.`, part:`Bi tane buldun, bi tane daha var.`,
+    done:`<e>rang</e> [K] ve <e>was climbing</e> [Ç]. Kesilen süreç: kısa olay K, uzun olay Ç.`},
+  {t:'tap', id:'av3', xp:2, q:'İki yüklem var. Biri üç kelime.', cebi:'native|yerli', toks:[['Native','s'],['people','s'],['had','p1'],['been','p1'],['living','p1'],['in','o'],['America','o'],['when','o'],['Columbus','s'],['finally','o'],['arrived.','p2']],
+    fs:`Bu özne.`, fo:`Bu zaman taşımıyor.`, part:`Devam, bitmedi.`,
+    done:`<e>had been living</e> [ÖH] ve <e>arrived</e> [K]. Dikkat: çapa cümlenin <b>sonunda</b>. Hep başta olmuyor.`},
+  {t:'tap', id:'av4', xp:2, q:'İki yüklem, aynı katman.', cebi:'rapidly|hızla', toks:[['While','o'],['the','s'],['city','s'],['was','p1'],['preparing','p1'],['for','o'],['the','o'],['Olympics,','o'],['prices','s'],['were','p2'],['rising','p2'],['rapidly.','o']],
+    fs:`Bu özne.`, fo:`Bu zaman taşımıyor.`, part:`Bi tane daha var.`,
+    done:`<e>was preparing</e> ve <e>were rising</e>, ikisi de [Ç]. <e>While</e> + iki Ç: paralel süreçler.`},
+  {t:'tap', id:'av5', xp:2, q:'İki yüklem. Biri neden, biri sonuç.', cebi:'notice|fark etmek; fall asleep|uyuyakalmak', toks:[['The','s'],['guard','s'],["didn't",'p1'],['notice','p1'],['anything','o'],['because','o'],['he','s'],['had','p2'],['fallen','p2'],['asleep.','o']],
+    fs:`Bu özne.`, fo:`Bu zaman taşımıyor. <e>because</e> bağlaç.`, part:`Olumsuzda yardımcı fiil de yükleme dahil. Devam.`,
+    done:`<e>didn't notice</e> [K] ve <e>had fallen</e> [Ö]. Neden olan olay daha önce: uyuyakalma fark etmemeden önce.`}
+]},
+
+/* ---------- SESLİ REHBER ---------- */
+{ sec:'cevir', title:'Sesli Rehber Arızası', btn:'Yalan haber avına', blocks:[
+  {t:'h', eb:'Bölüm 10', h:'Sesli rehber arızası'},
+  {t:'say', h:`Tarih müzesinin Türkçe sesli rehberi bozuldu: her bilgi için üç ayrı kayıt çalıyor. Olayların <b>sırasını ve süresini</b> doğru aktaranı seç.`},
+  {t:'mcq', id:'cv1', xp:2, cebi:'pass away|vefat etmek; enormous|devasa', stem:`By the time Alexander passed away, he had created an enormous empire.`, o:[
+    `İskender öldükten sonra devasa bi imparatorluk kurdu.`,
+    `İskender ölürken devasa bi imparatorluk kuruyordu.`,
+    `İskender öldüğünde devasa bi imparatorluk kurmuştu.`], a:2, f:[
+    `Sıra ters döndü. Öldükten sonra kurmadı, ölmeden önce kurmuştu.`,
+    `"Kuruyordu" süren bi iş; ama <e>had created</e> tamamlanmış diyor.`,
+    `Evet. Sıra da sonuç da yerinde.`]},
+  {t:'mcq', id:'cv2', xp:2, cebi:'continent|kıta', stem:`When Columbus reached America, native people had been living on the continent for thousands of years.`, o:[
+    `Kolomb Amerika'ya vardığında yerli halklar binlerce yıldır kıtada yaşıyordu.`,
+    `Kolomb Amerika'ya vardıktan sonra yerli halklar kıtada binlerce yıl yaşadı.`,
+    `Kolomb Amerika'ya vardığında yerli halklar kıtada binlerce yıl önce yaşamıştı.`], a:0, f:[
+    `Evet. "Binlerce yıldır … yaşıyordu": ÖH'nin doğal Türkçesi.`,
+    `Sıra ters. Kolomb'dan önce de oradalardı.`,
+    `"Binlerce yıl önce yaşamıştı" sürekliliği siliyor; sanki gelip gitmişler gibi oldu.`]},
+  {t:'mcq', id:'cv3', xp:2, cebi:'inventor|mucit; similar|benzer', stem:`While Bell was working on the telephone, another inventor was doing similar research.`, o:[
+    `Bell telefon üzerindeki çalışmasını bitirdikten sonra başka bi mucit benzer bi araştırma yaptı.`,
+    `Bell telefon üzerinde çalışırken başka bi mucit de benzer bi araştırma yapıyordu.`,
+    `Bell telefon üzerinde çalışmaya başlamadan önce başka bi mucit benzer bi araştırma yapmıştı.`], a:1, f:[
+    `İki paralel süreci sıraya dizdi.`,
+    `Evet. "…-ırken" + "-yordu": eşzamanlılık korunmuş.`,
+    `Yine sıraya dizdi, üstelik ters yöne.`]},
+  {t:'mcq', id:'cv4', xp:2, cebi:'farming|tarım; spread|yayılmak; gradually|yavaş yavaş', stem:`By about 7000 BCE, farming had gradually spread to many parts of the world.`, o:[
+    `MÖ 7000 civarına gelindiğinde tarım dünyanın pek çok yerine yavaş yavaş yayılmıştı.`,
+    `MÖ 7000 civarında tarım dünyanın pek çok yerine yavaş yavaş yayılmaya başladı.`,
+    `Tarım, MÖ 7000'den bu yana dünyanın pek çok yerine yavaş yavaş yayılmaktadır.`], a:0, f:[
+    `Evet. "…-e gelindiğinde …-mıştı": Ö'nün kalıp Türkçesi. Bu cümle 2024 YDT'nin 7. sorusunun kardeşi.`,
+    `"Yayılmaya başladı" işi o tarihte başlatıyor; oysa o tarihte iş bitmişti.`,
+    `"Bu yana … yayılmaktadır" bugüne bağlıyor. Çapa MÖ 7000.`]},
+  {t:'mcq', id:'cv5', xp:2, stem:`The thief escaped because the cameras weren't working at that moment.`, o:[
+    `Hırsız kaçtığı için kameralar o anda çalışmıyordu.`,
+    `Kameralar o ana kadar hiç çalışmamıştı, bu yüzden hırsız kaçtı.`,
+    `Hırsız, kameralar o anda çalışmadığı için kaçtı.`], a:2, f:[
+    `Neden-sonuç ters döndü. Kameralar hırsız kaçtığı için bozulmadı :)`,
+    `"O ana kadar hiç çalışmamıştı" Ö'ye çevirmiş; oysa kaynakta Ç var.`,
+    `Evet. Hem neden-sonuç hem katman doğru.`]},
+  {t:'mcq', id:'cv6', xp:2, cebi:'reach|ulaşmak; floor|kat', stem:`When the firefighters arrived, the fire hadn't reached the second floor yet.`, o:[
+    `İtfaiyeciler geldiğinde yangın ikinci kata ulaşmıştı.`,
+    `İtfaiyeciler geldiğinde yangın henüz ikinci kata ulaşmamıştı.`,
+    `İtfaiyeciler gelmeden önce yangın ikinci kata ulaşıyordu.`], a:1, f:[
+    `Olumsuzluk uçmuş. <e>hadn't</e> diyor.`,
+    `Evet. "Henüz … ulaşmamıştı": olumsuz Ö.`,
+    `Hem olumsuzluğu silmiş hem Ç'ye çevirmiş.`]}
+]},
+
+/* ---------- YALAN HABER AVCISI ---------- */
+{ sec:'yalan', title:'Yalan Haber Avcısı', btn:'Şifreye geç', blocks:[
+  {t:'h', eb:'Bölüm 11', h:'Yalan haber avcısı'},
+  {t:'say', h:`Bi tarih sitesi kaynak cümleleri özetlemiş. Bazı özetler olayların sırasını ya da süresini bozuyor. Her kartta üstte <b>kaynak</b>, altta <b>özet</b> var. Özet kaynağa uyuyorsa DOĞRULANDI, uymuyorsa YALAN.`},
+  {t:'say', h:`Bu arada bu tam olarak YDT'nin yakın anlam sorusu. Sadece kılığı değişik.`},
+  {t:'swipe', id:'yh1', xp:1, yesLabel:'✔ Doğrulandı', noLabel:'✘ Yalan',
+    en:`When the firefighters arrived, the fire had already destroyed the library.`,
+    tr:`<b>Özet:</b> The library was already {gone|yok olmuş} before the firefighters {got there|oraya vardı}.`, a:true,
+    ok:`Evet, doğru özet. <e>already destroyed</e> = <e>already gone before</e>. Sıra korunmuş.`,
+    no:`Bu aslında doğruydu. <e>had already destroyed</e> "onlar gelmeden önce bitmişti" demek; özet de tam bunu söylüyor.`},
+  {t:'swipe', id:'yh2', xp:1, yesLabel:'✔ Doğrulandı', noLabel:'✘ Yalan',
+    en:`When the firefighters arrived, the library was burning.`,
+    tr:`<b>Özet:</b> The firefighters arrived after the library had {burned down|yanıp kül olmak} completely.`, a:false,
+    ok:`Evet, yalan. Kaynakta yangın <b>sürüyordu</b> [Ç]; özet onu bitmiş gösteriyor [Ö].`,
+    no:`Kaynağa bi daha bak: <e>was burning</e>. Yani hâlâ yanıyordu, kül olmamıştı.`},
+  {t:'swipe', id:'yh3', xp:1, yesLabel:'✔ Doğrulandı', noLabel:'✘ Yalan',
+    en:`By the time Alexander passed away, he had created an enormous empire.`,
+    tr:`<b>Özet:</b> Alexander's empire was already big before his death.`, a:true,
+    ok:`Evet. <e>had created</e> = ölümünden önce kurulmuştu. Aynı sıra.`,
+    no:`Doğruydu aslında. <e>By the time … passed away</e> + <e>had created</e>: ölümünden önce.`},
+  {t:'swipe', id:'yh4', xp:1, yesLabel:'✔ Doğrulandı', noLabel:'✘ Yalan',
+    en:`People had been living in America for thousands of years when Columbus arrived.`,
+    tr:`<b>Özet:</b> People started living in America after Columbus arrived.`, a:false,
+    ok:`Evet, yalan. Hem de sırayı tam tersine çevirmiş.`,
+    no:`<e>had been living … when Columbus arrived</e>: Kolomb'dan <b>önce</b>, binlerce yıldır oradalar.`},
+  {t:'swipe', id:'yh5', xp:1, yesLabel:'✔ Doğrulandı', noLabel:'✘ Yalan',
+    en:`While Bell was working on the telephone, another inventor was doing similar research.`,
+    tr:`<b>Özet:</b> Two inventors were doing similar work at the same time.`, a:true,
+    ok:`Evet. İki Ç yan yana = aynı anda. Özet bunu <e>at the same time</e> ile söylüyor.`,
+    no:`Doğruydu. <e>While</e> + iki tane <e>was/were + V-ing</e> eşzamanlılık anlatır.`},
+  {t:'swipe', id:'yh6', xp:1, yesLabel:'✔ Doğrulandı', noLabel:'✘ Yalan',
+    en:`The security guard didn't notice the thief because he had already fallen asleep.`,
+    tr:`<b>Özet:</b> The security guard fell asleep after the thief left.`, a:false,
+    ok:`Evet, yalan. Uyuyakalma hırsızdan <b>önce</b>; zaten o yüzden fark etmemiş.`,
+    no:`<e>had already fallen asleep</e>: önce uyudu, sonra hırsız geldi. Özet sırayı ters çevirmiş.`},
+  {t:'swipe', id:'yh7', xp:1, yesLabel:'✔ Doğrulandı', noLabel:'✘ Yalan',
+    en:`By 1990, scientists had been {investigating|araştırmak} the {ozone hole|ozon deliği} for five years.`,
+    tr:`<b>Özet:</b> In 1990, scientists were still investigating the ozone hole.`, a:true,
+    ok:`Evet. ÖH "o noktada hâlâ sürüyordu" der; özetteki <e>still</e> tam bunu yakalamış.`,
+    no:`Doğruydu. ÖH'nin anlamı bu: 1990'da araştırma bitmemişti, sürüyordu.`},
+  {t:'swipe', id:'yh8', xp:1, yesLabel:'✔ Doğrulandı', noLabel:'✘ Yalan',
+    en:`The plane hadn't flown for long before the engine failed.`,
+    tr:`<b>Özet:</b> The engine failed {soon after|kısa süre sonra} the plane {took off|kalkış yaptı}.`, a:true,
+    ok:`Evet. "Uzun süre uçmamıştı" = kalkıştan kısa süre sonra arızalandı.`,
+    no:`Doğruydu. Olumsuz Ö burda süreyi kısaltıyor: uçuş uzun sürmedi.`},
+  {t:'swipe', id:'yh9', xp:1, yesLabel:'✔ Doğrulandı', noLabel:'✘ Yalan',
+    en:`Europeans had never seen a {kangaroo|kanguru} before they reached Australia.`,
+    tr:`<b>Özet:</b> Europeans knew kangaroos well before they went to Australia.`, a:false,
+    ok:`Evet, yalan. <e>had never seen</e> tam tersini söylüyor.`,
+    no:`<e>never … before</e>: Avustralya'ya varana kadar kanguruyu hiç görmemişlerdi.`},
+  {t:'swipe', id:'yh10', xp:1, yesLabel:'✔ Doğrulandı', noLabel:'✘ Yalan',
+    en:`When the results came out, Elif had already made her university choices.`,
+    tr:`<b>Özet:</b> Elif made her choices after she saw her results.`, a:false,
+    ok:`Evet, yalan. Tercihler Temmuz'da, sonuçlar Ağustos'ta. Elif'in çizelgesini hatırla.`,
+    no:`<e>had already made</e>: sonuçlar gelmeden önce yapmıştı. Özet sırayı ters çevirmiş.`}
+]},
+
+/* ---------- ŞİFRE ---------- */
+{ sec:'sifre', title:'Şifreyi Çöz', btn:'Editör masasına', blocks:[
+  {t:'h', eb:'Bölüm 12', h:'Şifreyi çöz · Türkçe → İngilizce'},
+  {t:'say', h:`Ters yöne. Bu aşamanın tuzağı Türkçedeki "-yordu" ve "-mıştı": önce çapayı bul, sonra karar ver. Altı harf, bu aşamanın anahtar kavramının İngilizcesini verecek.`},
+  {t:'cipher', id:'anc', ids:['sf1','sf2','sf3','sf4','sf5','sf6'], bonus:3,
+    reveal:`ANCHOR — yani <b>çapa</b>. Bu aşamanın tek kelimelik özeti: Ç, Ö ve ÖH'yi her zaman bi O ZAMAN çapası tutar. +3 XP.`},
+  {t:'mcq', id:'sf1', xp:2, tr:true, cebi:'native people|yerli halklar', stem:`Kolomb geldiğinde yerli halklar binlerce yıldır kıtada yaşıyordu.`, o:[
+    `When Columbus arrived, native people had been living on the continent for thousands of years.`,
+    `When Columbus arrived, native people were living on the continent for thousands of years.`,
+    `When Columbus arrived, native people have been living on the continent for thousands of years.`], L:['A','L','E'], a:0, f:[
+    `Evet. İlk harf geldi.`,
+    `Tuzak 5: süre varsa Ç olmaz.`,
+    `Bugüne bağlanıyor; ama çapa 1492.`]},
+  {t:'mcq', id:'sf2', xp:2, tr:true, cebi:'empire|imparatorluk', stem:`İskender öldüğünde dev bi imparatorluk kurmuştu.`, o:[
+    `By the time Alexander passed away, he has created an enormous empire.`,
+    `By the time Alexander passed away, he was creating an enormous empire.`,
+    `By the time Alexander passed away, he had created an enormous empire.`], L:['T','S','N'], a:2, f:[
+    `<e>has created</e> bugüne bağlanır; çapa geçmişte.`,
+    `İpucu 7'deki progressive çeldirici. Tamamlanmış bi başarı anlatılıyor.`,
+    `Evet. İkinci harf.`]},
+  {t:'mcq', id:'sf3', xp:2, tr:true, cebi:'security guard|güvenlik görevlisi', stem:`O sırada bekçi televizyon izliyordu.`, o:[
+    `At that moment, the security guard was watching TV.`,
+    `At that moment, the security guard had watched TV.`,
+    `At that moment, the security guard has been watching TV.`], L:['C','R','M'], a:0, f:[
+    `Evet. "O sırada" + süren eylem: Ç. Üçüncü harf.`,
+    `"İzlemişti" olurdu; ama cümle o andaki hâli anlatıyor.`,
+    `Bugüne bağlanıyor; sahne geçmişte.`]},
+  {t:'mcq', id:'sf4', xp:2, tr:true, stem:`Eskiden insanlar daha çok yürüyordu.`, o:[
+    `In the past, people were walking more.`,
+    `In the past, people walked more.`,
+    `In the past, people had been walking more.`], L:['I','H','U'], a:1, f:[
+    `Tuzak 5. "-yordu" var ama bu bi alışkanlık.`,
+    `Evet. Geçmiş alışkanlık düz K. Dördüncü harf.`,
+    `Ne çapa var ne süre.`]},
+  {t:'mcq', id:'sf5', xp:2, tr:true, cebi:'reach|ulaşmak; floor|kat', stem:`İtfaiyeciler geldiğinde yangın henüz ikinci kata ulaşmamıştı.`, o:[
+    `When the firefighters arrived, the fire hadn't reached the second floor yet.`,
+    `When the firefighters arrived, the fire didn't reach the second floor yet.`,
+    `When the firefighters arrived, the fire hasn't reached the second floor yet.`], L:['O','P','D'], a:0, f:[
+    `Evet. Çapa + olumsuz Ö. Beşinci harf.`,
+    `<e>yet</e> ile düz geçmiş olmaz.`,
+    `Present perfect bugüne bakar; çapa itfaiyecilerin gelişi.`]},
+  {t:'mcq', id:'sf6', xp:2, tr:true, stem:`Kimse kameraların çalışmadığını bilmiyordu.`, o:[
+    `Nobody was knowing that the cameras weren't working.`,
+    `Nobody had been knowing that the cameras weren't working.`,
+    `Nobody knew that the cameras weren't working.`], L:['Y','G','R'], a:2, f:[
+    `<e>know</e> -ing almaz.`,
+    `Yine -ing, üstelik ÖH.`,
+    `Evet. Durum fiili → K. Son harf, şifre tamam.`]}
+]},
+
+/* ---------- EDİTÖR MASASI ---------- */
+{ sec:'editor', title:'Editör Masası', btn:'Birlikte çözelim', blocks:[
+  {t:'h', eb:'Bölüm 13', h:'Editör masası'},
+  {t:'say', h:`Bi tarih dergisinin editörüsün. Aşağıdaki paragrafta yedi yüklem numaralanmış. Bazıları yanlış, bazıları doğru. Her biri için ya düzeltmeyi seç ya da "doğru, dokunma" de.`},
+  {t:'say', h:`<e>In 1934, David Warren's father <b>has died</b>¹ in a plane crash. Almost twenty years later, Warren <b>was working</b>² at a research lab in Australia. At that time, experts <b>are trying</b>³ to understand a series of mysterious crashes. Several new planes <b>have crashed</b>⁴ without any clear reason, and nobody <b>was knowing</b>⁵ why. {Investigators|müfettişler} <b>had been looking</b>⁶ for an explanation for months when Warren <b>came up</b>⁷ with a simple idea.</e>`},
+  {t:'say', h:`Taktik: paragrafın zaman zincirini takip et. Omurga [K], sahne [Ç], geriye dönüş [Ö] ve [ÖH].`},
+  {t:'mcq', id:'ed1', xp:2, q:'1 · has died', o:['died','doğru, dokunma','had been dying'], a:0, f:[
+    `Evet. <e>In 1934</e> kapalı tarih; present perfect orda duramaz. Omurga cümlesi, düz K.`,
+    `<e>has died</e> bugüne bağlanır. Ama 1934 kapalı.`,
+    `"Ölmekteydi" gibi bi şey olurdu. Tuhaf ve yanlış.`]},
+  {t:'mcq', id:'ed2', xp:2, q:'2 · was working', o:['works','had worked','doğru, dokunma'], a:2, f:[
+    `Bugünü anlatır; anlatı 1950'lerde.`,
+    `"Çalışmıştı" olurdu; ama burda sahne kuruluyor, geriye dönüş yok.`,
+    `Evet, dokunma. Sahnenin arka planı: Ç.`]},
+  {t:'mcq', id:'ed3', xp:2, q:'3 · are trying', o:['had tried','were trying','doğru, dokunma'], a:1, f:[
+    `Geriye dönüş değil bu; aynı sahnenin parçası.`,
+    `Evet. <e>At that time</e> + geçmiş anlatı: Ç olmalı.`,
+    `<e>are trying</e> şimdiyi anlatır. Anlatı geçmişte.`]},
+  {t:'mcq', id:'ed4', xp:2, q:'4 · have crashed', o:['doğru, dokunma','were crashing','had crashed'], a:2, f:[
+    `Present perfect bugüne bağlanır; anlatı 1953'te.`,
+    `Progressive çeldirici. Düşme olayları tamamlanmış.`,
+    `Evet. Sahneden önce olmuş olaylar: geriye dönüş, [Ö].`]},
+  {t:'mcq', id:'ed5', xp:2, q:'5 · was knowing', o:['knew','doğru, dokunma','had been knowing'], a:0, f:[
+    `Evet. <e>know</e> durum fiili, -ing almaz: düz K.`,
+    `<e>was knowing</e> diye bi şey yok.`,
+    `Yine -ing. Durum fiili hiçbir biçimde -ing almıyor.`]},
+  {t:'mcq', id:'ed6', xp:2, q:'6 · had been looking', o:['were looking','doğru, dokunma','have been looking'], a:1, f:[
+    `<e>for months when …</e> var: o ana kadar süren arayış. Ç bu süreyi taşımaz.`,
+    `Evet, dokunma. Süre + çapa: [ÖH]. Paragrafın en ince yeri burasıydı.`,
+    `Bugüne bağlanır; anlatı geçmişte.`]},
+  {t:'mcq', id:'ed7', xp:2, q:'7 · came up', o:['had come up','was coming up','doğru, dokunma'], a:2, f:[
+    `Geriye dönüş değil; anlatı burda yeniden ileri gidiyor.`,
+    `Fikir bulmak anlık bi şey, süren bi süreç gibi anlatılmıyor.`,
+    `Evet, dokunma. Yeni olay, omurgaya dönüş: [K].`]}
+]},
+
+/* ---------- BİRLİKTE ÇÖZELİM ---------- */
+{ sec:'birlikte', title:'Birlikte Çözelim', btn:"Boss'a gir", blocks:[
+  {t:'h', eb:'Bölüm 14', h:'Söz vermiştim: 2024 YDT, 7. soru'},
+  {t:'say', h:`Giriş ekranındaki soruyu hatırlıyor musun? Geldik. Bu gerçek bi YDT sorusu, hiç sadeleştirmedim. Ben sesli düşünücem, sen izle.`},
+  {t:'steps', id:'wk1', cebi:'cultivating|tarım yapan; sufficiently|yeterince; enable|olanak tanımak; skills|beceriler',
+    stem:`By about 7000 BCE, the tools and skills of Stone Age people ---- sufficiently to enable {cultivating|tarım yapan} groups ---- towns with more than 1,000 people, such as Çatalhöyük in present-day Türkiye.`,
+    o:[`were advancing / being supported`,
+       `may have advanced / to have supported`,
+       `would have advanced / supporting`,
+       `had advanced / to support`,
+       `advanced / to be supported`],
+    steps:[
+      `İlk iş çapayı bulmak. Cümle <e>By about 7000 BCE</e> diye başlıyor. Bu tam da Ö'nün birinci kalıbı: <e>by</e> + geçmiş tarih. Yani geçmişte bi nokta kondu ve yüklem o noktaya bakıyor.`,
+      `Sonra cümlenin ne anlattığına bak: aletler ve beceriler "yeterince gelişmişti", öyle ki artık 1000 kişilik kasabalar kurulabiliyordu. Yani MÖ 7000'e gelindiğinde iş <b>tamamlanmış</b>. Bi sonuç anlatılıyor.`,
+      `Şimdi şıkları tara. A: <e>were advancing</e>, [Ç]. İpucu 7'deki alarm tam burda çalıyor: <e>by</e> çapası + tamamlanmış sonuç varsa progressive elenir. "Gelişiyordu" demek, "gelişmişti" demez. A gitti.`,
+      `B ve C: <e>may have advanced</e> ve <e>would have advanced</e>. Bunlar ihtimal ve varsayım anlatıyor. Ama cümle Çatalhöyük'ü örnek veriyor, yani olmuş bitmiş bi gerçekten bahsediyor. Tahmin değil bu. İkisi de gitti.`,
+      `E: <e>advanced</e>, düz [K]. Aslında yakın. Ama <e>By about 7000 BCE</e> bi çapa ve İpucu 6'da söylemiştim: <e>by</e> + geçmiş tarih Ö'yü <b>zorunlu</b> kılar. Geriye D kaldı: <e>had advanced / to support</e>. Cevap D.`,
+      `Gördün mü, beş şıktan dördünü sadece çapaya ve katmana bakarak eledik. İkinci boşluğa (<e>to support</e>) neredeyse hiç bakmadık bile. YDT'nin çift boşluklu sorularında taktik hep bu: çapası güçlü olan boşluktan başla.`],
+    mark:3},
+  {t:'say', h:`Sıra sende. Aynı yolu yürü: önce çapa, sonra katman. Takılırsan ipucuna dokun.`},
+  {t:'mcq', id:'fd1', xp:3, five:true, cebi:'settlement|yerleşim; obtain|elde etmek; herding|hayvancılık',
+    q:'Bu cümledeki iki yüklem hangi katmanlarda?',
+    stem:`Archaeologists <b>have uncovered</b> a number of {settlements|yerleşimler} which <b>had been established</b> in Anatolia during the Neolithic period.`,
+    hint:`İlk yüklem bugüne mi bakıyor yoksa geçmişte bi noktaya mı? Peki ikincisi hangisinden önce olmuş?`,
+    o:[`İkisi de K`,
+       `D ve Ö`,
+       `Ö ve D`,
+       `Ç ve Ö`,
+       `D ve H`], a:1, f:[
+    `<e>have</e> ve <e>had</e> var; ikisi de düz geçmiş değil.`,
+    `Evet. <e>have uncovered</e> [D]: arkeologlar bugün bu bilgiye sahip. <e>had been established</e> [Ö]: yerleşimler keşiften çok önce kurulmuştu. Bu cümle 2026 YDT'nin 69. sorusundan, hiç değiştirmedim.`,
+    `Ters. <e>have</e> olan D'dir, <e>had</e> olan Ö.`,
+    `Ç olsaydı <e>were uncovering</e> görürdük.`,
+    `H olsaydı <e>had been establishing</e> olurdu; ama burda <e>established</e> var, süren bi süreç değil.`]}
+]},
+
+/* ---------- BOSS ---------- */
+{ sec:'boss', title:'Boss · Son Form', btn:'Çıkışa git', blocks:[
+  {t:'h', eb:'Bölüm 15', h:"Boss · Zaman Bükücü'nün son formu"},
+  {t:'say', h:`Yedi can barı. İlk iki soru gerçek YDT'nin 6-8. soru tipinde, çift boşluklu. Strateji aynı: önce O ZAMAN çapasını bul, çapası güçlü boşluktan başla, progressive şıkları ele.`},
+  {t:'hp', ids:['bs1','bs2','bs3','bs4','bs5','bs6','bs7']},
+  {t:'mcq', id:'bs1', xp:5, five:true, tag:'Dilbilgisi · çift boşluk', cebi:'destroy|yok etmek',
+    stem:`By the time the firefighters ----, the fire ---- most of the old library.`,
+    o:[`arrive / destroys`,
+       `were arriving / has destroyed`,
+       `arrived / had destroyed`,
+       `had arrived / was destroying`,
+       `have arrived / destroyed`], a:2, f:[
+    `<e>by the time</e> + present simple geleceği anlatır (İpucu 6). Ama bu bi geçmiş anlatısı.`,
+    `<e>were arriving</e> progressive çeldirici; <e>has destroyed</e> da bugüne bağlanır.`,
+    `Evet. Çapa [K] ile kurulur, ondan önce olan [Ö] ile.`,
+    `Sıra ters: <e>had</e> taşıyan yüklem önce olanı gösterir, ama burda yangın önce bitmişti.`,
+    `<e>have arrived</e> bugüne bağlanır; <e>by the time</e> ile uyuşmaz.`]},
+  {t:'mcq', id:'bs2', xp:5, five:true, tag:'Dilbilgisi · çift boşluk', cebi:'farming|tarım; spread|yayılmak; village|köy',
+    stem:`By about 7000 BCE, farming ---- to many parts of the world, and people ---- to live in villages.`,
+    o:[`spreads / begin`,
+       `had spread / had begun`,
+       `has spread / have begun`,
+       `was spreading / are beginning`,
+       `spread / will begin`], a:1, f:[
+    `Geçmiş çapasıyla present simple olmaz.`,
+    `Evet. İki olay da MÖ 7000'e gelindiğinde gerçekleşmişti. Az önceki gerçek sorunun kardeşi.`,
+    `<e>has / have</e> bugüne bağlanır; çapa MÖ 7000.`,
+    `Progressive alarmı: <e>by</e> çapası + tamamlanmış yayılma.`,
+    `İkinci boşlukta gelecek var; geçmiş çapasıyla çelişiyor.`]},
+  {t:'mcq', id:'bs3', xp:5, five:true, tag:'Cümle tamamlama', cebi:'native people|yerli halklar; continent|kıta',
+    stem:`When Columbus reached America in 1492, ----.`,
+    o:[`native people had been living on the continent for thousands of years`,
+       `native people have lived on the continent since ancient times`,
+       `native people will live on the continent for centuries`,
+       `native people lived on the continent after 1500`,
+       `native people are living in many parts of it`], a:0, f:[
+    `Evet. 1492 çapası + ondan önce başlayıp o anda süren durum: ÖH.`,
+    `<e>have lived</e> bugüne bağlanır; çapa 1492.`,
+    `Gelecek zaman, çapayla çelişiyor.`,
+    `<e>after 1500</e> diyor; ama çapa 1492, mantık çöküyor.`,
+    `Present continuous bugünü anlatır; geçmiş anlatıya oturmaz.`]},
+  {t:'mcq', id:'bs4', xp:5, five:true, tag:'Yakın anlam', cebi:'notice|fark etmek; fall asleep|uyuyakalmak',
+    stem:`The security guard didn't notice the thief because he had already fallen asleep.`, q:'Anlamca en yakın cümle hangisi?',
+    o:[`The security guard fell asleep after the thief had left.`,
+       `The thief woke the security guard up before he left.`,
+       `The security guard noticed the thief and then fell asleep.`,
+       `The security guard was already asleep, so he didn't see the thief.`,
+       `The security guard was awake, but he didn't notice the thief.`], a:3, f:[
+    `Sıra ters çevrilmiş. İpucu 9.`,
+    `Uyandırma diye bi bilgi kaynakta yok.`,
+    `Kaynak fark etmediğini söylüyor.`,
+    `Evet. Hem sıra hem neden-sonuç korunmuş: önce uyudu, o yüzden görmedi.`,
+    `"Uyanıktı" kaynakla doğrudan çelişiyor.`]},
+  {t:'mcq', id:'bs5', xp:5, five:true, tag:'İngilizce → Türkçe', cebi:'investigate|incelemek; main cause|ana neden',
+    stem:`By 1990, scientists had been investigating the {ozone hole|ozon deliği} for five years, and they had already found its main cause.`,
+    o:[`1990'a gelindiğinde bilim insanları beş yıldır ozon deliğini inceliyordu ve ana nedenini çoktan bulmuşlardı.`,
+       `Bilim insanları 1990'da ozon deliğini beş yıl inceledi ve ardından ana nedenini buldu.`,
+       `Bilim insanları 1990'dan bu yana beş yıldır ozon deliğini inceliyor ve ana nedenini bulmuş durumda.`,
+       `1990'da bilim insanları ozon deliğini incelemeye başladı ve beş yıl sonra ana nedenini buldular.`,
+       `Bilim insanları ozon deliğinin ana nedenini bulduktan sonra 1990'da onu incelemeyi bıraktı.`], a:0, f:[
+    `Evet. ÖH "beş yıldır inceliyordu", Ö "çoktan bulmuşlardı". İkisi de yerinde.`,
+    `"Beş yıl inceledi, ardından buldu" sırayı ve süreyi bozuyor.`,
+    `"Bu yana … inceliyor" referansı bugüne taşımış. Çapa 1990.`,
+    `Başlangıç noktasını değiştirmiş: 1990'da başlamadı, 1990'da beşinci yılındaydı.`,
+    `"Bırakmak" kaynakta yok.`]},
+  {t:'mcq', id:'bs6', xp:5, five:true, tag:'Diyalog tamamlama', chat:[
+      ['Deniz',`I went to the museum on Saturday, but I couldn't see the famous clock.`],
+      ['Arda','----'],
+      ['Deniz',`Yes. Someone had stolen it the night before!`]],
+    cebi:'steal|çalmak; the night before|bir önceki gece',
+    o:[`Will you go to the museum again next week?`,
+       `Do you usually visit museums at weekends?`,
+       `Were you working at the museum at that time?`,
+       `Have they found the thief yet?`,
+       `Oh no! Had something happened to it?`], a:4, f:[
+    `Gelecek hakkında; "Yes. Someone had stolen it" cevabına oturmaz.`,
+    `Genel alışkanlık sorusu; cevapla bağ kurmuyor.`,
+    `Deniz'in orda çalıştığına dair bi bilgi yok.`,
+    `"Yes" cevabı hırsızın bulunduğunu söylerdi; ama devamı onu anlatmıyor.`,
+    `Evet. Soru da cevap da aynı katmanda: cumartesiden önce olmuş bi olay, [Ö]. Soru biçimi <e>Had + özne + V3?</e>`]},
+  {t:'mcq', id:'bs7', xp:5, five:true, tag:'Paragraf tamamlama', cebi:'record|kaydetmek; voice|ses',
+    stem:`In 1953, David Warren was working at a research lab in Australia. At that time, experts were trying to understand a series of plane crashes. ---- Warren believed that a small machine recording the pilots' voices could help them find the answers.`,
+    o:[`Today, every passenger plane carries a black box.`,
+       `Several planes had crashed, and nobody knew why.`,
+       `Warren will become famous for his invention.`,
+       `Planes are becoming safer every year.`,
+       `Warren has invented many machines since then.`], a:1, f:[
+    `Bugüne atlıyor; sahne 1953'te kurulmuş.`,
+    `Evet. Sahne [Ç] ile kurulmuş, boşluk ondan önceye bakmalı: [Ö]. Sonraki cümle de "neden?" sorusunun peşinde.`,
+    `Gelecek; geçmiş anlatının ortasına oturmaz.`,
+    `Bugünkü genel durum; zinciri koparıyor.`,
+    `<e>since then</e> bugüne bağlanır, üstelik "neden?" sorusunu cevaplamıyor.`]}
+ ], after:[
+  {t:'say', h:`Zaman Bükücü son formunda da yere serildi. Yedi soru, yedi farklı YDT tipi, hepsinde ilk iş aynıydı: çapayı bul.`}
+]},
+
+/* ---------- ÇIKIŞ ---------- */
+{ sec:'cikis', title:'Çıkış', btn:null, blocks:[
+  {t:'h', eb:'Final', h:'Çıkış'},
+  {t:'say', h:`Bitti. Sekiz katmanın altısını artık tanıyorsun.`},
+  {t:'summary'},
+  {t:'say', h:`Kendine dürüst ol. Yapabildiğin maddeleri işaretle; işaretleyemediğin varsa bağlantıya dokun, o bölüme dönersin.`},
+  {t:'checklist', items:[
+    ['Şimdi ailesi ile geçmiş ailesi arasındaki simetriyi görüyorum (S→Ç, D→Ö, H→ÖH).','aile'],
+    ['Bir cümlede O ZAMAN çapasını bulabiliyorum.','aile'],
+    ['Kesilen süreci tanıyorum: uzun olan Ç, kısa olan K.','c'],
+    ['Past perfect\'i "-mış durumdaydı" diye çözümleyip olay sırasını okuyabiliyorum.','o'],
+    ['Ç ile ÖH\'yi ayırıyorum; durum fiillerinde ÖH kullanmıyorum.','oh'],
+    ['Bir anlatıda omurga, sahne ve geriye dönüşü ayırt edebiliyorum.','anlati'],
+    ['Türkçedeki "-yordu"nun dört anlamını ayırt edebiliyorum.','tuzak'],
+    ['by / by the time görünce progressive şıkları eliyorum.','ipucu']]},
+  {t:'say', h:`Son bi şey, alışkanlık oldu artık. Deniz grupta şöyle yazmış:`},
+  {t:'ex', items:[
+    ['',`<e>I<b>'m taking</b> the YDT next June.</e>`,`Deniz · YDT Çalışma Grubu`]]},
+  {t:'mcq', id:'bon', xp:3, noscore:true, q:`<e>'m taking</e> burda ne anlatıyor? Tahmin et.`, o:[
+    `Deniz şu anda sınava giriyor.`,
+    `Deniz geçen haziran sınava girdi.`,
+    `Deniz'in gelecek haziran için kesinleşmiş bi sınav planı var.`], a:2, f:[
+    `Biçim [S] gibi görünüyor, haklısın. Ama <e>next June</e> var; o her şeyi değiştiriyor.`,
+    `<e>'m taking</e> geçmiş olamaz. Hem <e>next June</e> diyor.`,
+    `Tahmin değil, bildin. Present continuous + gelecek zaman ifadesi = kesinleşmiş plan. Deniz başvurusunu yapmış yani.`]}
+ ], after:[
+  {t:'say', h:`Aşama 1'de [S] "bu dönem süren süreç"ti. Şimdi aynı yapının geleceğe bakan yüzünü gördün. Aşama 4'ün konusu bu: henüz olmamış şeyler. <e>will</e>, <e>going to</e>, ve geçmişte kalmış gelecekler. Görüşürüz.`},
+  {t:'restart'}
+]}
+];
+
+</script>
+<script>
+(function(){
+'use strict';
+/* Kodlar: STAGE.codes = {KOD:[cssSınıfı, ad, tense, Türkçe çekirdek, slogan]} — verilmezse G/K/S */
+const CODES=STAGE.codes||{G:['g','Genel geçer','Present Simple','-r','"Hep böyle."'],K:['k','Kapanmış geçmiş','Past Simple','-dı','"Oldu, bitti, kapı kapandı."'],S:['s','Süren süreç','Present Continuous','-yor','"Bu aralar oluyor, değişiyor."']};
+const CODE_RE=new RegExp('\\[('+Object.keys(CODES).sort((a,b)=>b.length-a.length).join('|')+')\\]','g');
+const L='ABCDE';
+const $=(s,r=document)=>r.querySelector(s);
+const el=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;};
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---- durum ---- */
+let st=load()||fresh();
+st.first=st.first||{};
+function fresh(){return {scr:0,q:{},xp:{},ge:{},sw:{},tp:{},steps:{},chk:{},v2:{},cl:{},cipher:{},first:{},finished:false};}
+function load(){try{const s=localStorage.getItem(STAGE.key);return s?JSON.parse(s):null;}catch(e){return null;}}
+function save(){try{localStorage.setItem(STAGE.key,JSON.stringify(st));}catch(e){}report(false);}
+
+/* ---- öğretmene rapor (yalnızca Google Apps Script'ten açılınca) ---- */
+const GS=(typeof google!=='undefined'&&google.script&&google.script.run)?google.script.run:null;
+/* Sayfa Google dışında (ör. GitHub Pages) barındırılınca kayıt bu adrese POST edilir (Apps Script doPost). */
+const TRACK=(typeof TRACK_URL==='string'&&/^https:\/\/script\.google\.com\//.test(TRACK_URL))?TRACK_URL:null;
+const TRACKED=!!(GS||TRACK);
+function postTrack(p,onFail){
+  const body=JSON.stringify(p);
+  if(navigator.onLine===false){onFail();return;}
+  try{fetch(TRACK,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body,keepalive:true}).then(()=>{retry=0;}).catch(onFail);}catch(e){onFail();}
+}
+let rT=null,lastSent='',retry=0;
+function stats(){
+  const scored=allQ().filter(q=>!q.cipher&&!q.noscore);
+  const ids=scored.map(q=>q.id);
+  const ans=ids.filter(id=>st.first[id]!==undefined);
+  const cor=ans.filter(id=>st.first[id]===true).length;
+  return {topic:STAGE.topic,study:STAGE.study,stage:STAGE.no,name:st.who&&st.who.name,email:st.who&&st.who.email,
+    progress:Math.round(100*Math.min(st.scr,SCREENS.length-1)/(SCREENS.length-1)),
+    finished:!!st.finished,answered:ans.length,correct:cor,total:ids.length};
+}
+function report(now){
+  if(!TRACKED||!st.who)return;
+  clearTimeout(rT);
+  rT=setTimeout(()=>{const p=stats();const k=JSON.stringify(p);if(k===lastSent)return;lastSent=k;
+    const fail=()=>{lastSent='';if(retry<5){retry++;setTimeout(()=>report(true),4000*retry);}};
+    if(GS){try{GS.withFailureHandler(fail).withSuccessHandler(()=>{retry=0;}).kaydet(p);}catch(e){}}
+    else postTrack(p,fail);},now?0:2500);
+}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')report(true);});
+function firstTry(id,ok,noscore){if(!noscore&&st.first[id]===undefined)st.first[id]=!!ok;}
+
+/* ---- metin biçimleme ---- */
+function fmt(s){
+  if(!s)return '';
+  return s
+    .replace(/\{([^|{}]+)\|([^{}]+)\}/g,(m,w,g)=>`<button type="button" class="gl" data-g="${g.replace(/"/g,'&quot;')}">${w}</button>`)
+    .replace(CODE_RE,(m,c)=>`<button type="button" class="cd ${CODES[c][0]}" data-c="${c}">${c}</button>`)
+    .replace(/<e>/g,'<span class="en">').replace(/<\/e>/g,'</span>')
+    .replace(/<p(g|k|s|d|h|c|o|oh|i|gi)>/g,'<span class="pr $1">').replace(/<\/p(g|k|s|d|h|c|o|oh|i|gi)>/g,'</span>')
+    .replace(/<sb>/g,'<span class="sb">').replace(/<\/sb>/g,'</span>');
+}
+function plain(s){return s.replace(/\{([^|{}]+)\|[^{}]+\}/g,'$1');}
+function chip(c){return c?`<span class="cd ${CODES[c][0]}" aria-hidden="true">${c}</span>`:'';}
+function cebi(str){
+  if(!str)return null;
+  const d=el('div','cebi');
+  d.innerHTML=str.split(';').map(x=>{const [w,g]=x.split('|');return `<span><b>${w.trim()}</b> ${g.trim()}</span>`;}).join('');
+  return d;
+}
+
+/* dokunmatik kelime ve kod açıklamaları (tek dinleyici) */
+document.addEventListener('click',e=>{
+  const g=e.target.closest('.gl');
+  if(g){const n=g.nextElementSibling;if(n&&n.classList.contains('gp'))n.remove();else g.insertAdjacentHTML('afterend',`<span class="gp">${g.dataset.g}</span>`);return;}
+  const c=e.target.closest('button.cd[data-c]');
+  if(c){const n=c.nextElementSibling;if(n&&n.classList.contains('cp'))n.remove();else{const d=CODES[c.dataset.c];c.insertAdjacentHTML('afterend',`<span class="cp">${d[1]} · ${d[2]} · ${d[3]}</span>`);}}
+});
+
+/* ---- XP ---- */
+let XPMAX=0;
+function allQ(){const out=[];for(const s of SCREENS)for(const b of [...s.blocks,...(s.after||[])]){if(b.t==='mcq'||b.t==='tap'||b.t==='swipe')out.push(b);if(b.t==='check')out.push(...b.items);if(b.t==='cipher')out.push({id:b.id,xp:b.bonus,cipher:true});}return out;}
+XPMAX=allQ().reduce((a,b)=>a+(b.xp||0),0);
+function xpNow(){return Object.values(st.xp).reduce((a,b)=>a+b,0);}
+function rank(){const r=xpNow()/XPMAX;let n=STAGE.ranks[0][1];for(const [t,name] of STAGE.ranks)if(r>=t)n=name;return n;}
+function hud(){
+  $('#hudXP').textContent=xpNow()+' XP';
+  $('#hudBar').style.width=Math.round(100*Math.min(st.scr,SCREENS.length-1)/(SCREENS.length-1))+'%';
+  let sec='';for(let i=st.scr;i>=0;i--){if(SCREENS[i].title){sec=SCREENS[i].title;break;}}
+  $('#hudS').textContent=sec;
+}
+function award(id,n){if(st.xp[id]==null){st.xp[id]=n;}}
+
+/* ---- ekranlar ---- */
+const main=$('#main');
+const screenObjs=[];
+function renderScreen(i,scroll){
+  const S=SCREENS[i];
+  const sec=el('section','screen');sec.id='s'+i;
+  if(S.sec&&(i===0||SCREENS[i-1].sec!==S.sec))sec.dataset.anchor=S.sec;
+  const reqs=[];
+  for(const b of S.blocks){const r=block(b,sec,()=>check());if(r&&r.req)reqs.push(r);}
+  const afterBox=el('div');afterBox.style.cssText='display:contents';
+  const nb=S.btn?el('button','btn',S.btn):null;
+  if(nb){nb.type='button';nb.hidden=true;nb.onclick=()=>{nb.hidden=true;nb.remove();next(i);};}
+  sec.appendChild(afterBox);if(nb)sec.appendChild(nb);
+  main.appendChild(sec);
+  let afterDone=false;
+  function check(){
+    if(!reqs.every(r=>r.done()))return;
+    if(!afterDone){afterDone=true;for(const b of (S.after||[]))block(b,afterBox,()=>{});}
+    if(nb&&st.scr===i)nb.hidden=false;
+    if(i===SCREENS.length-1&&!st.finished){st.finished=true;save();report(true);}
+    save();hud();
+  }
+  screenObjs[i]={sec,check};
+  check();
+  if(scroll)setTimeout(()=>sec.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}),40);
+}
+function next(i){if(st.scr===i){st.scr=i+1;save();report(true);}renderScreen(i+1,true);hud();menu();}
+
+/* ---- blok çizerleri ---- */
+function block(b,parent,changed){
+  const f=B[b.t];if(!f){console.warn('bilinmeyen blok',b.t);return null;}
+  return f(b,parent,changed);
+}
+const B={
+ hero(b,p){p.appendChild(el('div','hero',`<small>${STAGE.kicker||'YDT Grammar · Self-study'}</small><h1>${STAGE.title.split('·').pop().trim()}</h1><p>${fmt(STAGE.hero||'')}</p><div class="gks">${(STAGE.heroCodes||Object.keys(CODES)).map(c=>`<span>${c}</span>`).join('')}</div>`));},
+ say(b,p){p.appendChild(el('p','say',fmt(b.h)));},
+ h(b,p){p.appendChild(el('div','eb',b.eb));p.appendChild(el('h2','h'+(b.small?' small':''),(b.code?`<button type="button" class="cd ${CODES[b.code][0]}" data-c="${b.code}">${b.code}</button>`:'')+b.h));},
+ codes(b,p){p.appendChild(el('div','codes',(b.list||Object.keys(CODES)).map(c=>{const d=CODES[c];return `<div class="${d[0]}"><b>${c}</b><strong>${d[1]}</strong><span>${d[2]} · Türkçede çoğu zaman <em>${d[3]}</em></span>${d[4]?`<span>${d[4]}</span>`:''}</div>`;}).join('')));},
+ ex(b,p){const d=el('div','ex');for(const [c,e,t] of b.items)d.appendChild(el('div','it',(c?`<button type="button" class="cd ${CODES[c][0]}" data-c="${c}">${c}</button>`:'<span class="cd n">?</span>')+`<div class="e">${fmt(e)}</div><div class="t">${fmt(t)}</div>`));p.appendChild(d);},
+ card(b,p){p.appendChild(el('div','card '+CODES[b.code][0],`<h4>${chip(b.code)} ${b.title}</h4><dl>${b.rows.map(r=>`<dt>${r[0]}</dt><dd>${r[1]}${r[2]?`<small>${fmt(r[2])}</small>`:''}</dd>`).join('')}</dl>`));},
+ svg(b,p){p.appendChild(el('div','svgbox',b.h));},
+ pairs(b,p){p.appendChild(el('div','pairs',b.items.map(([tr,c,en])=>`<div><span>${tr}</span>${chip(c)}<span>${en}</span></div>`).join('')));},
+ timeline(b,p){p.appendChild(el('div','tl',`<svg viewBox="0 0 640 150" role="img" aria-label="Zaman şeridi: G zamandan bağımsız, K 1800'lerde, S bu dönem">
+  <rect class="gb" x="14" y="10" width="612" height="28" rx="14" stroke-width="1.5"/>
+  <text class="gt" x="320" y="29" text-anchor="middle" font-size="14" font-weight="700">G · zamandan bağımsız: tilki gece avlanır</text>
+  <line class="ax" x1="14" y1="95" x2="618" y2="95" stroke-width="2"/><polygon class="mut" points="628,95 616,89 616,101"/>
+  <rect class="kb" x="70" y="78" width="180" height="34" rx="8" stroke-width="1.5"/>
+  <text class="kt" x="160" y="100" text-anchor="middle" font-size="13.5" font-weight="700">K · in the 1800s</text>
+  <rect class="sbx" x="380" y="78" width="200" height="34" rx="17" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text class="st" x="480" y="100" text-anchor="middle" font-size="13.5" font-weight="700">S · these days</text>
+  <line class="now" x1="480" y1="64" x2="480" y2="122" stroke-width="2"/>
+  <text class="ink" x="480" y="142" text-anchor="middle" font-size="13" font-weight="800">ŞİMDİ</text>
+  <text class="mut" x="16" y="142" font-size="13">GEÇMİŞ</text><text class="mut" x="616" y="142" text-anchor="end" font-size="13">GELECEK</text></svg>`));},
+ v2(b,p){const d=el('div','v2');for(const [a,v] of b.items){const bt=el('button','',a);bt.type='button';const k=a;const show=()=>{bt.innerHTML=`${a} → <b>${v}</b>`;};if(st.v2[k])show();bt.onclick=()=>{if(st.v2[k]){st.v2[k]=0;bt.textContent=a;}else{st.v2[k]=1;show();}save();};d.appendChild(bt);}p.appendChild(d);},
+
+ mcq(b,p,changed,ctx){
+  const box=el('div','q'+(b.bomb?' bomb':''));
+  if(b.tag)box.appendChild(el('span','tag',b.tag));
+  if(b.q)box.appendChild(el('p','ask',fmt(b.q)));
+  if(b.chat){const c=el('div','chat');for(const [w,t] of b.chat){c.appendChild(el('div','bub'+(t==='----'?' me gap':''),t==='----'?`${w}: ----`:`<b>${w}</b>${fmt(t)}`));}box.appendChild(c);}
+  if(b.stem)box.appendChild(el('p','stem'+(b.tr?' trs':''),fmt(b.stem)));
+  const cb=cebi(b.cebi);if(cb)box.appendChild(cb);
+  let hb=null;if(b.hint){hb=el('button','hintb','İpucu');hb.type='button';hb.onclick=()=>{hb.replaceWith(el('div','fb info',fmt(b.hint)));};box.appendChild(hb);}
+  const opts=el('div','opts'+(b.codes?' codes3':'')+(b.who?' who':'')+(b.bomb?' wire':''));
+  const list=b.codes?(Array.isArray(b.codes)?b.codes:['G','K','S']):b.o;
+  const btns=list.map((o,i)=>{
+    const bt=el('button','op');bt.type='button';
+    let lab=b.who?['Ece','Mert','Defne'][i]:b.bomb?'':L[i];
+    if(b.codes)bt.innerHTML=`<span class="cd ${CODES[o][0]}">${o}</span><span class="x">${CODES[o][1]}</span>`;
+    else bt.innerHTML=`<span class="l">${lab}</span><span class="x">${fmt(plain(o))}</span>`+(b.L?`<span class="lt">${b.L[i]}</span>`:'');
+    bt.onclick=()=>pick(i);opts.appendChild(bt);return bt;});
+  box.appendChild(opts);
+  const fbw=el('div');fbw.style.cssText='display:contents';box.appendChild(fbw);
+  p.appendChild(box);
+  const key=b.id;
+  function rec(){return st.q[key]||(st.q[key]={tries:0,solved:false,wrong:[]});}
+  function paint(showFb){
+    const r=rec();
+    btns.forEach((bt,i)=>{bt.classList.remove('right','wrong','dim');bt.disabled=false;
+      if(r.wrong.includes(i))bt.classList.add('wrong');
+      if(r.solved){bt.disabled=true;if(i===b.a)bt.classList.add('right');else if(!r.wrong.includes(i))bt.classList.add('dim');}});
+    if(showFb!=null){fbw.innerHTML='';const ok=showFb===b.a;
+      const xpTxt=ok&&r.tries===1&&b.xp&&!(ctx&&ctx.noxp)?` <span class="xpg">+${b.xp} XP</span>`:'';
+      fbw.appendChild(el('div','fb '+(ok?'ok':'no'),`<div>${fmt(b.f[showFb])}${xpTxt}</div>`));}
+  }
+  function pick(i){
+    const r=rec();if(r.solved)return;
+    r.tries++;
+    firstTry(key,i===b.a,b.noscore);
+    if(i===b.a){r.solved=true;r.first=(r.tries===1);if(r.first&&b.xp&&!(ctx&&ctx.noxp))award(key,b.xp);}
+    else if(!r.wrong.includes(i))r.wrong.push(i);
+    paint(i);save();hud();changed();
+    if(ctx&&ctx.onAnswer)ctx.onAnswer();
+    document.dispatchEvent(new CustomEvent('qsolved',{detail:key}));
+  }
+  const r=rec();if(r.solved)paint(b.a);else if(r.wrong.length)paint(null);
+  return {req:true,done:()=>!!rec().solved,reset:()=>{st.q[key]={tries:0,solved:false,wrong:[]};fbw.innerHTML='';paint(null);if(hb===null&&b.hint){}}};
+ },
+
+ tap(b,p,changed){
+  const box=el('div','q');box.appendChild(el('p','ask',fmt(b.q)));
+  const cb=cebi(b.cebi);
+  const tk=el('div','toks');
+  const groups=[...new Set(b.toks.map(t=>t[1]).filter(r=>r[0]==='p'))];
+  const r=st.tp[b.id]||(st.tp[b.id]={found:[],tries:0,miss:0});
+  const fbw=el('div');fbw.style.cssText='display:contents';
+  const bts=b.toks.map(([w,role],i)=>{const bt=el('button','tk',w);bt.type='button';bt.onclick=()=>hit(i);tk.appendChild(bt);return bt;});
+  box.appendChild(tk);if(cb)box.appendChild(cb);box.appendChild(fbw);p.appendChild(box);
+  const done=()=>groups.every(g=>r.found.includes(g));
+  function paint(){
+    bts.forEach((bt,i)=>{const role=b.toks[i][1];bt.classList.toggle('hit',role[0]==='p'&&r.found.includes(role));if(done()){bt.disabled=true;if(role==='s')bt.classList.add('subj');bt.classList.remove('miss');}});
+  }
+  function say(cls,h){fbw.innerHTML='';fbw.appendChild(el('div','fb '+cls,`<div>${fmt(h)}</div>`));}
+  function hit(i){
+    if(done())return;const role=b.toks[i][1];r.tries++;
+    firstTry(b.id,role[0]==='p');
+    if(role[0]==='p'){if(!r.found.includes(role))r.found.push(role);
+      if(done()){if(r.miss===0)award(b.id,b.xp);say('ok',b.done+(r.miss===0?` <span class="xpg">+${b.xp} XP</span>`:''));}
+      else say('info',b.part||'Bi tane daha var.');}
+    else{r.miss++;bts[i].classList.add('miss');setTimeout(()=>bts[i].classList.remove('miss'),900);say('no',role==='s'?b.fs:b.fo);}
+    paint();save();hud();changed();
+  }
+  paint();if(done())say('ok',b.done);
+  return {req:true,done};
+ },
+
+ ge(b,p,changed){
+  const w=el('div','ge');w.appendChild(el('span','','Sence:'));
+  const fbw=el('div');fbw.style.cssText='display:contents';
+  const opts=[['G','Gerçek'],['E','Efsane']];
+  const bts=opts.map(([k,t])=>{const bt=el('button','',t);bt.type='button';bt.onclick=()=>pick(k);w.appendChild(bt);return bt;});
+  p.appendChild(w);p.appendChild(fbw);
+  function show(k){bts.forEach((bt,i)=>{bt.disabled=true;bt.classList.toggle('sel',opts[i][0]===k);});
+    fbw.innerHTML='';fbw.appendChild(el('div','fb '+(k===b.a?'ok':'info'),`<div>${k===b.a?'Tahminin tuttu. ':'Tahminin tutmadı, olsun. '}${fmt(b.fact)}</div>`));}
+  function pick(k){if(st.ge[b.id])return;st.ge[b.id]=k;show(k);save();changed();}
+  if(st.ge[b.id])show(st.ge[b.id]);
+  return {req:true,done:()=>!!st.ge[b.id]};
+ },
+
+ swipe(b,p,changed){
+  const c=el('div','sw',`<div class="e">${fmt(b.en)}</div>${b.tr?`<div class="t">${fmt(b.tr)}</div>`:''}`);
+  const bt=el('div','bt');const no=el('button','n',b.noLabel||'✕ Geç');const yes=el('button','y',b.yesLabel||'♥ Eşleşme');no.type=yes.type='button';bt.append(no,yes);c.appendChild(bt);
+  const fbw=el('div');fbw.style.cssText='display:contents';c.appendChild(fbw);p.appendChild(c);
+  const r=()=>st.sw[b.id];
+  function show(){const x=r();if(!x)return;
+    no.classList.toggle('wr',x.wrong&&x.wrong.includes(false));yes.classList.toggle('wr',x.wrong&&x.wrong.includes(true));
+    if(x.solved){no.disabled=yes.disabled=true;(b.a?yes:no).classList.add('sel');}
+    fbw.innerHTML='';fbw.appendChild(el('div','fb '+(x.solved?'ok':'no'),`<div>${fmt(x.solved?b.ok:b.no)}${x.solved&&x.first?` <span class="xpg">+${b.xp} XP</span>`:''}</div>`));}
+  function pick(v){const x=st.sw[b.id]||(st.sw[b.id]={tries:0,solved:false,wrong:[]});if(x.solved)return;x.tries++;firstTry(b.id,v===b.a);
+    if(v===b.a){x.solved=true;x.first=x.tries===1;if(x.first)award(b.id,b.xp);}else x.wrong.push(v);
+    show();save();hud();changed();}
+  no.onclick=()=>pick(false);yes.onclick=()=>pick(true);show();
+  return {req:true,done:()=>!!(r()&&r().solved)};
+ },
+
+ steps(b,p,changed){
+  const box=el('div','steps');
+  box.appendChild(el('p','stem',fmt(b.stem)));
+  const ol=el('ol','so');b.o.forEach((o,i)=>ol.appendChild(el('li','',`<b>${L[i]}</b><span>${fmt(o)}</span>`)));box.appendChild(ol);
+  const cb=cebi(b.cebi);if(cb)box.appendChild(cb);
+  const out=el('div');out.style.cssText='display:flex;flex-direction:column;gap:8px';box.appendChild(out);
+  const nb=el('button','btn sec','Sonraki adım');nb.type='button';box.appendChild(nb);p.appendChild(box);
+  const n=()=>st.steps[b.id]||0;
+  function paint(){out.innerHTML='';for(let i=0;i<n();i++)out.appendChild(el('div','st',`<i>${i+1}</i><div>${fmt(b.steps[i])}</div>`));
+    const lis=ol.children;for(let i=0;i<lis.length;i++){lis[i].classList.remove('out','mk');}
+    if(n()>=3){[0,2,3,4].filter(i=>i!==b.mark).forEach(i=>lis[i].classList.add('out'));}
+    if(n()>=4)lis[b.mark].classList.add('mk');
+    nb.hidden=n()>=b.steps.length;}
+  nb.onclick=()=>{st.steps[b.id]=n()+1;paint();save();changed();};
+  paint();
+  return {req:true,done:()=>n()>=b.steps.length};
+ },
+
+ hp(b,p){const d=el('div','hp','BOSS<span class="b">'+b.ids.map(()=>'<i></i>').join('')+'</span>');p.appendChild(d);
+  const f=()=>{const n=b.ids.filter(id=>st.q[id]&&st.q[id].solved).length;[...d.querySelectorAll('i')].forEach((x,i)=>x.classList.toggle('off',i<n));};
+  f();liveFns.push(f);},
+
+ cipher(b,p){const d=el('div','ci');const rv=el('div');rv.style.cssText='display:contents';p.appendChild(d);p.appendChild(rv);
+  const qs={};for(const s of SCREENS)for(const x of s.blocks)if(x.t==='mcq'&&b.ids.includes(x.id))qs[x.id]=x;
+  const f=()=>{d.innerHTML=b.ids.map(id=>{const q=qs[id];const ok=st.q[id]&&st.q[id].solved;return `<span class="${ok?'':'e'}">${ok?q.L[q.a]:'·'}</span>`;}).join('');
+    const all=b.ids.every(id=>st.q[id]&&st.q[id].solved);
+    if(all&&!rv.firstChild){award(b.id,b.bonus);save();rv.appendChild(el('div','fb ok',`<div>${fmt(b.reveal)}</div>`));$('#hudXP').textContent=xpNow()+' XP';}};
+  f();liveFns.push(f);},
+
+ check(b,p,changed){
+  const box=el('div','chk');p.appendChild(box);
+  const c=st.chk[b.id]||(st.chk[b.id]={round:1,result:null});
+  const inner=el('div');inner.style.cssText='display:flex;flex-direction:column;gap:12px';box.appendChild(inner);
+  const msg=el('div');msg.style.cssText='display:flex;flex-direction:column;gap:10px';box.appendChild(msg);
+  let objs=[];
+  function build(){inner.innerHTML='';objs=b.items.map(it=>B.mcq(it,inner,()=>{},{noxp:c.round>1,onAnswer:eval_}));}
+  function eval_(){
+    if(!b.items.every(it=>st.q[it.id]&&st.q[it.id].solved))return;
+    if(c.result)return show();
+    const n=b.items.filter(it=>st.q[it.id].tries===1).length;
+    c.score=n;c.result=(n>=b.need)?'pass':(c.round>1?'done2':'fail');save();show();changed();}
+  function show(){msg.innerHTML='';
+    if(!c.result)return;
+    const n=c.score;
+    if(c.result==='pass'){msg.appendChild(el('div','fb ok',`<div><b>${n}/5.</b> ${fmt(c.round>1?b.pass2:b.pass)}</div>`));}
+    else if(c.result==='done2'){msg.appendChild(el('div','fb info',`<div><b>${n}/5.</b> ${fmt(b.fail2)}</div>`));}
+    else{msg.appendChild(el('div','fb no',`<div><b>${n}/5.</b> ${fmt(b.fail)}</div>`));
+      const row=el('div','row');const back=el('button','btn sec',b.backLabel);back.type='button';
+      back.onclick=()=>{const t=document.querySelector(`[data-anchor="${b.back}"]`);if(t)t.scrollIntoView({behavior:reduce?'auto':'smooth'});};
+      const again=el('button','btn','Kontrolü baştan çöz');again.type='button';
+      again.onclick=()=>{c.round=2;c.result=null;for(const it of b.items)st.q[it.id]={tries:0,solved:false,wrong:[]};save();build();show();box.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});};
+      row.append(back,again);msg.appendChild(row);}
+  }
+  build();show();
+  return {req:true,done:()=>c.result==='pass'||c.result==='done2'};
+ },
+
+ summary(b,p){const d=el('div','sum');p.appendChild(d);
+  const f=()=>{const all=allQ().filter(q=>q.xp&&!q.cipher);const first=all.filter(q=>st.xp[q.id]!=null).length;
+    d.innerHTML=`<div><b>${xpNow()}</b><span>/ ${XPMAX} XP</span></div><div><b>${first}</b><span>soru ilk denemede</span></div><div><b>${Math.round(100*xpNow()/XPMAX)}%</b><span>başarı</span></div><div class="rk"><span>Rütben</span><b>${rank()}</b><span>${rankNote()}</span></div>`;};
+  f();liveFns.push(f);},
+ checklist(b,p){const d=el('div','clist');b.items.forEach(([t,a],i)=>{const lb=el('label','',`<input type="checkbox" id="cl${i}"><span>${t}</span><a href="#" data-go="${a}">bölüme dön</a>`);
+   const inp=lb.querySelector('input');inp.checked=!!st.cl[i];inp.onchange=()=>{st.cl[i]=inp.checked?1:0;save();};
+   lb.querySelector('a').onclick=e=>{e.preventDefault();go(a);};d.appendChild(lb);});p.appendChild(d);},
+ restart(b,p){const bt=el('button','btn sec','Aşamayı baştan çöz');bt.type='button';let arm=false;
+   bt.onclick=()=>{if(!arm){arm=true;bt.textContent='Emin misin? Bütün cevaplar silinir. Tekrar dokun.';return;}reset();};p.appendChild(bt);}
+};
+const liveFns=[];
+function rankNote(){const r=rank();const d={'Çaylak':'Olsun, ilk tur bu. Tuzak bölümlerine bi daha bak.','Zaman Yolcusu':'Fena değil. Bi tur daha atarsan dedektif olursun.','Zaman Dedektifi':'Çok iyi. KRONOS\'a az kaldı.','KRONOS':'Zamanın efendisi sensin.'};return (STAGE.rankNotes&&STAGE.rankNotes[r])||d[r]||'';}
+const _hud=hud;hud=function(){_hud();liveFns.forEach(f=>f());};
+
+/* ---- menü ---- */
+function menu(){
+  const nav=$('#menuNav');nav.innerHTML='';const seen=new Set();
+  if(st.who)nav.appendChild(el('p','who-l','Öğrenci: <b></b>')).querySelector('b').textContent=st.who.name;
+  SCREENS.forEach((s,i)=>{if(!s.title||seen.has(s.sec))return;seen.add(s.sec);
+    const a=el('a',i<=st.scr?'':'lock',s.title);a.href='#';a.onclick=e=>{e.preventDefault();closeMenu();go(s.sec);};nav.appendChild(a);});
+}
+function go(sec){const t=document.querySelector(`[data-anchor="${sec}"]`);if(t)t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});}
+function closeMenu(){$('#menu').hidden=true;}
+$('#menuB').onclick=()=>{menu();$('#menu').hidden=false;};
+$('#menu').addEventListener('click',e=>{if(e.target.id==='menu')closeMenu();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
+let armR=false;$('#resetB').onclick=()=>{if(!armR){armR=true;$('#resetB').textContent='Emin misin? Tekrar dokun.';return;}reset();};
+function reset(){const w=st.who;st=fresh();st.who=w;save();location.hash='';main.innerHTML='';liveFns.length=0;boot(true);closeMenu();armR=false;$('#resetB').textContent='Baştan başla';window.scrollTo(0,0);}
+
+/* ---- başlat ---- */
+function gate(){
+  const box=el('section','screen');
+  box.innerHTML=`<div class="hero"><small>${STAGE.kicker||'YDT Grammar · Self-study'}</small><h1>${STAGE.title.split('·').pop().trim()}</h1><p>Başlamadan önce kendini tanıt. Hocan ilerlemeni bu bilgilerle görecek.</p></div>
+  <form class="login" id="lg" novalidate>
+    <label for="lgN">Adın soyadın</label><input id="lgN" autocomplete="name" required maxlength="80">
+    <label for="lgE">E-posta adresin</label><input id="lgE" type="email" autocomplete="email" inputmode="email" required maxlength="120">
+    <p class="lgerr" id="lgX" hidden></p>
+    <button class="btn" type="submit">Derse başla</button>
+    <p class="lgnote">Aynı telefonla açtığın sürece kaldığın yerden devam edersin.</p>
+  </form>`;
+  main.appendChild(box);
+  $('#lg').addEventListener('submit',e=>{e.preventDefault();
+    const n=$('#lgN').value.trim(),m=$('#lgE').value.trim().toLowerCase();
+    const x=$('#lgX');
+    if(n.length<3){x.textContent='Adını ve soyadını yaz.';x.hidden=false;return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m)){x.textContent='E-posta adresini kontrol et, bi harf eksik gibi.';x.hidden=false;return;}
+    st.who={name:n,email:m};save();box.remove();boot();report(true);});
+}
+function boot(){
+  if(TRACKED&&!st.who){$('#hudT').textContent=STAGE.title;gate();return;}
+  $('#hudT').textContent=STAGE.title;
+  const upto=Math.min(st.scr,SCREENS.length-1);
+  for(let i=0;i<=upto;i++)renderScreen(i,false);
+  hud();menu();
+  if(upto>0){const t=document.getElementById('s'+upto);if(t)setTimeout(()=>t.scrollIntoView({block:'start'}),60);}
+}
+boot();
+})();
+
+</script>
+
+</body></html>
