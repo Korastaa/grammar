@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Öğretmen paneli · Sınıf görevleri</title>
+<link rel="stylesheet" href="motor.css">
+<link rel="stylesheet" href="panel.css">
+</head>
+<body>
+<div id="app"><p style="padding:20px">Yükleniyor…</p></div>
+<script>
+(function () {
+  var h = (new URLSearchParams(location.search).get('h') || '1').replace(/[^0-9]/g, '') || '1';
+  var dosyalar = ['ayar.js', 'h' + h + '-veri.js', 'h' + h + '-anahtar.js', 'panel.js'];
+  (function yukle(i) {
+    if (i >= dosyalar.length) return;
+    var s = document.createElement('script'); s.src = dosyalar[i];
+    s.onload = function () { yukle(i + 1); };
+    s.onerror = function () { document.getElementById('app').innerHTML = '<p style="padding:20px">Hafta ' + h + ' dosyaları bulunamadı (' + dosyalar[i] + ').</p>'; };
+    document.body.appendChild(s);
+  })(0);
+})();
+</script>
+</body>
+</html>
