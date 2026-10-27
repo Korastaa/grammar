@@ -33,3 +33,8 @@
 .bilgi-anahtar{display:none;font-size:13px;color:var(--muted)}
 .isim{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
 .isim span{background:var(--sunk);border-radius:8px;padding:3px 9px;font-size:14px}
+.cub .ad .tz{display:block;font-weight:500;font-size:11.5px;color:var(--muted);line-height:1.2}
+h3 .bec{font-size:12px;font-weight:600;color:var(--muted);margin-left:6px}
+.esik.alt{color:var(--danger,#B42318)}
+.esik.ust{color:var(--teal)}
+.anahtar-kapali .tz{display:none}

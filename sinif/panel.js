@@ -2,7 +2,7 @@
    Veri: HAFTA_VERI, HAFTA_ANAHTAR, SINIF_AYAR.url → Sinif.gs doGet (JSONP). */
 (function () {
   'use strict';
-  var V = window.HAFTA_VERI, A = window.HAFTA_ANAHTAR || {}, AYAR = window.SINIF_AYAR || {};
+  var V = window.HAFTA_VERI, A = window.HAFTA_ANAHTAR || {}, ET = window.HAFTA_ETIKET || {}, AYAR = window.SINIF_AYAR || {};
   var KOK = document.getElementById('app');
   var HARF = 'ABCDE';
   var ders = 1, secili = null, zaman = null, anahtarAcik = false, sonVeri = [];
@@ -78,11 +78,11 @@
   }
 
   function ayir(c) { var i = c.indexOf(' | '); return i < 0 ? [c, ''] : [c.slice(0, i), c.slice(i + 3)]; }
-  function cubuk(kap, etiketler, sayim, dogrular, toplam) {
+  function cubuk(kap, etiketler, sayim, dogrular, toplam, tuzak) {
     etiketler.forEach(function (e) {
       var n = sayim[e] || 0;
       var r = el('div', 'cub' + (dogrular.indexOf(e) >= 0 ? ' dogru' : ''));
-      r.appendChild(el('div', 'ad', kac(e)));
+      r.appendChild(el('div', 'ad', kac(e) + (tuzak && tuzak[e] ? '<span class="tz">' + kac(tuzak[e]) + '</span>' : '')));
       var b = el('div', 'bar'); var i = el('i'); i.style.width = (toplam ? Math.round(100 * n / toplam) : 0) + '%'; b.appendChild(i); r.appendChild(b);
       r.appendChild(el('div', 'n', String(n)));
       kap.appendChild(r);
@@ -95,7 +95,13 @@
     liste.forEach(function (x) { d.appendChild(el('div', null, '<b>' + kac(x[0]) + '</b>' + kac(x[1]))); });
     kap.appendChild(d);
   }
-  function oran(kap, d, t) { kap.appendChild(el('div', 'oran', t ? 'Doğru: ' + d + ' / ' + t + ' (%' + Math.round(100 * d / t) + ')' : '')); }
+  // karar eşikleri (27 Ekim): %60 altı → beceri sonraki hafta çapa maddeyle yeniden açılır; %80 üstü → destek azaltılabilir
+  function esik(d, t) {
+    if (t < 5) return '';
+    var p = 100 * d / t;
+    return p < 60 ? ' · <b class="esik alt">eşik altı: sonraki hafta yeniden aç</b>' : (p >= 80 ? ' · <b class="esik ust">eşik üstü: destek azaltılabilir</b>' : '');
+  }
+  function oran(kap, d, t) { kap.appendChild(el('div', 'oran', t ? 'Doğru: ' + d + ' / ' + t + ' (%' + Math.round(100 * d / t) + ')' + esik(d, t) : '')); }
 
   function cizSonuc(hata) {
     var k = document.getElementById('sonuc'); if (!k || !secili) return;
@@ -116,7 +122,9 @@
     g.maddeler.forEach(function (m) {
       var satir = sonVeri.filter(function (r) { return r.madde === m.id; });
       var kap = el('div', 'madde');
-      kap.appendChild(el('h3', null, kac(m.id) + (m.yildiz ? ' · ek madde' : '') + ' <span class="durum">' + satir.length + ' cevap</span>'));
+      var et = (ET[g.kod] || {})[m.id] || {};
+      kap.appendChild(el('h3', null, kac(m.id) + (m.yildiz ? ' · ek madde' : '') + ' <span class="durum">' + satir.length + ' cevap</span>' +
+        (et.beceri ? ' <span class="bec">' + kac(et.beceri) + '</span>' : '')));
       var ozet = m.kok || m.sol || (m.bloklar && m.bloklar.join(' ')) || '';
       kap.appendChild(el('div', 'kk', kac(ozet.length > 150 ? ozet.slice(0, 150) + '…' : ozet)));
       var a = an[m.id], t = satir.length, say = {}, dogru = 0, ekler = [];
@@ -131,7 +139,7 @@
           once.forEach(function (r) { if (!bilinen[r.ogrenci]) ekler.push([r.ogrenci, r.cevap]); });
           kap.querySelector('h3').innerHTML += ' <span class="durum">· ' + once.length + ' tahmin</span>';
         }
-        cubuk(kap, HARF.slice(0, m.siklar.length).split(''), say, [a], t);
+        cubuk(kap, HARF.slice(0, m.siklar.length).split(''), say, [a], t, et.tuzak);
         if (a) kap.appendChild(el('div', 'model', a + ') ' + kac(m.siklar[HARF.indexOf(a)])));
         oran(kap, dogru, t);
         yazilar(kap, ekler, m.tur === 'tahmin_secim' ? 'Tahminler' : m.ek);
@@ -142,7 +150,7 @@
         kap.appendChild(el('div', 'kk', 'İlişki'));
         cubuk(kap, m.iliskiler, si, a ? a.iliski : [], t);
         kap.appendChild(el('div', 'kk', 'Bağlaç'));
-        cubuk(kap, HARF.slice(0, m.siklar.length).split(''), sh, a ? [a.sik] : [], t);
+        cubuk(kap, HARF.slice(0, m.siklar.length).split(''), sh, a ? [a.sik] : [], t, et.tuzak);
         if (a) kap.appendChild(el('div', 'model', a.iliski.join(' / ') + ' → ' + a.sik + ') ' + kac(m.siklar[HARF.indexOf(a.sik)])));
         kap.appendChild(el('div', 'oran', t ? 'İlişki doğru ' + di + ' / ' + t + ' · bağlaç doğru ' + dh + ' / ' + t : ''));
       } else if (m.tur === 'karar') {
@@ -163,11 +171,12 @@
         if (a) kap.appendChild(el('div', 'model', kac(a.model)));
         yazilar(kap, ekler, m.ek);
       } else if (m.tur === 'sira') {
-        satir.forEach(function (r) { var p = ayir(r.cevap); say[p[0]] = (say[p[0]] || 0) + 1; if (a && p[0] === a.sira) dogru++; if (p[1]) ekler.push([r.ogrenci, p[1]]); });
-        var sk = Object.keys(say); if (a && sk.indexOf(a.sira) < 0) sk.unshift(a.sira);
-        cubuk(kap, sk, say, a ? [a.sira] : [], t);
+        var kabul = a ? [].concat(a.sira) : [];   // kabul edilen bütün doğal sıralar
+        satir.forEach(function (r) { var p = ayir(r.cevap); say[p[0]] = (say[p[0]] || 0) + 1; if (kabul.indexOf(p[0]) >= 0) dogru++; if (p[1]) ekler.push([r.ogrenci, p[1]]); });
+        var sk = Object.keys(say); kabul.forEach(function (x) { if (sk.indexOf(x) < 0) sk.unshift(x); });
+        cubuk(kap, sk, say, kabul, t);
         oran(kap, dogru, t);
-        if (a) kap.appendChild(el('div', 'model', kac(a.model)));
+        if (a) kap.appendChild(el('div', 'model', (a.kural ? 'Kural: ' + kac(a.kural) + '<br>' : '') + kac(a.model)));
         yazilar(kap, ekler, 'Türkçeleri');
       } else if (m.tur === 'yazi') {
         if (a) kap.appendChild(el('div', 'model', kac(a.model)));

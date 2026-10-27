@@ -11,11 +11,11 @@ window.HAFTA_VERI={
     {
      "id": "1",
      "tur": "secim",
-     "kok": "In the past, families ----.",
+     "kok": "In the past, ---- were popular pastimes.",
      "siklar": [
-      "played online games together",
-      "went to the theatre together",
-      "watched series on streaming platforms"
+      "live concerts and sporting events",
+      "outdoor games, books and storytelling",
+      "arcades and video games"
      ]
     },
     {
@@ -60,8 +60,9 @@ window.HAFTA_VERI={
      "id": "A",
      "tur": "blok",
      "bloklar": [
-      "Online concerts enable people to enjoy live music from home,",
-      "so they do not have to travel and buy expensive tickets."
+      "Players",
+      "who stay calm",
+      "think outside the box."
      ],
      "etiketler": [
       "ÇEKİRDEK",
@@ -94,9 +95,10 @@ window.HAFTA_VERI={
      "id": "★",
      "tur": "blok",
      "bloklar": [
-      "Because of this controlled environment,",
-      "indoor skydiving is suitable for people as young as three,",
-      "which makes it eminently accessible to almost everyone."
+      "During the race,",
+      "the man",
+      "who loved Atalanta",
+      "threw apples."
      ],
      "etiketler": [
       "ÇEKİRDEK",
@@ -112,63 +114,6 @@ window.HAFTA_VERI={
    ]
   },
   {
-   "kod": "P4A",
-   "ders": 1,
-   "ad": "Bağlantı",
-   "slayt": "Bağlantı · çöz",
-   "maddeler": [
-    {
-     "id": "1",
-     "tur": "iliski_secim",
-     "kok": "---- the clues are difficult, the players still stay calm.",
-     "siklar": [
-      "Despite",
-      "Because",
-      "Although"
-     ],
-     "iliskiler": [
-      "NEDEN",
-      "SONUÇ",
-      "KARŞITLIK",
-      "TAVİZ"
-     ]
-    },
-    {
-     "id": "2",
-     "tur": "iliski_secim",
-     "kok": "Atalanta was the fastest runner. ----, Hippomenes won the race.",
-     "siklar": [
-      "For example",
-      "However",
-      "Therefore"
-     ],
-     "iliskiler": [
-      "NEDEN",
-      "SONUÇ",
-      "KARŞITLIK",
-      "TAVİZ"
-     ]
-    },
-    {
-     "id": "★",
-     "tur": "iliski_secim",
-     "kok": "---- the controlled environment, children as young as three can try indoor skydiving.",
-     "siklar": [
-      "Although",
-      "Because",
-      "Because of"
-     ],
-     "iliskiler": [
-      "NEDEN",
-      "SONUÇ",
-      "KARŞITLIK",
-      "TAVİZ"
-     ],
-     "yildiz": true
-    }
-   ]
-  },
-  {
    "kod": "YXE",
    "ders": 1,
    "ad": "Çeviri · öbekler",
@@ -177,25 +122,25 @@ window.HAFTA_VERI={
     {
      "id": "1",
      "tur": "yazi",
-     "kok": "Unlike football, which calls for a large team,",
+     "kok": "players as young as six",
      "ipucu": "Türkçesi"
     },
     {
      "id": "2",
      "tur": "yazi",
-     "kok": "Because of its simple rules,",
+     "kok": "Unlike football, which calls for a large team,",
      "ipucu": "Türkçesi"
     },
     {
      "id": "3",
      "tur": "yazi",
-     "kok": "players as young as six",
+     "kok": ", which makes it highly appealing to beginners",
      "ipucu": "Türkçesi"
     },
     {
      "id": "4",
      "tur": "yazi",
-     "kok": ", which makes it highly appealing to beginners",
+     "kok": "Because of its simple rules,",
      "ipucu": "Türkçesi"
     }
    ]
@@ -214,8 +159,7 @@ window.HAFTA_VERI={
       "which calls for expensive equipment,",
       "indoor climbing in sports centres",
       "is accessible to almost everyone."
-     ],
-     "ek": "Türkçesi"
+     ]
     },
     {
      "id": "2",
@@ -225,8 +169,88 @@ window.HAFTA_VERI={
       "card games",
       "are suitable for players as young as six,",
       "which makes them popular at family gatherings."
+     ]
+    }
+   ]
+  },
+  {
+   "kod": "P4A",
+   "ders": 1,
+   "ad": "Bağlantı",
+   "slayt": "Bağlantı · çöz",
+   "maddeler": [
+    {
+     "id": "1",
+     "tur": "iliski_secim",
+     "kok": "---- the clues are difficult, the players still stay calm.",
+     "siklar": [
+      "Despite",
+      "Although",
+      "Because"
      ],
-     "ek": "Türkçesi"
+     "iliskiler": [
+      "NEDEN",
+      "SONUÇ",
+      "KARŞITLIK",
+      "TAVİZ",
+      "KOŞUL",
+      "AMAÇ"
+     ]
+    },
+    {
+     "id": "2",
+     "tur": "iliski_secim",
+     "kok": "Atalanta was the fastest runner. ----, Hippomenes won the race.",
+     "siklar": [
+      "In addition",
+      "Therefore",
+      "However"
+     ],
+     "iliskiler": [
+      "NEDEN",
+      "SONUÇ",
+      "KARŞITLIK",
+      "TAVİZ",
+      "KOŞUL",
+      "AMAÇ"
+     ]
+    },
+    {
+     "id": "3",
+     "tur": "iliski_secim",
+     "kok": "---- the weather is bad, outdoor skydivers cannot jump.",
+     "siklar": [
+      "If",
+      "Although",
+      "Unless"
+     ],
+     "iliskiler": [
+      "NEDEN",
+      "SONUÇ",
+      "KARŞITLIK",
+      "TAVİZ",
+      "KOŞUL",
+      "AMAÇ"
+     ]
+    },
+    {
+     "id": "★",
+     "tur": "iliski_secim",
+     "kok": "---- her great speed, no suitor could beat Atalanta.",
+     "siklar": [
+      "Despite",
+      "Because",
+      "Because of"
+     ],
+     "iliskiler": [
+      "NEDEN",
+      "SONUÇ",
+      "KARŞITLIK",
+      "TAVİZ",
+      "KOŞUL",
+      "AMAÇ"
+     ],
+     "yildiz": true
     }
    ]
   },
@@ -242,7 +266,7 @@ window.HAFTA_VERI={
      "kok": "----, their team can easily get left behind in a scavenger hunt.",
      "siklar": [
       "Whenever players share every clue with their teammates",
-      "Once all teams assemble to hear the results",
+      "Once players find the first clue",
       "Unless players miss a clue",
       "If players miss even one clue"
      ]
@@ -250,12 +274,12 @@ window.HAFTA_VERI={
     {
      "id": "2",
      "tur": "secim",
-     "kok": "Atalanta was curious about the shining fruit and slowed down, ----.",
+     "kok": "Atalanta was curious about the fruit and slowed down, ----.",
      "siklar": [
-      "so Hippomenes was able to pull ahead of her",
-      "because Hippomenes crossed the finish line first",
+      "so Hippomenes could pull ahead of her",
+      "since Hippomenes crossed the finish line first",
       "although she wanted to see the intriguing apple",
-      "so that she could take the lead at the start"
+      "so that she could stay ahead of Hippomenes"
      ]
     }
    ]
@@ -269,8 +293,8 @@ window.HAFTA_VERI={
     {
      "id": "1",
      "tur": "karar",
-     "sol": "Indoor skydivers stay a few metres above a safety net.",
-     "sag": "Indoor skydivers float a few metres above a safety net.",
+     "sol": "Because the tunnel is safe, even children can try it.",
+     "sag": "Although the tunnel is safe, even children can try it.",
      "secenekler": [
       "AYNI",
       "KİM",
@@ -295,8 +319,8 @@ window.HAFTA_VERI={
     {
      "id": "3",
      "tur": "karar",
-     "sol": "Because the tunnel is safe, even children can try indoor skydiving.",
-     "sag": "Although the tunnel is safe, even children can try indoor skydiving.",
+     "sol": "Hippomenes could not defeat Atalanta by speed alone.",
+     "sag": "Speed alone was not enough for Hippomenes to beat Atalanta.",
      "secenekler": [
       "AYNI",
       "KİM",
@@ -327,10 +351,23 @@ window.HAFTA_VERI={
      "ek": "Değişen sözcük"
     },
     {
+     "id": "5",
+     "tur": "karar",
+     "sol": "Skilled instructors supervise the participants.",
+     "sag": "The participants are supervised by skilled instructors.",
+     "secenekler": [
+      "AYNI",
+      "KİM",
+      "İLİŞKİ",
+      "NE KADAR"
+     ],
+     "ek": "Değişen sözcük"
+    },
+    {
      "id": "★",
      "tur": "karar",
-     "sol": "Hippomenes could not defeat Atalanta by speed alone.",
-     "sag": "Speed alone was not enough for Hippomenes to beat Atalanta.",
+     "sol": "Indoor skydivers stay a few metres above a safety net.",
+     "sag": "Indoor skydivers float a few metres above a safety net.",
      "secenekler": [
       "AYNI",
       "KİM",
@@ -351,23 +388,23 @@ window.HAFTA_VERI={
     {
      "id": "1",
      "tur": "secim",
-     "kok": "Because Hippomenes could not defeat Atalanta by speed alone, ----.",
+     "kok": "Although the fastest teams earn medals at the end, ----.",
      "siklar": [
-      "he came up with a clever plan to slow her down",
-      "Atalanta watched each of her suitors fail one by one",
-      "she realised her mistake in the final moments of the race",
-      "he decided to rely only on his speed in the race"
+      "the real fun comes from working together as a team",
+      "all teams assemble at the end to hear the results",
+      "speed is the most important skill in the game",
+      "only the teams with the most players can win"
      ]
     },
     {
      "id": "2",
      "tur": "secim",
-     "kok": "Since hologram concerts can take place in several cities at the same time, ----.",
+     "kok": "Since hologram concerts can happen in several cities at once, ----.",
      "siklar": [
       "artists who have passed away can appear on stage again",
       "most audiences feel that hologram concerts are as real as live ones",
       "some people find them less exciting than live shows",
-      "a much larger audience can watch the show"
+      "a much larger audience can watch them"
      ]
     }
    ]
@@ -411,26 +448,26 @@ window.HAFTA_VERI={
     {
      "id": "1",
      "tur": "secim",
-     "kok": "Participants float in a wind tunnel just a few metres above a safety net. Because of this controlled environment, indoor skydiving is suitable for people as young as three.",
-     "isaret": "this controlled environment",
-     "soru": "this controlled environment = ?",
+     "kok": "Participants float in a wind tunnel. Strong fans create fast-moving air. A safety net is just below them. Because of this controlled environment, even children can try it.",
      "siklar": [
-      "a tunnel with a safety net below",
-      "the outdoor weather",
-      "the aircraft"
-     ]
+      "the tunnel, fans and net",
+      "the fast-moving air from the fans",
+      "the safety net just below them"
+     ],
+     "isaret": "this controlled environment",
+     "soru": "this controlled environment = ?"
     },
     {
      "id": "2",
      "tur": "secim",
-     "kok": "Players form teams, choose a strategy and make a detailed plan. This preparation helps teams feel ready.",
-     "isaret": "This preparation",
-     "soru": "This preparation = ?",
+     "kok": "Players form teams, choose a strategy and make a plan. This preparation helps teams feel ready.",
      "siklar": [
-      "finding the hidden items",
+      "making a plan before the hunt",
       "forming teams, choosing a strategy and planning",
-      "hearing the results at the end"
-     ]
+      "feeling ready for the challenges ahead"
+     ],
+     "isaret": "This preparation",
+     "soru": "This preparation = ?"
     }
    ]
   },
@@ -443,27 +480,59 @@ window.HAFTA_VERI={
     {
      "id": "3",
      "tur": "secim",
-     "kok": "For beginners, indoor skydiving offers the thrill of free fall without the fear of heights, which makes it rather appealing.",
-     "isaret": "it",
-     "soru": "it = ?",
+     "kok": "In the race, Hippomenes tossed an apple onto the track. Atalanta was curious about it and slowed down.",
      "siklar": [
-      "the fear of heights",
-      "free fall",
-      "indoor skydiving"
-     ]
+      "the race",
+      "the track",
+      "the apple"
+     ],
+     "isaret": "it",
+     "soru": "it = ?"
     },
     {
      "id": "★",
      "tur": "secim",
-     "kok": "Beyond recreation, professionals use wind tunnels for training. They allow practising expert-level aerial moves.",
-     "isaret": "They",
-     "soru": "They = ?",
+     "kok": "People choose indoor skydiving for its safety. They wear helmets, and skilled instructors watch them closely.",
      "siklar": [
-      "wind tunnels",
-      "professionals",
-      "aerial moves"
+      "instructors",
+      "people",
+      "helmets"
      ],
+     "isaret": "them",
+     "soru": "them = ?",
      "yildiz": true
+    }
+   ]
+  },
+  {
+   "kod": "LNL",
+   "ders": 3,
+   "ad": "Konu mu, iddia mı?",
+   "slayt": "Konu mu, iddia mı? · çöz",
+   "maddeler": [
+    {
+     "id": "1",
+     "tur": "secim",
+     "kok": "Scavenger hunts help players work as a team.",
+     "siklar": [
+      "Teams share ideas and make a plan together.",
+      "Players listen to each other when a clue is hard.",
+      "These games can be played indoors or outdoors."
+     ],
+     "soru": "Hangi cümle bu iddiayı sürdürmüyor?",
+     "ek": "İlk cümlenin iddiası (Türkçe, 2–4 kelime)"
+    },
+    {
+     "id": "2",
+     "tur": "secim",
+     "kok": "Online concerts make live music easy to reach.",
+     "siklar": [
+      "Some online concerts last more than three hours.",
+      "People can watch them on a phone or a laptop.",
+      "Fans do not need to travel or buy expensive tickets."
+     ],
+     "soru": "Hangi cümle bu iddiayı sürdürmüyor?",
+     "ek": "İlk cümlenin iddiası (Türkçe, 2–4 kelime)"
     }
    ]
   },
@@ -476,12 +545,12 @@ window.HAFTA_VERI={
     {
      "id": "1",
      "tur": "tahmin_secim",
-     "kok": "Wind tunnels are not only for fun. Professional skydivers also use them as a training place. ---- This kind of practice would be challenging and risky in the open sky. As a result, many teams spend long hours in tunnels before an important competition.",
+     "kok": "Wind tunnels are not only for fun. Professional skydivers also use them for training. ---- This kind of practice would be challenging and risky in the open sky. As a result, many teams spend long hours in tunnels before an important competition.",
      "siklar": [
       "They usually wear helmets and special suits for protection.",
       "In a tunnel, they can try expert-level moves again and again.",
-      "Beginners, on the other hand, enjoy the thrill of free fall without fear.",
-      "Indoor skydiving is suitable even for children as young as three."
+      "Beginners, on the other hand, usually fly there just for fun.",
+      "They practise there for only a few minutes before a competition."
      ],
      "tahminler": [
       "Sonraki cümlede boşluğu gösteren sözcükler",
@@ -501,10 +570,10 @@ window.HAFTA_VERI={
      "tur": "secim",
      "kok": "In a scavenger hunt, the fastest team does not always win. ---- However, creative answers and good teamwork also bring points. For this reason, a slow but clever team can still earn the biggest reward.",
      "siklar": [
-      "For example, every team receives a list of items before the hunt.",
+      "Points in this game come only from speed.",
       "As a result, slow teams never get a reward at the end.",
       "Of course, speed matters, and teams race to find hidden items first.",
-      "Players must stay calm when a clue does not make sense at first."
+      "Clever teams usually solve the clues in creative ways."
      ]
     }
    ]
@@ -518,7 +587,7 @@ window.HAFTA_VERI={
     {
      "id": "3",
      "tur": "secim",
-     "kok": "Indoor skydiving is one of the safest ways to experience free fall. (I) All participants wear helmets and special suits for protection. (II) Indoor skydiving centres also offer special prices for school groups. (III) In addition, skilled instructors watch every flight from close by. (IV) Unlike outdoor jumps, the flights are also safe from storms and strong winds.",
+     "kok": "Indoor skydiving is one of the safest ways to experience free fall. (I) All participants wear helmets and special suits for protection. (II) Many beginners also choose it for the thrill of free fall. (III) In addition, skilled instructors watch every flight closely. (IV) Unlike outdoor jumps, the flights are also safe from storms and strong winds.",
      "siklar": [
       "I",
       "II",
@@ -537,13 +606,13 @@ window.HAFTA_VERI={
     {
      "id": "1",
      "tur": "secim",
-     "kok": "In the past, families spent their free time together. ---- They listened to live music, played outdoor games and went to the theatre. Today, many of these activities happen on a screen.",
+     "kok": "In the past, families spent their free time together. ---- These social activities changed with the radio and cinema.",
      "siklar": [
-      "Their entertainment was mostly social and took place outside the home.",
-      "Television became popular in the 20th century.",
-      "Many children today play online games with their friends."
+      "Some people stayed at home and read books alone.",
+      "Today, many people watch films on streaming platforms.",
+      "They listened to live music and went to the theatre."
      ],
-     "ek": "Boşluktan sonraki cümlede boşluğu gösteren sözcük"
+     "ek": "Boşluğu gösteren sözcükler (sonraki cümleden)"
     }
    ]
   }

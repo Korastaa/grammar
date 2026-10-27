@@ -297,7 +297,8 @@
       sil.onclick = function () { secilen = []; Array.prototype.forEach.call(s.children, function (x) { x.disabled = false; }); guncelle(); };
       s.appendChild(sil);
       c.appendChild(g); c.appendChild(s);
-      ekAlan(c, m.ek, function (v) { ek = v; guncelle(); }, true);
+      if (m.ek) ekAlan(c, m.ek, function (v) { ek = v; guncelle(); }, true);
+      else c.appendChild(el('div', 'not', 'Türkçesini sözlü söyleyeceksin; yalnız sırayı gönder.'));
     },
     yazi: function (c, m, set) {
       c.appendChild(el('p', 'kok', '<b>' + kac(m.kok) + '</b>'));
