@@ -277,7 +277,7 @@
         cipler(d, m.etiketler, function (t) { sec[j] = t; guncelle(); });
         c.appendChild(d);
       });
-      ekAlan(c, m.ek, function (v) { ek = v; guncelle(); }, true);
+      if (m.ek) ekAlan(c, m.ek, function (v) { ek = v; guncelle(); }, true);
     },
     sira: function (c, m, set) {
       m.bloklar.forEach(function (b, j) { c.appendChild(el('div', 'blok', '<div class="t"><span class="n">' + (j + 1) + '</span>' + kac(b) + '</div>')); });
