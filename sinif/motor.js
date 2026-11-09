@@ -146,6 +146,10 @@
       var k = g.value.trim().toUpperCase().replace(/[İI]/g, 'I');
       var gr = V.gorevler.filter(function (x) { return x.kod === k; })[0];
       if (!gr) { h.textContent = 'Bu kod yok. Slayttaki kodu tekrar kontrol et.'; return; }
+      if (gr.sureli) {
+        if (oku('gonderilen', {})[gr.kod]) { h.textContent = 'Bu görevi gönderdin. Süreli görev yeniden açılmaz.'; return; }
+        sureliEkrani(gr); return;
+      }
       gorevEkrani(gr);
     }
     b.onclick = ac;
@@ -200,6 +204,108 @@
     };
     kontrol();
     window.scrollTo(0, 0);
+  }
+
+  /* ---------- süreli görev (Hafta 3'ten: Ödev kontrolü) ----------
+     Maddeler tek tek gelir; her maddenin kendi süresi var (m.sure sn). Süre bitince madde boş sayılır ve sonrakine geçilir.
+     Geri dönüş yok. Son maddeden sonra cevaplar kendiliğinden gönderilir; gönderilen görev yeniden açılmaz.
+     Şıkların sırası öğrenciye göre karışık (m.karistir === false ise sabit); kayıt her zaman asıl harfle.
+     Sayfa yenilenirse ya da kod yeniden girilirse görev kaldığı yerden, saat durmadan sürer. */
+  function stilEkle() {
+    if (document.getElementById('sureli-stil')) return;
+    var s = el('style'); s.id = 'sureli-stil';
+    s.textContent = '.sayac{display:flex;align-items:center;gap:10px;margin:6px 0 2px}.sayac .bar{flex:1;height:10px;border-radius:99px;background:var(--sunk);overflow:hidden}' +
+      '.sayac .bar i{display:block;height:100%;background:var(--teal);transition:width .25s linear}.sayac.az .bar i{background:var(--or)}' +
+      '.sayac .sn{font-weight:800;font-variant-numeric:tabular-nums;min-width:3.2em;text-align:right}.ilerle{font-size:13px;color:var(--muted)}';
+    document.head.appendChild(s);
+  }
+  function tohumlu(str) {   // aynı öğrenci + görev → aynı karışık sıra
+    var h = 2166136261; for (var i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return function () { h ^= h << 13; h ^= h >>> 17; h ^= h << 5; return ((h >>> 0) % 100000) / 100000; };
+  }
+  function sureliEkrani(gr) {
+    stilEkle();
+    var o = oku('ogr', {});
+    var ANAH = 'sureli_' + gr.kod;
+    var st = oku(ANAH, null);
+    if (!st) {
+      var r = tohumlu((o.ad || '') + '|' + (o.no || '') + '|' + gr.kod);
+      st = { i: 0, bitis: Date.now() + gr.maddeler[0].sure * 1000, bas: Date.now(), cevap: [], sure: [],
+             sira: gr.maddeler.map(function (m) {
+               var p = m.siklar.map(function (_, j) { return j; });
+               if (m.karistir !== false) for (var j = p.length - 1; j > 0; j--) { var k = Math.floor(r() * (j + 1)); var t = p[j]; p[j] = p[k]; p[k] = t; }
+               return p;
+             }) };
+      yaz(ANAH, st); yaz('aktif', gr.kod);
+    }
+    var zaman = null, secili = null;
+    function bitir() {
+      if (zaman) clearInterval(zaman);
+      var kayit = gr.maddeler.map(function (m, i) { return { madde: m.id, cevap: st.cevap[i] || 'BOŞ', sure: st.sure[i] || 0 }; });
+      gonder({ hafta: V.hafta, ders: gr.ders, gorev: gr.kod, ogrenci: o.ad, no: o.no, sube: o.sube || '', oturum: oturum, kayitlar: kayit });
+      var gon = oku('gonderilen', {}); gon[gr.kod] = 1; yaz('gonderilen', gon);
+      yaz(ANAH, null); yaz('aktif', null);
+      window.scrollTo(0, 0); kodEkrani(true);
+    }
+    function ilerle(cevap) {   // bu maddeyi kaydet, sonrakine geç
+      var m = gr.maddeler[st.i];
+      st.cevap[st.i] = cevap;
+      st.sure[st.i] = Math.min(Date.now(), st.bitis) - (st.bitis - m.sure * 1000);
+      st.i++;
+      if (st.i >= gr.maddeler.length) { yaz(ANAH, st); bitir(); return; }
+      st.bitis = (cevap ? Date.now() : st.bitis) + gr.maddeler[st.i].sure * 1000;
+      yaz(ANAH, st); ciz();
+    }
+    function yetis() {   // ekran kapalıyken süresi dolan maddeler boş sayılır
+      while (st.i < gr.maddeler.length && Date.now() >= st.bitis) {
+        var m = gr.maddeler[st.i]; st.cevap[st.i] = null; st.sure[st.i] = m.sure * 1000; st.i++;
+        if (st.i < gr.maddeler.length) st.bitis += gr.maddeler[st.i].sure * 1000;
+      }
+      yaz(ANAH, st);
+      return st.i >= gr.maddeler.length;
+    }
+    function ciz() {
+      if (zaman) clearInterval(zaman);
+      if (yetis()) { bitir(); return; }
+      var m = gr.maddeler[st.i]; secili = null;
+      KOK.innerHTML = '';
+      var w = el('div', 'w'); KOK.appendChild(w);
+      w.appendChild(ust());
+      w.appendChild(el('div', 'eb', 'Ders ' + gr.ders + ' · ' + kac(gr.ad)));
+      w.appendChild(el('div', 'ilerle', 'Soru ' + (st.i + 1) + ' / ' + gr.maddeler.length + ' · geri dönüş yok'));
+      var say = el('div', 'sayac'); var bar = el('div', 'bar'); var ic = el('i'); bar.appendChild(ic); var sn = el('div', 'sn');
+      say.appendChild(bar); say.appendChild(sn); w.appendChild(say);
+      var c = el('div', 'card');
+      if (m.ust) c.appendChild(el('div', 'not', kac(m.ust)));
+      c.appendChild(el('p', 'kok', m.isaret ? isaretli(m.kok, m.isaret) : kac(m.kok)));
+      if (m.soru) c.appendChild(el('div', 'soru', kac(m.soru)));
+      var op = el('div', 'opts');
+      st.sira[st.i].forEach(function (j, n) {
+        var b = el('button', 'opt', '<span class="h">' + HARF[n] + ')</span><span>' + kac(m.siklar[j]) + '</span>');
+        b.type = 'button';
+        b.onclick = function () {
+          Array.prototype.forEach.call(op.children, function (x) { x.classList.remove('on'); });
+          b.classList.add('on'); secili = HARF[j]; ileri.disabled = false;
+        };
+        op.appendChild(b);
+      });
+      c.appendChild(op); w.appendChild(c);
+      var alt = el('div', 'alt'); var ai = el('div', 'in'); alt.appendChild(ai);
+      var ileri = el('button', 'btn', st.i === gr.maddeler.length - 1 ? 'Bitir ve gönder' : 'Sonraki soru');
+      ileri.disabled = true;
+      ileri.onclick = function () { if (secili) ilerle(secili); };
+      ai.appendChild(ileri); KOK.appendChild(alt);
+      function tik() {
+        var kalan = Math.max(0, st.bitis - Date.now());
+        ic.style.width = (100 * kalan / (m.sure * 1000)) + '%';
+        sn.textContent = Math.ceil(kalan / 1000) + ' sn';
+        say.className = 'sayac' + (kalan < 8000 ? ' az' : '');
+        if (kalan <= 0) { clearInterval(zaman); ilerle(secili); }
+      }
+      tik(); zaman = setInterval(tik, 250);
+      window.scrollTo(0, 0);
+    }
+    ciz();
   }
 
   /* ---------- madde türleri ---------- */
@@ -259,14 +365,14 @@
     karar: function (c, m, set) {
       var d = el('div', 'cift');
       d.appendChild(el('div', null, kac(m.sol)));
-      d.appendChild(el('div', 'ok', '↓ yeniden yazım'));
+      d.appendChild(el('div', 'ok', kac(m.ok || '↓ yeniden yazım')));
       d.appendChild(el('div', null, kac(m.sag)));
       c.appendChild(d);
       c.appendChild(el('label', null, 'Kararın'));
       var k = null, ek = '';
       var guncelle = function () { set(k ? birlestir(k, ek) : null); };
       cipler(c, m.secenekler, function (t) { k = t; guncelle(); });
-      ekAlan(c, m.ek + ' (varsa)', function (v) { ek = v; guncelle(); });
+      if (m.ek) ekAlan(c, m.ek + ' (varsa)', function (v) { ek = v; guncelle(); });
     },
     blok: function (c, m, set) {
       var sec = m.bloklar.map(function () { return null; }), ek = '';
@@ -302,6 +408,7 @@
     },
     yazi: function (c, m, set) {
       c.appendChild(el('p', 'kok', '<b>' + kac(m.kok) + '</b>'));
+      if (m.iskelet) c.appendChild(el('p', 'kok', bosluklu(m.iskelet)));
       ekAlan(c, m.ipucu || 'Cevabın', function (v) { set(v || null); }, true);
     },
     tahmin_secim: function (c, m, set, anlik) {
@@ -324,5 +431,10 @@
   };
 
   bosalt();
-  oku('ogr', null) ? kodEkrani() : giris();
+  (function () {   // yarım kalmış süreli görev varsa kaldığı yerden
+    var a = oku('ogr', null) && oku('aktif', null);
+    var gr = a && V.gorevler.filter(function (x) { return x.kod === a && x.sureli; })[0];
+    if (gr && !oku('gonderilen', {})[gr.kod]) sureliEkrani(gr);
+    else oku('ogr', null) ? kodEkrani() : giris();
+  })();
 })();
