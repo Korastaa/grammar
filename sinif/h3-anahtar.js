@@ -9,9 +9,21 @@ window.HAFTA_ANAHTAR={
   "7": "B",
   "8": "C",
   "9": "A",
-  "10": "D",
+  "10": "C",
   "11": "B",
-  "12": "C"
+  "12": "D",
+  "13": "B",
+  "14": "C",
+  "15": "D",
+  "16": "B",
+  "17": "A",
+  "18": "C",
+  "19": "D",
+  "20": "A",
+  "21": "B",
+  "22": "D",
+  "23": "A",
+  "24": "C"
  },
  "RCF": {
   "1": "A",
@@ -96,90 +108,166 @@ window.HAFTA_ANAHTAR={
 window.HAFTA_ETIKET={
  "7F9": {
   "1": {
-   "beceri": "ödev izi · yer · 3C",
+   "beceri": "ödev izi · tanıma · örnek · A",
    "tuzak": {
-    "A": "başka bölüm",
-    "B": "başka bölüm",
-    "D": "başka bölüm",
-    "E": "hiçbiri"
+    "A": "metinde geçti",
+    "B": "metinde geçti",
+    "D": "metinde geçti"
    }
   },
   "2": {
-   "beceri": "ödev izi · yer · 3A",
+   "beceri": "ödev izi · tanıma · örnek · C",
    "tuzak": {
-    "B": "başka bölüm",
-    "C": "başka bölüm",
-    "D": "başka bölüm",
-    "E": "hiçbiri"
+    "B": "metinde geçti",
+    "C": "metinde geçti",
+    "D": "metinde geçti"
    }
   },
   "3": {
-   "beceri": "ödev izi · yer · 3D",
+   "beceri": "ödev izi · tanıma · örnek · B",
    "tuzak": {
-    "A": "başka bölüm",
-    "B": "başka bölüm",
-    "C": "başka bölüm",
-    "E": "hiçbiri"
+    "A": "metinde geçti",
+    "B": "metinde geçti",
+    "C": "metinde geçti"
    }
   },
   "4": {
-   "beceri": "ödev izi · yer · 3B",
+   "beceri": "ödev izi · tanıma · öbek · D",
    "tuzak": {
-    "A": "başka bölüm",
-    "C": "başka bölüm",
-    "D": "başka bölüm",
-    "E": "hiçbiri"
+    "A": "metinde geçti",
+    "C": "metinde geçti",
+    "D": "metinde geçti"
    }
   },
   "5": {
-   "beceri": "ödev izi · chunk · A",
+   "beceri": "ödev izi · tanıma · konu · T",
    "tuzak": {
-    "B": "biçim benzerliği",
-    "C": "bağlamdan tahmin",
-    "D": "çok anlamlılık"
+    "B": "metinde geçti",
+    "C": "metinde geçti",
+    "D": "metinde geçti"
    }
   },
   "6": {
-   "beceri": "ödev izi · chunk · B",
+   "beceri": "ödev izi · tanıma · öbek · A",
    "tuzak": {
-    "A": "kelime kelime çeviri",
-    "C": "bağlamdan tahmin",
-    "B": "biçim benzerliği"
+    "A": "metinde geçti",
+    "B": "metinde geçti",
+    "C": "metinde geçti"
    }
   },
   "7": {
-   "beceri": "ödev izi · chunk · C",
+   "beceri": "ödev izi · tanıma · öbek · C",
    "tuzak": {
-    "A": "çok anlamlılık",
-    "C": "biçim benzerliği",
-    "D": "biçim benzerliği"
+    "A": "metinde geçti",
+    "C": "metinde geçti",
+    "D": "metinde geçti"
    }
   },
   "8": {
-   "beceri": "ödev izi · chunk · D",
+   "beceri": "ödev izi · tanıma · öbek · B",
    "tuzak": {
-    "A": "çok anlamlılık",
-    "B": "bağlamdan tahmin",
-    "D": "kelime kelime çeviri"
+    "A": "metinde geçti",
+    "B": "metinde geçti",
+    "D": "metinde geçti"
    }
   },
   "9": {
-   "beceri": "ödev izi · chunk · V",
+   "beceri": "ödev izi · tanıma · öbek · D",
    "tuzak": {
-    "B": "çok anlamlılık",
-    "C": "kelime kelime çeviri",
-    "D": "çok anlamlılık"
+    "B": "metinde geçti",
+    "C": "metinde geçti",
+    "D": "metinde geçti"
    }
   },
   "10": {
-   "beceri": "ödev izi · chunk · V",
+   "beceri": "ödev izi · tanıma · deyim · V",
    "tuzak": {
-    "A": "çok anlamlılık",
-    "B": "çok anlamlılık",
-    "C": "biçim benzerliği"
+    "A": "metinde geçti",
+    "B": "metinde geçti",
+    "D": "metinde geçti"
    }
   },
   "11": {
+   "beceri": "ödev izi · tanıma · bilgi · A",
+   "tuzak": {
+    "A": "metinde geçti",
+    "C": "metinde geçti",
+    "D": "metinde geçti"
+   }
+  },
+  "12": {
+   "beceri": "ödev izi · tanıma · bilgi · B",
+   "tuzak": {
+    "A": "metinde geçti",
+    "B": "metinde geçti",
+    "C": "metinde geçti"
+   }
+  },
+  "13": {
+   "beceri": "ödev izi · tanıma · bilgi · C",
+   "tuzak": {
+    "A": "metinde geçti",
+    "C": "metinde geçti",
+    "D": "metinde geçti"
+   }
+  },
+  "14": {
+   "beceri": "ödev izi · tanıma · örnek · D",
+   "tuzak": {
+    "A": "metinde geçti",
+    "B": "metinde geçti",
+    "D": "metinde geçti"
+   }
+  },
+  "15": {
+   "beceri": "ödev izi · tanıma · kutu · V",
+   "tuzak": {
+    "A": "metinde geçti",
+    "B": "metinde geçti",
+    "C": "metinde geçti"
+   }
+  },
+  "16": {
+   "beceri": "ödev izi · tanıma · konu · T",
+   "tuzak": {
+    "A": "metinde geçti",
+    "C": "metinde geçti",
+    "D": "metinde geçti"
+   }
+  },
+  "17": {
+   "beceri": "ödev izi · tanıma · öbek · A",
+   "tuzak": {
+    "B": "metinde geçti",
+    "C": "metinde geçti",
+    "D": "metinde geçti"
+   }
+  },
+  "18": {
+   "beceri": "ödev izi · tanıma · bilgi · B",
+   "tuzak": {
+    "A": "metinde geçti",
+    "B": "metinde geçti",
+    "D": "metinde geçti"
+   }
+  },
+  "19": {
+   "beceri": "ödev izi · tanıma · bilgi · C",
+   "tuzak": {
+    "A": "metinde geçti",
+    "B": "metinde geçti",
+    "C": "metinde geçti"
+   }
+  },
+  "20": {
+   "beceri": "ödev izi · tanıma · bilgi · D",
+   "tuzak": {
+    "B": "metinde geçti",
+    "C": "metinde geçti",
+    "D": "metinde geçti"
+   }
+  },
+  "21": {
    "beceri": "derinlik · yapısal · C-1 · C-4",
    "tuzak": {
     "A": "en yakın isim",
@@ -187,7 +275,23 @@ window.HAFTA_ETIKET={
     "D": "metinde var, ilişki yok"
    }
   },
-  "12": {
+  "22": {
+   "beceri": "derinlik · işlevsel · M-e",
+   "tuzak": {
+    "A": "ekleme",
+    "B": "metin dışı",
+    "C": "çelişki"
+   }
+  },
+  "23": {
+   "beceri": "derinlik · gönderim · C-4",
+   "tuzak": {
+    "B": "sonucu",
+    "C": "kapsamın parçası",
+    "D": "metinde var, ilişki yok"
+   }
+  },
+  "24": {
    "beceri": "derinlik · ton · M4",
    "tuzak": {
     "A": "çelişki",

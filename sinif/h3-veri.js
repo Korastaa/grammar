@@ -11,159 +11,265 @@ window.HAFTA_VERI={
     {
      "id": "1",
      "tur": "secim",
-     "kok": "Olumsuz iç konuşma kortizol düzeyini yükseltir ve stres yaratır.",
+     "kok": "Ödevdeki metinlerde anılan halk ilaçlarından hangisi GEÇMEDİ?",
      "siklar": [
-      "3A",
-      "3B",
-      "3C",
-      "3D",
-      "Hiçbirinde"
+      "Yastığın altına sarımsak koymak",
+      "Küçük yanıklara çiğ patates dilimi koymak",
+      "Hıçkırığı geçirmek için bir kaşık şeker yutmak",
+      "Sindirime iyi gelsin diye sirke kullanmak"
      ],
-     "sure": 30,
-     "karistir": false,
-     "soru": "Bu bilgi hangi metindeydi?",
+     "sure": 20,
      "ust": "Reading kitabı · 3. ünite"
     },
     {
      "id": "2",
      "tur": "secim",
-     "kok": "Sirkenin sindirime iyi geldiği bilinir; bunun için ayrıca açıklama gerekmez.",
+     "kok": "Ödevdeki metinlerde 'kötü giden bir gün' için verilen örneklerden hangisi GEÇMEDİ?",
      "siklar": [
-      "3A",
-      "3B",
-      "3C",
-      "3D",
-      "Hiçbirinde"
+      "Ayakkabı bağcığının kopması",
+      "Otobüsü kaçırmak",
+      "Sweatshirt'üne meyve suyu dökmek",
+      "Telefonunun öğlene doğru kapanması"
      ],
-     "sure": 30,
-     "karistir": false,
-     "soru": "Bu bilgi hangi metindeydi?",
+     "sure": 20,
      "ust": "Reading kitabı · 3. ünite"
     },
     {
      "id": "3",
      "tur": "secim",
-     "kok": "Doktorlar, iyileşme sırasında vücudun enfeksiyonlarla savaşabildiğinden emin olmak için bağışıklık düzeyini de kontrol edebilir.",
+     "kok": "Ödevdeki metinlerde, günlük hayata kolayca eklenebilecek hareket örneklerinden hangisi GEÇMEDİ?",
      "siklar": [
-      "3A",
-      "3B",
-      "3C",
-      "3D",
-      "Hiçbirinde"
+      "Merdiven çıkmak",
+      "Kısa mesafeleri yürümek",
+      "Esneme hareketleri yapmak",
+      "Dans etmek"
      ],
-     "sure": 30,
-     "karistir": false,
-     "soru": "Bu bilgi hangi metindeydi?",
+     "sure": 20,
      "ust": "Reading kitabı · 3. ünite"
     },
     {
      "id": "4",
      "tur": "secim",
-     "kok": "Uzmanlara göre haftada en az 150 dakika hafif egzersiz yapılmalı.",
+     "kok": "Ödevdeki okuma metinlerinde hangisi GEÇMEDİ?",
      "siklar": [
-      "3A",
-      "3B",
-      "3C",
-      "3D",
-      "Hiçbirinde"
+      "respond urgently",
+      "transfer the patient",
+      "protect vital organs",
+      "make a clear diagnosis"
      ],
-     "sure": 30,
-     "karistir": false,
-     "soru": "Bu bilgi hangi metindeydi?",
+     "sure": 20,
      "ust": "Reading kitabı · 3. ünite"
     },
     {
      "id": "5",
      "tur": "secim",
-     "kok": "Perhaps you were even advised to put a slice of raw potato on minor burns to relieve pain.",
+     "kok": "Ödevdeki Reading Test 3'ün parçalarında hangi konu GEÇMEDİ?",
      "siklar": [
-      "hafifletmek",
-      "yeniden yaşamak",
-      "soğutmak",
-      "görevden almak"
+      "Kan bağışının faydaları",
+      "Ekranların mavi ışığı ve uyku",
+      "İnsülinin keşfi",
+      "Orucun vücuda etkileri"
      ],
-     "soru": "'relieve' burada ne anlama geliyor?",
-     "sure": 35,
-     "isaret": "relieve",
-     "ust": "Reading kitabı · 3. ünite"
+     "sure": 20,
+     "ust": "Reading kitabı · Test 3"
     },
     {
      "id": "6",
      "tur": "secim",
-     "kok": "Even light activities, such as stretching or casual walking, contribute considerably to better health.",
+     "kok": "Ödevdeki okuma metinlerinde hangisi GEÇMEDİ?",
      "siklar": [
-      "dikkate alınarak",
-      "düşünceli bir şekilde",
-      "düzenli olarak",
-      "önemli ölçüde"
+      "ward off illness",
+      "stand the test of time",
+      "shed light on medicinal benefits",
+      "treat common ailments"
      ],
-     "soru": "'considerably' burada ne anlama geliyor?",
-     "sure": 35,
-     "isaret": "considerably",
+     "sure": 20,
      "ust": "Reading kitabı · 3. ünite"
     },
     {
      "id": "7",
      "tur": "secim",
-     "kok": "This kind of thinking can set off a cycle of stress, uncertainty, and avoidance.",
+     "kok": "Ödevdeki okuma metinlerinde hangisi GEÇMEDİ?",
      "siklar": [
-      "yola koyulmak",
-      "başlatmak",
-      "dengelemek",
-      "ertelemek"
+      "trust their abilities",
+      "set clear boundaries",
+      "step out of your comfort zone",
+      "set off a cycle of stress"
      ],
-     "soru": "'set off' burada ne anlama geliyor?",
-     "sure": 35,
-     "isaret": "set off",
+     "sure": 20,
      "ust": "Reading kitabı · 3. ünite"
     },
     {
      "id": "8",
      "tur": "secim",
-     "kok": "Although setbacks can occur, many patients eventually come through difficult stages.",
+     "kok": "Ödevdeki okuma metinlerinde hangisi GEÇMEDİ?",
      "siklar": [
-      "belli olmak",
-      "yeniden içine düşmek",
-      "atlatmak",
-      "-e varmak"
+      "make small adjustments",
+      "get the most out of it",
+      "burn extra calories",
+      "boost productivity"
      ],
-     "soru": "'come through' burada ne anlama geliyor?",
-     "sure": 35,
-     "isaret": "come through",
+     "sure": 20,
      "ust": "Reading kitabı · 3. ünite"
     },
     {
      "id": "9",
      "tur": "secim",
-     "kok": "Parents with a family history of asthma might pass on this condition to their children.",
+     "kok": "Ödevdeki okuma metinlerinde hangisi GEÇMEDİ?",
      "siklar": [
-      "aktarmak",
-      "vefat etmek",
-      "üzerinden geçmek",
-      "geri çevirmek"
+      "explain the risks to patients",
+      "find the underlying cause",
+      "keep track of important signs",
+      "come through difficult stages"
      ],
-     "soru": "'pass on' burada ne anlama geliyor?",
-     "sure": 35,
-     "isaret": "pass on",
-     "ust": "Vocabulary kitabı · 3. ünite alıştırmaları"
+     "sure": 20,
+     "ust": "Reading kitabı · 3. ünite"
     },
     {
      "id": "10",
      "tur": "secim",
-     "kok": "Bad eating habits and a poor lifestyle may break down the body's immune defences.",
+     "kok": "Ödevdeki Vocabulary alıştırmasının diyaloglarında hangi deyim GEÇMEDİ?",
      "siklar": [
-      "bileşenlerine ayırmak",
-      "gözyaşlarına boğulmak",
-      "patlak vermek",
-      "zayıflatmak"
+      "as fit as a flea",
+      "under the weather",
+      "a bitter pill to swallow",
+      "go under the knife"
      ],
-     "soru": "'break down' burada ne anlama geliyor?",
-     "sure": 35,
-     "isaret": "break down",
-     "ust": "Vocabulary kitabı · 3. ünite alıştırmaları"
+     "sure": 20,
+     "ust": "Vocabulary kitabı · 3. ünite"
     },
     {
      "id": "11",
+     "tur": "secim",
+     "kok": "Ödevdeki okuma metinlerinde hangisi GEÇMEDİ?",
+     "siklar": [
+      "Bazı okurlar modern tıbbın bu uygulamaların yerini aldığını düşünebilir.",
+      "Sarımsağın etkisi pişirildiğinde azalır.",
+      "Atalarımız yalnızca deneyim ve gözlemle doğanın iyileştirme gücünü çok iyi anlamış.",
+      "Bazı okurlar bu uygulamaları batıl inanç olarak görebilir."
+     ],
+     "sure": 25,
+     "ust": "Reading kitabı · 3. ünite"
+    },
+    {
+     "id": "12",
+     "tur": "secim",
+     "kok": "Ödevdeki okuma metinlerinde hangisi GEÇMEDİ?",
+     "siklar": [
+      "Ulaşılabilir hedefler koymak düzenli alışkanlık kurmaya ve motivasyonu korumaya yardım eder.",
+      "Hareketsiz bir yaşam kronik hastalık riskini artırabilir.",
+      "Düzenli hareketin faydası için radikal yaşam değişikliklerine gerek yoktur.",
+      "Hafta sonu yapılan uzun yürüyüşler de aynı faydayı sağlar."
+     ],
+     "sure": 25,
+     "ust": "Reading kitabı · 3. ünite"
+    },
+    {
+     "id": "13",
+     "tur": "secim",
+     "kok": "Ödevdeki okuma metinlerinde, olumlu bakışın faydalarından hangisi GEÇMEDİ?",
+     "siklar": [
+      "Bağışıklık sistemini güçlendirir.",
+      "Uykuya dalmayı kolaylaştırır.",
+      "Daha iyi kararlar vermeyi sağlar.",
+      "Stresi azaltır, dayanıklılığı artırır."
+     ],
+     "sure": 25,
+     "ust": "Reading kitabı · 3. ünite"
+    },
+    {
+     "id": "14",
+     "tur": "secim",
+     "kok": "Ödevdeki metinlerde, sağlık çalışanlarının iyileşmeyi izlerken baktığı belirtilerden hangisi GEÇMEDİ?",
+     "siklar": [
+      "Vücut ısısı",
+      "Solunum",
+      "Kan basıncı",
+      "Kalp atış hızı"
+     ],
+     "sure": 20,
+     "ust": "Reading kitabı · 3. ünite"
+    },
+    {
+     "id": "15",
+     "tur": "secim",
+     "kok": "Ödevdeki Vocabulary alıştırmalarında hangi öbek fiil GEÇMEDİ?",
+     "siklar": [
+      "stave off",
+      "pull through",
+      "bring down",
+      "wear off"
+     ],
+     "sure": 20,
+     "ust": "Vocabulary kitabı · 3. ünite"
+    },
+    {
+     "id": "16",
+     "tur": "secim",
+     "kok": "Ödevdeki Reading Test 3'ün parçalarında hangi konu GEÇMEDİ?",
+     "siklar": [
+      "Her günü ayrıntısıyla hatırlamayı sağlayan nadir bir durum",
+      "Kas kramplarının nedenleri",
+      "Boğulma anında yapılan Heimlich manevrası",
+      "Yeterli su içmenin önemi"
+     ],
+     "sure": 20,
+     "ust": "Reading kitabı · Test 3"
+    },
+    {
+     "id": "17",
+     "tur": "secim",
+     "kok": "Ödevdeki okuma metinlerinde hangisi GEÇMEDİ?",
+     "siklar": [
+      "keep mosquitoes away",
+      "back up the claim",
+      "speak for themselves",
+      "trigger a healing response"
+     ],
+     "sure": 20,
+     "ust": "Reading kitabı · 3. ünite"
+    },
+    {
+     "id": "18",
+     "tur": "secim",
+     "kok": "Ödevdeki okuma metinlerinde, düzenli egzersizin faydalarından hangisi GEÇMEDİ?",
+     "siklar": [
+      "Kalbi, kasları ve kemikleri güçlendirir.",
+      "Endorfin salgılatarak stres ve kaygıyla mücadeleye yardım eder.",
+      "Duruşu düzelterek bel ve boyun ağrısını önler.",
+      "Genel zindeliği artırır."
+     ],
+     "sure": 25,
+     "ust": "Reading kitabı · 3. ünite"
+    },
+    {
+     "id": "19",
+     "tur": "secim",
+     "kok": "Ödevdeki okuma metinlerinde, olumlu bir bakış kazanmak için önerilenlerden hangisi GEÇMEDİ?",
+     "siklar": [
+      "Şükran ve mizahı alışkanlık hâline getirmek",
+      "Moral veren insanlarla vakit geçirmek",
+      "İç konuşmada küçük değişiklikler yapmak",
+      "Gönüllü işlerde çalışmak"
+     ],
+     "sure": 25,
+     "ust": "Reading kitabı · 3. ünite"
+    },
+    {
+     "id": "20",
+     "tur": "secim",
+     "kok": "Ödevdeki okuma metinlerinde hangisi GEÇMEDİ?",
+     "siklar": [
+      "Ameliyattan sonra erken ayağa kalkmak iyileşmeyi hızlandırır.",
+      "Doktorlar bazen hastanın bağışıklık düzeyini de kontrol eder.",
+      "Tam iyileşme, hastanın doktor tavsiyesine uyma kararlılığına da bağlıdır.",
+      "Profesyonel bakım ve aile desteği, hastaların zor evreleri atlatmasına yardım eder."
+     ],
+     "sure": 25,
+     "ust": "Reading kitabı · 3. ünite"
+    },
+    {
+     "id": "21",
      "tur": "secim",
      "kok": "Studies also back up the claim that honey, which is widely used for its calming qualities in traditional practice, can reduce inflammation.",
      "siklar": [
@@ -173,11 +279,39 @@ window.HAFTA_VERI={
       "sakinleştirici özellikler"
      ],
      "soru": "Cümleye göre iltihabı azaltabilen ne?",
-     "sure": 45,
+     "sure": 35,
      "ust": "Reading kitabı · 3. ünite"
     },
     {
-     "id": "12",
+     "id": "22",
+     "tur": "secim",
+     "kok": "An inactive lifestyle, on the other hand, may interfere with long-term health by increasing the risk of chronic illnesses.",
+     "siklar": [
+      "Egzersizin zihinsel faydalarına yeni bir örnek ekliyor.",
+      "Uzmanların haftalık egzersiz önerisini bir araştırma sonucuyla destekliyor.",
+      "Metnin konusunu okura ilk kez tanıtıyor.",
+      "Düzenli hareketin faydalarının karşısına hareketsizliğin zararını koyuyor."
+     ],
+     "soru": "Bu cümle Move to Improve metninde ne iş yapıyor?",
+     "sure": 35,
+     "ust": "Reading kitabı · 3. ünite"
+    },
+    {
+     "id": "23",
+     "tur": "secim",
+     "kok": "… negative self-talk—such as expecting disaster, black-and-white thinking, or blaming oneself—increases cortisol levels and causes stress and anxiety. Recognising these thought patterns is the first step towards change.",
+     "siklar": [
+      "Felaket beklemek, siyah-beyaz düşünmek, kendini suçlamak",
+      "Kortizolün yükselmesi, stresin ve kaygının artması",
+      "Yalnızca kendini suçlamak",
+      "Şükran ve mizah alışkanlığı"
+     ],
+     "soru": "'these thought patterns' neyi gösteriyor?",
+     "sure": 35,
+     "ust": "Reading kitabı · 3. ünite"
+    },
+    {
+     "id": "24",
      "tur": "secim",
      "kok": "Think Bright, Live Bright metninde yazar okura nasıl sesleniyor?",
      "siklar": [
@@ -186,7 +320,7 @@ window.HAFTA_VERI={
       "Okura doğrudan seslenip onu küçük adımlarla değişmeye cesaretlendiriyor.",
       "Kendi yaşadığı zor bir günü anlatıp okurdan yardım istiyor."
      ],
-     "sure": 45,
+     "sure": 35,
      "ust": "Reading kitabı · 3. ünite"
     }
    ],
