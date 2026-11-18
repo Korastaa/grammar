@@ -1,0 +1,2481 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>:root{color-scheme:light dark}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Hafta 3 · Özneye Yapılan</title>
+</head><body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+<style>
+/* Layout: tek sütunlu ders akışı; üstte sabit ilerleme şeridi, ekranlar dokundukça alta eklenir */
+:root{
+  --bg:#F3F5F9; --surface:#FFFFFF; --sunk:#EBEEF4; --ink:#18202F; --muted:#5A6375; --line:#D9DEE8;
+  --accent:#2341B5; --accent-ink:#FFFFFF; --accent-soft:#E5EAFB;
+  --ok:#137A3B; --ok-soft:#E1F4E7; --bad:#B8233A; --bad-soft:#FBE6EA;
+  --g:#0E7268; --g-soft:#D7F0EB; --k:#A85008; --k-soft:#FBEAD2; --s:#6526C9; --s-soft:#EDE4FB;
+  --xp:#8F5A04; --xp-soft:#FDF0C8;
+  --d:#0369A1; --d-soft:#E0F2FE; --h:#BE185D; --h-soft:#FCE7F3; --c:#4D7C0F; --c-soft:#ECFCCB; --o:#4338CA; --o-soft:#E0E7FF; --oh:#A21CAF; --oh-soft:#FAE8FF; --i:#C2410C; --i-soft:#FFEDD5; --gi:#475569; --gi-soft:#E2E8F0;
+  --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --f-body:"Figtree","Segoe UI",system-ui,-apple-system,sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E131D; --surface:#161D2B; --sunk:#1D2536; --ink:#E7EBF3; --muted:#9BA4B6; --line:#2B3448;
+  --accent:#8EA3FF; --accent-ink:#0E131D; --accent-soft:#1E284D;
+  --ok:#5BD98A; --ok-soft:#123220; --bad:#FF8597; --bad-soft:#3A1621;
+  --g:#5FE0CC; --g-soft:#0E2F2B; --k:#F9B84A; --k-soft:#382710; --s:#C3B1FF; --s-soft:#271D47;
+  --xp:#F8CF5B; --xp-soft:#352A0E;
+  --d:#7DD3FC; --d-soft:#0C2A3D; --h:#F9A8D4; --h-soft:#3B1027; --c:#BEF264; --c-soft:#1F2C0B; --o:#A5B4FC; --o-soft:#1E1F4D; --oh:#F0ABFC; --oh-soft:#3A1240; --i:#FDBA74; --i-soft:#3A1F0B; --gi:#CBD5E1; --gi-soft:#243041;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E131D; --surface:#161D2B; --sunk:#1D2536; --ink:#E7EBF3; --muted:#9BA4B6; --line:#2B3448;
+  --accent:#8EA3FF; --accent-ink:#0E131D; --accent-soft:#1E284D;
+  --ok:#5BD98A; --ok-soft:#123220; --bad:#FF8597; --bad-soft:#3A1621;
+  --g:#5FE0CC; --g-soft:#0E2F2B; --k:#F9B84A; --k-soft:#382710; --s:#C3B1FF; --s-soft:#271D47;
+  --xp:#F8CF5B; --xp-soft:#352A0E;
+  --d:#7DD3FC; --d-soft:#0C2A3D; --h:#F9A8D4; --h-soft:#3B1027; --c:#BEF264; --c-soft:#1F2C0B; --o:#A5B4FC; --o-soft:#1E1F4D; --oh:#F0ABFC; --oh-soft:#3A1240; --i:#FDBA74; --i-soft:#3A1F0B; --gi:#CBD5E1; --gi-soft:#243041;
+  color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.62 var(--f-body);-webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+/* üst şerit */
+.hud{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hud-in{max-width:680px;margin:0 auto;padding:10px 16px 8px;display:flex;align-items:center;gap:12px}
+.hud-t{flex:1;min-width:0}
+.hud-t b{display:block;font:800 15px/1.2 var(--f-display);letter-spacing:-.01em}
+.hud-t span{display:block;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.xp-pill{flex:none;font:700 13px/1 var(--f-body);background:var(--xp-soft);color:var(--xp);padding:7px 11px;border-radius:999px;font-variant-numeric:tabular-nums}
+.menu-b{flex:none;width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer}
+.menu-b i{display:block;width:16px;height:2px;background:var(--ink);box-shadow:0 -5px 0 var(--ink),0 5px 0 var(--ink)}
+.bar{height:4px;background:var(--sunk)}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .4s}
+
+.menu{position:fixed;inset:0;z-index:40;background:rgba(10,14,22,.45);display:flex;justify-content:flex-end}
+.menu-p{width:min(320px,86vw);height:100%;background:var(--surface);padding:calc(env(safe-area-inset-top,0px) + 18px) 18px 18px;overflow:auto;display:flex;flex-direction:column;gap:6px}
+.menu-p h3{margin:0 0 8px;font:800 18px var(--f-display)}
+.menu-p a{display:block;padding:10px 12px;border-radius:10px;color:var(--ink);text-decoration:none;font-weight:600}
+.menu-p a.lock{color:var(--muted);pointer-events:none;font-weight:400}
+.menu-p a:not(.lock):hover{background:var(--sunk)}
+.menu-p .sp{flex:1}
+.ghost{background:none;border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;text-align:left}
+
+/* akış */
+main{max-width:680px;margin:0 auto;padding-inline:16px;padding-block:8px 120px}
+.screen{display:flex;flex-direction:column;gap:14px;padding-top:22px;scroll-margin-top:84px}
+.screen+.screen{border-top:1px dashed var(--line);margin-top:22px}
+p.say{margin:0;max-width:62ch}
+.eb{font:700 12px/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:6px 0 -6px}
+h2.h{margin:0;font:800 clamp(26px,6vw,34px)/1.1 var(--f-display);letter-spacing:-.02em;text-wrap:balance}
+h2.h.small{font-size:clamp(21px,5vw,25px)}
+h2.h .cd{vertical-align:6px;margin-right:8px}
+
+.hero{background:var(--accent);color:var(--accent-ink);border-radius:20px;padding:26px 22px 22px;display:flex;flex-direction:column;gap:10px;overflow:hidden;position:relative}
+.hero small{font:700 12px var(--f-body);letter-spacing:.14em;text-transform:uppercase;opacity:.8}
+.hero h1{margin:0;font:800 clamp(34px,9vw,48px)/1 var(--f-display);letter-spacing:-.03em}
+.hero p{margin:0;opacity:.9;max-width:40ch}
+.hero .gks{display:flex;gap:8px;margin-top:6px}
+.hero .gks span{font:800 15px var(--f-display);width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.16);background:color-mix(in srgb,var(--accent-ink) 16%,transparent)}
+
+.en{font-weight:600}
+.pr{font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+.pr.g{color:var(--g)} .pr.k{color:var(--k)} .pr.s{color:var(--s)}
+.sb{color:var(--accent)}
+u{text-decoration-color:var(--bad);text-decoration-thickness:2px;text-underline-offset:4px}
+
+/* kelime ve kod dokunmatikleri */
+.gl{background:none;border:0;padding:0;font-weight:inherit;cursor:pointer;border-bottom:2px dotted var(--muted);line-height:1.2}
+.gp,.cp{display:inline-block;font:600 13px/1.3 var(--f-body);background:var(--ink);color:var(--bg);border-radius:8px;padding:3px 8px;margin:0 4px;vertical-align:1px;animation:pop .15s ease-out}
+@keyframes pop{from{transform:scale(.85);opacity:0}to{transform:none;opacity:1}}
+.cd{display:inline-grid;place-items:center;min-width:28px;height:26px;padding:0 7px;border-radius:8px;border:0;font:800 14px/1 var(--f-display);cursor:pointer;vertical-align:1px}
+.cd.g{background:var(--g-soft);color:var(--g)} .cd.k{background:var(--k-soft);color:var(--k)} .cd.s{background:var(--s-soft);color:var(--s)}
+.cd.n{background:var(--sunk);color:var(--muted);cursor:default}
+
+/* kod kartları */
+.codes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.codes div{border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.codes .g{background:var(--g-soft)} .codes .k{background:var(--k-soft)} .codes .s{background:var(--s-soft)}
+.codes b{font:800 26px/1 var(--f-display)}
+.codes .g b{color:var(--g)} .codes .k b{color:var(--k)} .codes .s b{color:var(--s)}
+.codes strong{font-size:14.5px;line-height:1.25}
+.codes span{font-size:13px;color:var(--muted);line-height:1.35}
+.codes em{font-style:normal;font-size:13px;font-weight:600;white-space:nowrap}
+@media (max-width:460px){.codes{grid-template-columns:1fr}.codes div{display:grid;grid-template-columns:44px 1fr;column-gap:10px}.codes b{grid-row:span 3;align-self:center}}
+
+/* örnek cümleler */
+.ex{display:flex;flex-direction:column;gap:8px}
+.ex .it{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.ex .it .cd{grid-row:span 2;align-self:start;margin-top:2px}
+.ex .e{font-weight:600;min-width:0}
+.ex .t{color:var(--muted);font-size:15px;min-width:0}
+
+/* kimlik kartı */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.card h4{margin:0;padding:11px 14px;font:800 17px var(--f-display);display:flex;align-items:center;gap:10px}
+.card.g h4{background:var(--g-soft);color:var(--g)} .card.k h4{background:var(--k-soft);color:var(--k)} .card.s h4{background:var(--s-soft);color:var(--s)}
+.card dl{margin:0;display:grid;grid-template-columns:96px 1fr}
+.card dt,.card dd{margin:0;padding:9px 14px;border-top:1px solid var(--line);font-size:15px;min-width:0}
+.card dt{font-weight:700;color:var(--muted);font-size:13.5px;padding-right:0}
+.card dd small{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+@media (max-width:420px){.card dl{grid-template-columns:1fr}.card dd{border-top:0;padding-top:0}}
+
+/* Türkçe-İngilizce eşleri */
+.svgbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 10px;overflow:hidden}
+.svgbox svg{width:100%;height:auto;display:block}
+.pairs{display:flex;flex-direction:column;gap:6px}
+.pairs div{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:15px}
+.pairs div span:last-child{font-weight:500}
+@media (max-width:460px){.pairs div{grid-template-columns:auto 1fr}.pairs div span:first-child{grid-column:1/-1;color:var(--muted)}}
+
+/* soru */
+.q{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.q .tag{align-self:flex-start;font:700 11.5px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--sunk);padding:4px 9px;border-radius:999px}
+.q .ask{font-size:14.5px;color:var(--muted);margin:0}
+.q .stem{font-size:18px;font-weight:600;line-height:1.5;margin:0}
+.q .stem.trs{font-weight:500}
+.q .stem.trs::before{content:"TR";font:800 11px var(--f-body);letter-spacing:.08em;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:2px 5px;margin-right:8px;vertical-align:2px}
+.cebi{font-size:13.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px;margin:-4px 0 0}
+.cebi::before{content:"Kelime cebi";font-weight:700;color:var(--ink)}
+.cebi b{color:var(--ink);font-weight:600}
+.opts{display:flex;flex-direction:column;gap:8px}
+.op{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;cursor:pointer;transition:border-color .15s,background .15s;font-size:16px;line-height:1.45}
+.op:hover:not([disabled]){border-color:var(--accent)}
+.op .l{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font:800 13px var(--f-display);background:var(--sunk);color:var(--muted);margin-top:-1px}
+.op .x{flex:1;min-width:0}
+.op.wrong{border-color:var(--bad);background:var(--bad-soft)} .op.wrong .l{background:var(--bad);color:var(--surface)}
+.op.right{border-color:var(--ok);background:var(--ok-soft)} .op.right .l{background:var(--ok);color:var(--surface)}
+.op[disabled]{cursor:default}
+.op.dim{opacity:.55}
+.op .lt{flex:none;font:800 12px var(--f-display);color:var(--muted);border:1px dashed var(--line);border-radius:6px;padding:2px 6px;align-self:center}
+.opts.codes3{flex-direction:row}
+.opts.codes3 .op{flex:1 1 0;min-width:0;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:11px 6px;font-size:14px;line-height:1.25}
+.opts.codes3 .op .cd{pointer-events:none}
+.opts.who .op .l{width:auto;padding:0 9px;border-radius:999px;color:#fff}
+.opts.who .op:nth-child(1) .l{background:#D6304F}.opts.who .op:nth-child(2) .l{background:#0B7FC0}.opts.who .op:nth-child(3) .l{background:#7A3AE0}
+.opts.wire .op .l{width:34px;height:10px;border-radius:5px;margin-top:8px}
+.opts.wire .op:nth-child(1) .l{background:#DC2626}.opts.wire .op:nth-child(2) .l{background:#2563EB}.opts.wire .op:nth-child(3) .l{background:#16A34A}
+.opts.wire .op.right .l,.opts.wire .op.wrong .l{color:transparent}
+.fb{border-radius:12px;padding:11px 13px;font-size:15.5px;line-height:1.55;display:flex;gap:10px;animation:pop .18s ease-out}
+.fb::before{flex:none;font:800 13px/1 var(--f-display);width:24px;height:24px;border-radius:50%;display:grid;place-items:center;margin-top:1px}
+.fb.ok{background:var(--ok-soft)} .fb.ok::before{content:"✓";background:var(--ok);color:var(--surface)}
+.fb.no{background:var(--bad-soft)} .fb.no::before{content:"!";background:var(--bad);color:var(--surface)}
+.fb.info{background:var(--accent-soft)} .fb.info::before{content:"i";background:var(--accent);color:var(--accent-ink)}
+.fb .xpg{font-weight:700;color:var(--xp);white-space:nowrap}
+.hintb{align-self:flex-start;background:none;border:1px dashed var(--accent);color:var(--accent);border-radius:999px;padding:5px 12px;font-size:14px;font-weight:600;cursor:pointer}
+.bomb .stem::before{content:"00:59";font:800 13px/1 ui-monospace,Menlo,monospace;color:var(--bad);margin-right:10px;letter-spacing:.06em}
+.chat{background:var(--sunk);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:6px}
+.bub{max-width:85%;background:var(--surface);border-radius:12px;padding:7px 11px;font-size:15.5px}
+.bub b{display:block;font-size:12px;color:var(--g)}
+.bub.me{align-self:flex-end;background:var(--accent-soft)}
+.bub.gap{border:1.5px dashed var(--muted);background:transparent;color:var(--muted);text-align:center}
+
+/* yüklem avı */
+.toks{display:flex;flex-wrap:wrap;gap:6px}
+.tk{border:1.5px solid var(--line);background:var(--bg);border-radius:10px;padding:7px 11px;font-size:17px;font-weight:500;cursor:pointer}
+.tk:hover:not([disabled]){border-color:var(--accent)}
+.tk.miss{border-color:var(--bad);background:var(--bad-soft)}
+.tk.hit{border-color:var(--ok);background:var(--ok-soft);color:var(--ok);font-weight:700}
+.tk.subj{border-color:transparent;color:var(--accent);background:var(--accent-soft)}
+.tk[disabled]{cursor:default}
+
+/* gerçek mi efsane mi */
+.ge{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:0 4px}
+.ge span{font-size:14.5px;color:var(--muted);margin-right:4px}
+.ge button{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;font-weight:700;cursor:pointer}
+.ge button.sel{border-color:var(--ink)}
+.ge+.fb{margin-top:-6px}
+
+/* kaydırmalı kart */
+.sw{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.sw .e{font-weight:600;font-size:17px}
+.sw .t{color:var(--muted)}
+.sw .bt{display:flex;gap:10px}
+.sw .bt button{flex:1;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);padding:10px;font-weight:700;cursor:pointer}
+.sw .bt button.n{color:var(--bad)} .sw .bt button.y{color:var(--ok)}
+.sw .bt button.sel.y{background:var(--ok-soft);border-color:var(--ok)} .sw .bt button.sel.n{background:var(--bad-soft);border-color:var(--bad)}
+.sw .bt button.wr{background:var(--bad-soft);border-color:var(--bad)}
+
+/* V2 kartları */
+.v2{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.v2 button{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 4px;cursor:pointer;font-size:15px;min-width:0}
+.v2 button b{color:var(--k)}
+@media (max-width:420px){.v2{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* zaman şeridi */
+.tl{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;overflow-x:auto}
+.tl svg{display:block;width:100%;min-width:300px;height:auto}
+.tl .ax{stroke:var(--muted)} .tl .ink{fill:var(--ink)} .tl .mut{fill:var(--muted)}
+.tl .gb{fill:var(--g-soft);stroke:var(--g)} .tl .gt{fill:var(--g)}
+.tl .kb{fill:var(--k-soft);stroke:var(--k)} .tl .kt{fill:var(--k)}
+.tl .sbx{fill:var(--s-soft);stroke:var(--s)} .tl .st{fill:var(--s)}
+.tl .now{stroke:var(--ink)}
+
+/* adım adım çözüm */
+.steps{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.steps .stem{margin:0;font-size:18px;font-weight:600;line-height:1.5}
+.steps ol.so{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.steps ol.so li{display:flex;gap:10px;font-size:16px;padding:6px 8px;border-radius:10px}
+.steps ol.so li b{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:var(--sunk);color:var(--muted);font:800 13px var(--f-display)}
+.steps ol.so li.mk{background:var(--ok-soft)} .steps ol.so li.mk b{background:var(--ok);color:var(--surface)}
+.steps ol.so li.out{opacity:.5;text-decoration:line-through;text-decoration-thickness:1px}
+.steps .st{display:flex;gap:10px;background:var(--accent-soft);border-radius:12px;padding:11px 13px;font-size:15.5px;animation:pop .18s ease-out}
+.steps .st i{flex:none;font:800 13px var(--f-display);font-style:normal;color:var(--accent);margin-top:2px}
+
+/* boss can barı */
+.hp{display:flex;align-items:center;gap:10px;background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:10px 14px;font:800 14px var(--f-display)}
+.hp .b{flex:1;display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.hp .b i{height:14px;border-radius:4px;background:var(--bad);transition:opacity .3s,transform .3s}
+.hp .b i.off{opacity:.15;transform:scaleY(.6)}
+
+/* şifre kutuları */
+.ci{display:flex;gap:8px;flex-wrap:wrap}
+.ci span{width:44px;height:50px;border:2px solid var(--accent);border-radius:10px;display:grid;place-items:center;font:800 24px var(--f-display);color:var(--accent);background:var(--surface)}
+.ci span.e{border-style:dashed;color:transparent}
+
+/* kontrol noktası */
+.chk{border:2px solid var(--accent);border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.chk .row{display:flex;gap:8px;flex-wrap:wrap}
+.btn{align-self:flex-start;background:var(--accent);color:var(--accent-ink);border:0;border-radius:12px;padding:13px 20px;font:700 16px var(--f-body);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn::after{content:"→";font-weight:800}
+.btn.sec{background:var(--surface);color:var(--accent);border:1.5px solid var(--accent)}
+.btn.sec::after{content:none}
+.btn[hidden]{display:none}
+
+/* özet */
+.sum{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.sum div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.sum b{font:800 26px/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.sum span{font-size:13px;color:var(--muted)}
+.sum .rk{grid-column:1/-1;background:var(--xp-soft);border-color:transparent}
+.sum .rk b{color:var(--xp)}
+.clist{display:flex;flex-direction:column;gap:8px}
+.clist label{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:15.5px;cursor:pointer}
+.clist input{width:20px;height:20px;margin-top:2px;accent-color:var(--ok);flex:none}
+.clist span{flex:1;min-width:0}
+.clist a{flex-basis:100%;margin-left:30px;font-size:13.5px;color:var(--accent);font-weight:600;text-decoration:none}
+.login{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px}
+.login label{font-weight:700;font-size:14.5px;margin-top:6px}
+.login input{font:inherit;font-size:17px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+.login input:focus{border-color:var(--accent);outline:none}
+.login .btn{margin-top:10px}
+.lgerr{margin:0;color:var(--bad);font-weight:600;font-size:14.5px}
+.lgnote{margin:4px 0 0;color:var(--muted);font-size:13.5px}
+.who-l{margin:0 0 10px;color:var(--muted);font-size:14px}
+
+/* diğer kodlar (Aşama 2–5) */
+.cd.d{background:var(--d-soft);color:var(--d)} .cd.h{background:var(--h-soft);color:var(--h)} .cd.c{background:var(--c-soft);color:var(--c)} .cd.o{background:var(--o-soft);color:var(--o)} .cd.oh{background:var(--oh-soft);color:var(--oh)} .cd.i{background:var(--i-soft);color:var(--i)} .cd.gi{background:var(--gi-soft);color:var(--gi)}
+.pr.d{color:var(--d)} .pr.h{color:var(--h)} .pr.c{color:var(--c)} .pr.o{color:var(--o)} .pr.oh{color:var(--oh)} .pr.i{color:var(--i)} .pr.gi{color:var(--gi)}
+.codes .d{background:var(--d-soft)} .codes .h{background:var(--h-soft)} .codes .c{background:var(--c-soft)} .codes .o{background:var(--o-soft)} .codes .oh{background:var(--oh-soft)} .codes .i{background:var(--i-soft)} .codes .gi{background:var(--gi-soft)}
+.codes .d b{color:var(--d)} .codes .h b{color:var(--h)} .codes .c b{color:var(--c)} .codes .o b{color:var(--o)} .codes .oh b{color:var(--oh)} .codes .i b{color:var(--i)} .codes .gi b{color:var(--gi)}
+.card.d h4{background:var(--d-soft);color:var(--d)} .card.h h4{background:var(--h-soft);color:var(--h)} .card.c h4{background:var(--c-soft);color:var(--c)} .card.o h4{background:var(--o-soft);color:var(--o)} .card.oh h4{background:var(--oh-soft);color:var(--oh)} .card.i h4{background:var(--i-soft);color:var(--i)} .card.gi h4{background:var(--gi-soft);color:var(--gi)}
+.svgbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;overflow-x:auto}
+
+/* üretim blokları (kart · build · type · spot) */
+mark{background:var(--xp-soft);color:inherit;padding:0 3px;border-radius:4px;font-weight:700}
+.kart{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.kart h4{margin:0;padding:10px 14px;background:var(--accent-soft);color:var(--accent);font:800 16px/1.3 var(--f-display)}
+.kart .r{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:2px 14px;padding:10px 14px;border-top:1px solid var(--line);font-size:15.5px}
+.kart h4+.r{border-top:0}
+.kart .r .t{color:var(--muted)} .kart .r .e{min-width:0}
+.kart .nt{margin:0;padding:10px 14px;border-top:1px solid var(--line);font-size:14.5px;color:var(--muted)}
+@media (max-width:460px){.kart .r{grid-template-columns:1fr}}
+.q .row{display:flex;gap:8px;flex-wrap:wrap}
+.btn.sm{padding:10px 16px;font-size:15px}
+.btn[disabled]{opacity:.45;cursor:default}
+.bline{min-height:54px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:9px;border:1.5px dashed var(--line);border-radius:12px;background:var(--bg)}
+.bline.ok{border-style:solid;border-color:var(--ok);background:var(--ok-soft)}
+.bline .ph{color:var(--muted);font-size:14.5px;padding-left:4px}
+.bline .end{font-weight:700;font-size:19px;margin-left:-3px}
+.pool{display:flex;flex-wrap:wrap;gap:7px}
+.tile{border:1.5px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 13px;min-height:44px;font-size:17px;font-weight:600;cursor:pointer}
+.tile:hover:not([disabled]){border-color:var(--accent)}
+.tile.used{opacity:.22}
+.tile.in{background:var(--accent-soft);border-color:transparent}
+.bline.ok .tile.in{background:transparent;color:var(--ok);padding-inline:4px}
+.tys{line-height:2.3}
+.gapi{font:600 17px var(--f-body);color:var(--ink);background:var(--bg);border:0;border-bottom:2.5px solid var(--accent);border-radius:6px 6px 0 0;padding:3px 8px;margin:0 3px;max-width:100%;min-width:0}
+.gapi.wide{width:100%;border:1.5px solid var(--accent);border-radius:10px;padding:10px 12px;margin:0}
+.gapi.ok{border-color:var(--ok);background:var(--ok-soft);color:var(--ok)} .gapi.no{border-color:var(--bad);background:var(--bad-soft)}
+.gapi:disabled{opacity:1;-webkit-text-fill-color:currentColor}
+.stoks{display:flex;flex-wrap:wrap;gap:2px 1px;align-items:baseline}
+.stk{border:0;background:none;padding:3px 3px;border-radius:7px;font-size:17px;line-height:1.45;cursor:pointer}
+.stk:hover:not([disabled]){background:var(--sunk)}
+.stk[disabled]{cursor:default;color:inherit}
+.stk.miss{background:var(--bad-soft);color:var(--bad)}
+.stk.sel{outline:2px solid var(--accent);background:var(--accent-soft)}
+.stk.fixd{background:var(--ok-soft);color:var(--ok);font-weight:700}
+.stk.del{text-decoration:line-through;color:var(--muted);background:var(--ok-soft)}
+.pun{font-size:17px;margin-left:-4px;margin-right:2px}
+.sp-p{padding:2px 0}
+.msgb{background:var(--sunk);border-radius:14px;padding:12px}
+.msgb .from{display:block;font-weight:700;font-size:13px;color:var(--g);margin-bottom:4px}
+.sped{display:flex;flex-direction:column;gap:10px;background:var(--accent-soft);border-radius:12px;padding:12px}
+.sped p{margin:0;font-size:15px}
+.spcount{font:700 13px var(--f-body);color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="hud" id="hud"><div class="hud-in">
+  <div class="hud-t"><b id="hudT"></b><span id="hudS"></span></div>
+  <span class="xp-pill" id="hudXP">0 XP</span>
+  <button class="menu-b" id="menuB" type="button" aria-label="Bölümler"><i></i></button>
+</div><div class="bar"><i id="hudBar"></i></div></div>
+<div class="menu" id="menu" hidden><div class="menu-p" role="dialog" aria-label="Bölümler">
+  <h3>Bölümler</h3><nav id="menuNav"></nav><div class="sp"></div>
+  <button class="ghost" id="resetB" type="button">Baştan başla</button>
+</div></div>
+<main id="main"></main>
+
+<script>
+const TRACK_URL='https://script.google.com/macros/s/AKfycbz-kcR7bO8k8hWOJYp0uh0hCxt2aNLqXB4ehusKWhkjovavQuHkkfBx_huTTWBA_3cH4w/exec';
+/* title: 'Hafta 3 · Özneye Yapılan' (build.py başlığı buradan okur) */
+const STAGE = {
+ "key": "ydt-passive-a1-v1",
+ "no": 1,
+ "topic": "Passive",
+ "study": "Hafta 3 · Özneye Yapılan",
+ "kicker": "Strengthen Your Grammar · Hafta 3 · Ön çalışma 1",
+ "hero": "Özne her zaman yapan değil. Bazen eylem ona yapılıyor. Ok, hedef, be + V3 ve zamanı nerden okuyacağın.",
+ "heroCodes": [
+  "G",
+  "K",
+  "S",
+  "Ç",
+  "D",
+  "Ö",
+  "İ",
+  "MD"
+ ],
+ "codes": {
+  "G": [
+   "g",
+   "Genel geçer",
+   "am / is / are + V3",
+   "-ılır, -ınır",
+   "\"Hep böyle yapılır.\""
+  ],
+  "K": [
+   "k",
+   "Kapanmış geçmiş",
+   "was / were + V3",
+   "-ıldı, -ındı",
+   "\"Yapıldı, bitti.\""
+  ],
+  "S": [
+   "s",
+   "Süren süreç",
+   "am / is / are being + V3",
+   "-ılıyor",
+   "\"Şu sıralar yapılıyor.\""
+  ],
+  "Ç": [
+   "c",
+   "O anda sürüyordu",
+   "was / were being + V3",
+   "-ılıyordu (o anda)",
+   "\"O sırada yapılıyordu.\""
+  ],
+  "D": [
+   "d",
+   "Bugüne bağlı durum",
+   "have / has been + V3",
+   "-ılmış durumda",
+   "\"Yapılmış, bugün durum bu.\""
+  ],
+  "Ö": [
+   "o",
+   "O zamana kadar olmuştu",
+   "had been + V3",
+   "-ılmış durumdaydı (o zaman)",
+   "\"O zamana kadar çoktan yapılmıştı.\""
+  ],
+  "İ": [
+   "i",
+   "İleride olacak",
+   "will be + V3 · is going to be + V3",
+   "-ılacak",
+   "\"Henüz yapılmadı, yapılacak.\""
+  ],
+  "MD": [
+   "h",
+   "Modal + pasif",
+   "can / must / should / may + be V3",
+   "-ılabilir, -ılmalı",
+   "\"Tutum + yapılan.\""
+  ]
+ },
+ "title": "Hafta 3 · Özneye Yapılan",
+ "ranks": [
+  [
+   0,
+   "Çaylak"
+  ],
+  [
+   0.5,
+   "Hedef Gözcüsü"
+  ],
+  [
+   0.75,
+   "Okçu"
+  ],
+  [
+   0.9,
+   "PASİF USTASI"
+  ]
+ ],
+ "rankNotes": {
+  "Çaylak": "Olsun. Ok ve hedef bölümüne bi daha bak, sonra yarınki çalışmaya geç.",
+  "Hedef Gözcüsü": "Fena değil. Zaman tablosuna bi daha göz at.",
+  "Okçu": "Çok iyi. Yarın fiilimsiler, rapor pasifi ve ettirgenler var.",
+  "PASİF USTASI": "Hedefi de zamanı da okuyorsun. Yarın görüşürüz."
+ }
+};
+
+const SCREENS = [
+ {
+  "sec": "giris",
+  "title": "Giriş",
+  "btn": "Başla",
+  "blocks": [
+   {
+    "t": "hero"
+   },
+   {
+    "t": "say",
+    "h": "Selam. Bu hafta pasif. İki günlük hazırlığın ilk günü bu; 45 dakika civarı. İstediğin yerde bırak, aynı telefondan açınca kaldığın yerden devam edersin."
+   },
+   {
+    "t": "say",
+    "h": "Bi soruyla başlıyım. Louvre Müzesi'ni kim kurdu? Louvre değil herhalde :) Kendini kendisi kurmadı. Kuruldu. İşte pasif bu: cümlenin öznesi eylemi yapan değil, eylem ona yapılıyor."
+   },
+   {
+    "t": "ex",
+    "items": [
+     [
+      "K",
+      "<sb>The Louvre Museum</sb> <pk>was {founded|kuruldu}</pk> in 1793.",
+      "Louvre Müzesi 1793'te kuruldu."
+     ]
+    ]
+   },
+   {
+    "t": "say",
+    "h": "YDT'de bu yüklemler dokuz sınavın dokuzunda da var, hem de genelde 6. soruda. İyi haber: şıkların hepsi pasif geliyor, karar zamanda. Yani Tenses'te öğrendiğin her şey burda da çalışıyor. Tek fark: zamanı bu sefer <e>be</e> taşıyor."
+   },
+   {
+    "t": "say",
+    "h": "Kurallar aynı. Şıkka dokun; doğruysa yeşil yanar, yanlışsa nerde kaydığını söylerim. Puan (XP) sadece ilk denemede. Altı noktalı kelimeye dokun, anlamı çıksın: {founded|kuruldu}."
+   },
+   {
+    "t": "say",
+    "h": "Kodlarımız Tenses'tekiler; sadece hepsinin pasif hâli. Bi de yeni bi kod var: [MD], modal + pasif."
+   },
+   {
+    "t": "codes"
+   },
+   {
+    "t": "say",
+    "h": "Ezberleme. Metinde bi kod görünce dokun, hatırlatırım."
+   }
+  ]
+ },
+ {
+  "sec": "sezgi",
+  "title": "Sezgi Testi",
+  "btn": "Oka geçelim",
+  "blocks": [
+   {
+    "t": "h",
+    "eb": "Isınma",
+    "h": "Sezgi testi"
+   },
+   {
+    "t": "say",
+    "h": "Kural yok, sadece kafandaki resim. Üç soru: eylemi kim yapıyor?"
+   },
+   {
+    "t": "mcq",
+    "id": "sz1",
+    "xp": 1,
+    "q": "<e>The historic bridge is repainted every five years to protect it from {rust|pas}.</e> Köprü mü boyuyor?",
+    "cebi": "repaint|yeniden boyamak; protect|korumak",
+    "o": [
+     "Hayır. Köprüyü işçiler boyuyor; köprü boyanıyor.",
+     "Evet, köprü boyuyor.",
+     "İkisi de olabilir."
+    ],
+    "f": [
+     "Evet. Köprü kendini boyamıyor; eylem ona yapılıyor. Özne yapan değil.",
+     "Köprünün elinde fırça yok :) <e>is repainted</e>: köprü boyanır.",
+     "Değil; köprü bi şey yapamaz. Eylem ona yapılıyor."
+    ],
+    "a": 0
+   },
+   {
+    "t": "mcq",
+    "id": "sz2",
+    "xp": 1,
+    "q": "<e>Penicillin was discovered by Alexander Fleming in 1928.</e> Keşfi kim yaptı?",
+    "cebi": "discover|keşfetmek",
+    "o": [
+     "Penisilin.",
+     "Fleming. Penisilin bulunan şey.",
+     "Cümlede yazmıyor."
+    ],
+    "f": [
+     "Penisilin keşif yapamaz :) <e>was discovered</e>: keşfedildi.",
+     "Doğru. Penisilin hiçbi şey keşfetmedi; o keşfedilen. Keşfi yapan <e>by</e>'dan sonra geliyor: Fleming.",
+     "Yazıyor: <e>by Alexander Fleming</e>. Pasifte yapan <e>by</e>'dan sonra gelebilir."
+    ],
+    "a": 1
+   },
+   {
+    "t": "mcq",
+    "id": "sz3",
+    "xp": 1,
+    "q": "<e>In the Amazon {rainforest|yağmur ormanı}, heavy rain falls almost every day.</e> Eylemi kim yapıyor?",
+    "cebi": "almost|neredeyse",
+    "o": [
+     "Yağmura bi şey yapılıyor.",
+     "Bulutlar.",
+     "Yağmur. Burda yapan da o, cümlede eylemi yapan özne."
+    ],
+    "f": [
+     "Kimse yağmuru yağdırmıyor; yağmur yağıyor. Burda pasif yok.",
+     "Bulutlar cümlede yok. Özne <e>rain</e>, eylemi yapan da o.",
+     "Evet. <e>falls</e> aktif; yağmur yağıyor. Kimse yağmura bi şey yapmıyor."
+    ],
+    "a": 2
+   },
+   {
+    "t": "say",
+    "h": "Kafandaki resim çalışıyor. Şimdi ona bi isim ve bi test koyuyoruz."
+   }
+  ]
+ },
+ {
+  "sec": "ok",
+  "title": "Ok ve Hedef",
+  "btn": "Türkçe tuzağına geçelim",
+  "blocks": [
+   {
+    "t": "h",
+    "eb": "Bölüm 1",
+    "h": "Ok ve hedef"
+   },
+   {
+    "t": "say",
+    "h": "Bazı fiiller ok gibi: özneden çıkıp bi yere saplanıyor. <e>build</e> bi şey inşa eder; <e>eat</e> bi şey yer; <e>help</e> birine yardım eder. Okun saplandığı şey <b>nesne</b>. Bu fiillere <b>nesne alan fiil</b> diyoruz."
+   },
+   {
+    "t": "say",
+    "h": "Bazı fiillerin oku yok. <e>happen</e>, <e>arrive</e>, <e>exist</e>, <e>sleep</e>: olur, varır, var olur, uyur. Bi şeye saplanmazlar. Bunlar <b>nesne almayan fiil</b>."
+   },
+   {
+    "t": "ex",
+    "items": [
+     [
+      "G",
+      "<sb>Bees</sb> <pg>produce</pg> honey.",
+      "Arılar bal üretir. Ok → <b>honey</b>. Nesne alan fiil."
+     ],
+     [
+      "G",
+      "<sb>Most bees</sb> <pg>rest</pg> inside the {hive|kovan} at night.",
+      "Çoğu arı geceleri kovanda dinlenir. Ok yok; <e>inside the hive</e> yer, <e>at night</e> zaman bilgisi. Nesne almayan fiil."
+     ]
+    ]
+   },
+   {
+    "t": "say",
+    "h": "Hedefi bulmanın Türkçe yolu: fiile <b>ne?</b>, <b>neyi?</b>, <b>kimi?</b> diye sor. Arılar neyi üretir? Bal. Hedef bu. Arılar neyi dinlenir? Saçma soru. Hedef yok."
+   },
+   {
+    "t": "say",
+    "h": "Ama asıl ölçü İngilizce cümlede: hedef fiilden <b>hemen sonra</b> gelir ve önünde edat yoktur. Sıra sende: hedefe dokun."
+   },
+   {
+    "t": "tap",
+    "id": "tp1",
+    "xp": 2,
+    "q": "Hedef hangisi? ({ancient|antik}, {enormous|devasa}, {pyramid|piramit})",
+    "toks": [
+     [
+      "Ancient",
+      "s"
+     ],
+     [
+      "Egyptians",
+      "s"
+     ],
+     [
+      "built",
+      "o"
+     ],
+     [
+      "enormous",
+      "p1"
+     ],
+     [
+      "pyramids",
+      "p1"
+     ],
+     [
+      "near",
+      "o"
+     ],
+     [
+      "the",
+      "o"
+     ],
+     [
+      "Nile.",
+      "o"
+     ]
+    ],
+    "fs": "Bu, eylemi yapan; özne. Okun gittiği yeri ara.",
+    "fo": "Bu hedef değil. Fiilden hemen sonra gelen, edatsız isme bak.",
+    "done": "Tamam. Neyi inşa ettiler? Piramitleri. Ok <e>built</e>'ten çıkıp <e>pyramids</e>'e saplanıyor. <e>near the Nile</e> yer bilgisi, önünde edat var."
+   },
+   {
+    "t": "tap",
+    "id": "tp2",
+    "xp": 2,
+    "q": "Hedef hangisi?",
+    "toks": [
+     [
+      "Every",
+      "s"
+     ],
+     [
+      "year,",
+      "s"
+     ],
+     [
+      "millions",
+      "s"
+     ],
+     [
+      "of",
+      "s"
+     ],
+     [
+      "foreign",
+      "s"
+     ],
+     [
+      "tourists",
+      "s"
+     ],
+     [
+      "visit",
+      "o"
+     ],
+     [
+      "Istanbul.",
+      "p1"
+     ]
+    ],
+    "fs": "Bu cümlenin başı: zaman ve eylemi yapanlar. Okun gittiği yere bak.",
+    "fo": "Bu hedef değil. Fiilden hemen sonra gelen, edatsız isme bak.",
+    "done": "Evet. Neyi ziyaret ediyorlar? İstanbul'u. Fiilden hemen sonra, edatsız."
+   },
+   {
+    "t": "tap",
+    "id": "tp3",
+    "xp": 2,
+    "q": "Hedef hangisi? ({researcher|araştırmacı}, {test|denemek}, {vaccine|aşı}, {laboratory|laboratuvar})",
+    "toks": [
+     [
+      "The",
+      "s"
+     ],
+     [
+      "researchers",
+      "s"
+     ],
+     [
+      "tested",
+      "o"
+     ],
+     [
+      "the",
+      "p1"
+     ],
+     [
+      "new",
+      "p1"
+     ],
+     [
+      "vaccine",
+      "p1"
+     ],
+     [
+      "on",
+      "o"
+     ],
+     [
+      "laboratory",
+      "o"
+     ],
+     [
+      "mice.",
+      "o"
+     ]
+    ],
+    "fs": "Bu, eylemi yapan; özne. Okun gittiği yeri ara.",
+    "fo": "Bu hedef değil. Fiilden hemen sonra gelen, edatsız isme bak.",
+    "done": "Doğru. Neyi test ettiler? Yeni aşıyı. <e>on mice</e> edatlı; hedef değil, nerde test ettiklerini söylüyor."
+   },
+   {
+    "t": "mcq",
+    "id": "ok1",
+    "xp": 1,
+    "q": "Hangi fiilin oku yok, yani nesne almıyor?",
+    "o": [
+     "arrive",
+     "produce",
+     "visit"
+    ],
+    "f": [
+     "Doğru. Varmak bi şeye saplanmıyor; <e>arrive at the station</e>'da bile istasyon edatla bağlanıyor. Nesne almayan fiil.",
+     "Bu nesne alıyor: <e>produce energy</e>, enerji üretir.",
+     "Bu nesne alıyor: <e>visit a museum</e>, bi müzeyi ziyaret eder."
+    ],
+    "a": 0
+   },
+   {
+    "t": "mcq",
+    "id": "ok2",
+    "xp": 1,
+    "q": "Hangisi nesne almayan fiil?",
+    "cebi": "planet|gezegen; species|tür; crop|ekin",
+    "o": [
+     "discover",
+     "exist",
+     "damage"
+    ],
+    "f": [
+     "Nesne alıyor: <e>discover a new species</e>.",
+     "Evet. Var olmak bi şeye saplanmaz: <e>Life may exist on other planets.</e>",
+     "Nesne alıyor: <e>damage the crops</e>, ekinlere zarar verir."
+    ],
+    "a": 1
+   }
+  ]
+ },
+ {
+  "sec": "tuzak",
+  "title": "Neye? Kime?",
+  "btn": "Pasifi kuralım",
+  "blocks": [
+   {
+    "t": "h",
+    "eb": "Bölüm 2",
+    "h": "Neye? Kime? Dikkat"
+   },
+   {
+    "t": "say",
+    "h": "Burda bi tuzak var, Türkçeden geliyor. \"Neyi, kimi\" sorusu kolay. Ama \"neye, kime\" sorusunun cevabı İngilizcede bazen hedef, bazen değil. Türkçe eke güvenme; İngilizce cümleye bak."
+   },
+   {
+    "t": "say",
+    "h": "<b>Birinci grup.</b> Türkçede \"-e\" alıyor, İngilizcede edatsız hedef alıyor. Türkçe \"neye?\" diyor diye kandırmasın; bunlar nesne alan fiil."
+   },
+   {
+    "t": "ex",
+    "items": [
+     [
+      "G",
+      "Too much sunlight <pg>harms</pg> your skin.",
+      "Fazla güneş cildine zarar verir. Neye? Cilde. İngilizcede: harms → your skin, edat yok. Hedef."
+     ],
+     [
+      "G",
+      "Many people still <pg>believe</pg> this ancient {legend|efsane}.",
+      "Birçok insan bu eski efsaneye hâlâ inanır. Neye? Efsaneye. İngilizcede: believe → this ancient legend. Hedef."
+     ]
+    ]
+   },
+   {
+    "t": "say",
+    "h": "Bu grupta YDT'de sık gördüklerin: <e>harm</e>, <e>damage</e> (zarar vermek), <e>help</e> (yardım etmek), <e>enter</e> (girmek), <e>attend</e>, <e>join</e> (katılmak), <e>reach</e> (ulaşmak), <e>answer</e> (cevap vermek), <e>believe</e> (inanmak)."
+   },
+   {
+    "t": "say",
+    "h": "<b>İkinci grup.</b> Türkçede yine \"-e\" alıyor, ama İngilizcede araya edat giriyor. Edattan sonraki isim hedef değil. Bu fiiller nesne almıyor."
+   },
+   {
+    "t": "ex",
+    "items": [
+     [
+      "G",
+      "Stress often <pg>leads to</pg> serious sleep problems.",
+      "Stres uyku sorunlarına yol açar. Neye? Sorunlara. Ama İngilizcede <b>to</b> var: hedef değil."
+     ],
+     [
+      "G",
+      "Young animals <pg>depend on</pg> their parents for food and protection.",
+      "Yavru hayvanlar yiyecek ve korunma için ebeveynlerine bağlıdır. <b>on</b> var: hedef değil."
+     ]
+    ]
+   },
+   {
+    "t": "say",
+    "h": "YDT metinlerinde en sık geçenler: <e>lead to</e> (dokuz sınavın dokuzunda), <e>result in</e>, <e>depend on</e>, <e>rely on</e>, <e>contribute to</e>, <e>adapt to</e>, <e>belong to</e>, <e>happen to</e>."
+   },
+   {
+    "t": "mcq",
+    "id": "tz1",
+    "xp": 1,
+    "q": "<e>The climbers finally reached the top after five exhausting hours.</e> <e>the top</e> hedef mi?",
+    "cebi": "climber|dağcı; top|zirve; exhausting|yorucu",
+    "o": [
+     "Hedef değil, çünkü Türkçede \"neye?\" sorusuna cevap.",
+     "Hedef değil, yer bilgisi.",
+     "Hedef. <e>reach</e>'ten sonra edat yok."
+    ],
+    "f": [
+     "Tuzak bu işte. Türkçe eke değil İngilizceye bak: <e>reached the top</e>, arada edat yok.",
+     "Yer bilgisi olsa önünde edat olurdu (<e>at</e>, <e>in</e>). Burda yok.",
+     "Doğru. Türkçede \"zirveye ulaştılar\", neye? Ama İngilizcede <e>reached the top</e>: edatsız, hedef."
+    ],
+    "a": 2
+   },
+   {
+    "t": "mcq",
+    "id": "tz2",
+    "xp": 1,
+    "q": "<e>Petrol cars contribute to climate change.</e> <e>climate change</e> hedef mi?",
+    "cebi": "contribute to|katkıda bulunmak; climate change|iklim değişikliği",
+    "o": [
+     "Hedef değil; önünde <e>to</e> var.",
+     "Hedef; Türkçede \"neye?\" sorusunun cevabı.",
+     "Hedef; fiilden sonra geliyor."
+    ],
+    "f": [
+     "Evet. Türkçede \"iklim değişikliğine katkıda bulunuyor\" diyoruz; İngilizcede <e>contribute to</e>. Edattan sonraki isim hedef değil.",
+     "Türkçe ek kandırmasın. <e>to</e> araya girmiş; hedef değil.",
+     "Fiilden hemen sonra gelen <e>to</e>. Hedef edatsız gelir."
+    ],
+    "a": 0
+   },
+   {
+    "t": "mcq",
+    "id": "tz3",
+    "xp": 1,
+    "q": "Hangi fiil İngilizcede edatsız hedef alıyor?",
+    "cebi": "attend|katılmak; belong to|ait olmak",
+    "o": [
+     "belong",
+     "attend",
+     "happen"
+    ],
+    "f": [
+     "<e>belong to</e>: edat var, hedef yok.",
+     "Doğru. Türkçede \"toplantıya katılmak\", ama İngilizcede <e>attend the meeting</e>: edatsız hedef.",
+     "<e>happen</e>'in oku yok; nesne almıyor."
+    ],
+    "a": 1
+   },
+   {
+    "t": "say",
+    "h": "<b>Üçüncü durum: kime?</b> Bazı fiiller iki ok atar: biri bi şeye, biri birine. <e>give</e>, <e>teach</e>, <e>tell</e>, <e>offer</e>, <e>show</e>. \"Kime?\" sorusunun cevabı da burda hedef sayılır."
+   },
+   {
+    "t": "ex",
+    "items": [
+     [
+      "K",
+      "The government <pk>gave</pk> <b>the students</b> free {tablets|tabletler} for online lessons.",
+      "Hükümet öğrencilere çevrim içi dersler için ücretsiz tablet verdi. Kime? Öğrencilere. Neyi? Tabletleri. İki hedef."
+     ]
+    ]
+   },
+   {
+    "t": "mcq",
+    "id": "tz4",
+    "xp": 1,
+    "q": "<e>Some schools teach young children a second language from the age of five.</e> Hangisi hedef: <e>young children</e> mı, <e>a second language</e> mı?",
+    "o": [
+     "Yalnız <e>a second language</e>.",
+     "Hiçbiri.",
+     "İkisi de."
+    ],
+    "f": [
+     "\"Kime?\" sorusunun cevabı da hedef: <e>young children</e>, edatsız.",
+     "<e>teach</e> nesne alan fiil; iki hedefi var.",
+     "Evet. <e>teach</e> iki ok atıyor: kime öğretiyorlar (<e>young children</e>), neyi öğretiyorlar (<e>a second language</e>)."
+    ],
+    "a": 2
+   }
+  ]
+ },
+ {
+  "sec": "kurulum",
+  "title": "Pasif Nasıl Kurulur",
+  "btn": "Zamana geçelim",
+  "blocks": [
+   {
+    "t": "h",
+    "eb": "Bölüm 3",
+    "h": "Hedef başa geçiyor"
+   },
+   {
+    "t": "say",
+    "h": "Şimdi pasif. Ok yine atılıyor; ama cümlenin başına bu sefer hedef geçiyor. Özne artık yapan değil, okun saplandığı yer."
+   },
+   {
+    "t": "ex",
+    "items": [
+     [
+      "K",
+      "<sb>Engineers</sb> <pk>completed</pk> the first Bosphorus Bridge in 1973.",
+      "Aktif: mühendisler ilk Boğaz Köprüsü'nü 1973'te tamamladı."
+     ],
+     [
+      "K",
+      "<sb>The first Bosphorus Bridge</sb> <pk>was completed</pk> in 1973.",
+      "Pasif: ilk Boğaz Köprüsü 1973'te tamamlandı. Hedef başa geçti."
+     ]
+    ]
+   },
+   {
+    "t": "say",
+    "h": "Yüklem değişti: <b>be + V3</b>. <e>be</e> zamanı taşıyor, V3 \"yapıldı\" anlamını. Yapanı söylemek istersen <e>by</e>'la eklersin; çoğu zaman söylenmez bile, çünkü önemli değil ya da belli."
+   },
+   {
+    "t": "say",
+    "h": "Şimdi önemli kısım. Pasif için hedef lazım. Hedefi olmayan fiilin başa geçirecek kimsesi yok. O yüzden nesne almayan fiilin pasifi olmaz: <e>was happened</e>, <e>is existed</e> diye bi şey yok. YDT metinlerinde <e>happen</e>, <e>exist</e>, <e>remain</e>, <e>become</e> toplam 140 kadar geçiyor; bi kez bile pasif değil."
+   },
+   {
+    "t": "mcq",
+    "id": "ku1",
+    "xp": 1,
+    "q": "Hangisi doğru pasif?",
+    "cebi": "law|yasa; accept|kabul etmek; parliament|meclis",
+    "o": [
+     "The new law was accepted by parliament in 2020.",
+     "The new law accepted parliament in 2020.",
+     "The new law was accept by parliament in 2020."
+    ],
+    "f": [
+     "Doğru. Yasa kendini kabul etmedi; meclis tarafından kabul edildi. <e>was accepted</e>: be + V3.",
+     "Yasa meclisi kabul etmiş gibi oldu :) Hedef başa geçtiyse <e>be</e> lazım.",
+     "<e>be</e>'den sonra V3 gelir: <e>accepted</e>."
+    ],
+    "a": 0
+   },
+   {
+    "t": "mcq",
+    "id": "ku2",
+    "xp": 1,
+    "q": "Hangisi doğru?",
+    "cebi": "accident|kaza",
+    "o": [
+     "The accident was happened late at night on the motorway.",
+     "The accident happened late at night on the {motorway|otoyol}.",
+     "The accident has been happened late at night on the motorway."
+    ],
+    "f": [
+     "<e>happen</e> nesne almıyor; başa geçecek hedef yok. Pasif olmaz.",
+     "Evet. <e>happen</e>'in oku yok; pasif olmaz. Kaza oldu, kimse kazayı \"olmadı\".",
+     "Yine pasif. <e>happen</e>'in pasifi olmaz."
+    ],
+    "a": 1
+   },
+   {
+    "t": "tap",
+    "id": "tp4",
+    "xp": 2,
+    "q": "Pasif yüklemi bul: <e>be</e> + V3, ikisini de al.",
+    "toks": [
+     [
+      "Coffee",
+      "s"
+     ],
+     [
+      "is",
+      "p1"
+     ],
+     [
+      "grown",
+      "p1"
+     ],
+     [
+      "in",
+      "o"
+     ],
+     [
+      "more",
+      "o"
+     ],
+     [
+      "than",
+      "o"
+     ],
+     [
+      "50",
+      "o"
+     ],
+     [
+      "countries,",
+      "o"
+     ],
+     [
+      "mostly",
+      "o"
+     ],
+     [
+      "in",
+      "o"
+     ],
+     [
+      "tropical",
+      "o"
+     ],
+     [
+      "regions.",
+      "o"
+     ]
+    ],
+    "fs": "Bu özne. Eylemden etkilenen o; yüklemi ara.",
+    "fo": "Bu yüklemin parçası değil. <e>be</e>'yi ve hemen arkasındaki V3'ü ara.",
+    "done": "Tamam. <e>is grown</e>: kahve yetiştirilir. Kahve bi şey yetiştirmiyor; o yetiştirilen. Bu arada doğru bilgi; 70'e yakın ülkede yetişiyor."
+   },
+   {
+    "t": "mcq",
+    "id": "ku3",
+    "xp": 1,
+    "stem": "Many roads in Europe were originally built ---- the Romans.",
+    "cebi": "Romans|Romalılar; originally|aslen, ilk olarak",
+    "o": [
+     "from",
+     "to",
+     "by"
+    ],
+    "f": [
+     "<e>from</e> nerden geldiğini söyler; yapanı <e>by</e> getirir.",
+     "<e>to</e> yön verir; yapanı <e>by</e> getirir.",
+     "Doğru. Pasifte yapanı <e>by</e> getirir: <e>by the Romans</e>."
+    ],
+    "a": 2
+   }
+  ]
+ },
+ {
+  "sec": "zaman",
+  "title": "Zamanı Be Taşır",
+  "btn": "Süren pasife geçelim",
+  "blocks": [
+   {
+    "t": "h",
+    "eb": "Bölüm 4",
+    "h": "Zamanı be taşır"
+   },
+   {
+    "t": "say",
+    "h": "Tenses'teki kuralımız: zamanı yüklemin ilk parçası taşır. Pasifte de aynı. İlk parçaya bak, zamanı oku; sonra <e>be + V3</e> çiftini gör, \"yapılan\" de. İki adım."
+   },
+   {
+    "t": "card",
+    "code": "G",
+    "title": "Pasifte zaman tablosu",
+    "rows": [
+     [
+      "G",
+      "am / is / are + V3",
+      "English <b>is spoken</b> in many countries. → konuşulur"
+     ],
+     [
+      "K",
+      "was / were + V3",
+      "The telephone <b>was invented</b> in 1876. → icat edildi"
+     ],
+     [
+      "D",
+      "have / has been + V3",
+      "Honey <b>has been found</b> in ancient tombs. → bulunmuş durumda"
+     ],
+     [
+      "Ö",
+      "had been + V3",
+      "By 1900, most of the forest <b>had been cut</b> down. → kesilmiş durumdaydı"
+     ],
+     [
+      "İ",
+      "will be + V3",
+      "The 2028 Olympics <b>will be held</b> in Los Angeles. → düzenlenecek"
+     ]
+    ]
+   },
+   {
+    "t": "say",
+    "h": "<e>has been found</e>'a bak. İlk parça <e>has</e>: [D], bugüne bağlı. Sonra <e>been found</e>: be + V3, pasif. \"Bulunmuş durumda.\" Tenses'teki <e>has found</e>'dan tek farkı araya giren <e>been</e>."
+   },
+   {
+    "t": "mcq",
+    "id": "zm1",
+    "xp": 1,
+    "q": "<e>Hagia Sophia was originally built as a church in 537.</e> → hangi zaman?",
+    "cebi": "originally|aslen; church|kilise",
+    "codes": [
+     "K",
+     "G",
+     "D"
+    ],
+    "f": [
+     "Doğru. İlk parça <e>was</e>: geçmişte kapandı. <e>was built</e>: inşa edildi. Ayasofya 537'de tamamlandı.",
+     "İlk parça <e>was</e>; geçmiş. [G] olsa <e>is built</e> olurdu.",
+     "İlk parça <e>has</e> olsaydı [D] olurdu. <e>was</e> → [K]."
+    ],
+    "a": 0
+   },
+   {
+    "t": "mcq",
+    "id": "zm2",
+    "xp": 1,
+    "q": "<e>Many ancient {manuscripts|el yazmaları} have been lost.</e> → hangi zaman?",
+    "codes": [
+     "Ö",
+     "D",
+     "K"
+    ],
+    "f": [
+     "[Ö] <e>had been</e> olurdu. Burda <e>have</e>.",
+     "Evet. İlk parça <e>have</e>: bugüne bağlı. <e>have been lost</e>: kaybolmuş durumda.",
+     "İlk parça <e>was</e> değil, <e>have</e>. [K] olsa <e>were lost</e> olurdu."
+    ],
+    "a": 1
+   },
+   {
+    "t": "mcq",
+    "id": "zm3",
+    "xp": 1,
+    "q": "<e>The new international airport will be officially opened next year.</e> → hangi zaman?",
+    "cebi": "officially|resmî olarak",
+    "codes": [
+     "G",
+     "D",
+     "İ"
+    ],
+    "f": [
+     "İlk parça <e>will</e>; şimdi değil, ileride.",
+     "<e>been</e> yok, <e>has</e> yok. İlk parça <e>will</e>.",
+     "Doğru. İlk parça <e>will</e>: ileride. <e>will be opened</e>: açılacak."
+    ],
+    "a": 2
+   },
+   {
+    "t": "mcq",
+    "id": "zm4",
+    "xp": 1,
+    "q": "<e>When the firefighters arrived, the old library had been destroyed.</e> → hangi zaman?",
+    "cebi": "firefighter|itfaiyeci; destroy|yıkmak, yok etmek",
+    "codes": [
+     "Ö",
+     "K",
+     "D"
+    ],
+    "f": [
+     "Evet. İlk parça <e>had</e>: geçmişte bi noktada çoktan olmuştu. <e>had been destroyed</e>: yıkılmış durumdaydı. O nokta: itfaiye geldiğinde.",
+     "<e>had been</e>: geçmişte bi noktadan da önce. Tek başına [K] değil.",
+     "[D] <e>has been</e> olurdu. Burda <e>had</e>."
+    ],
+    "a": 0
+   },
+   {
+    "t": "mcq",
+    "id": "zm5",
+    "xp": 1,
+    "stem": "In our town, the {rubbish bins|çöp kutuları} ---- every Tuesday.",
+    "o": [
+     "were collected",
+     "are collected",
+     "have been collected"
+    ],
+    "f": [
+     "<e>every Tuesday</e> bugünkü düzen; geçmiş değil.",
+     "Doğru. Genel bi düzen: her salı. [G] + pasif: toplanır.",
+     "<e>every Tuesday</e> alışkanlık söylüyor; [D] değil, [G]."
+    ],
+    "a": 1
+   },
+   {
+    "t": "mcq",
+    "id": "zm6",
+    "xp": 1,
+    "stem": "Since it opened, the science museum ---- by over two million visitors.",
+    "cebi": "visitor|ziyaretçi",
+    "o": [
+     "was visited",
+     "will be visited",
+     "has been visited"
+    ],
+    "f": [
+     "<e>since</e> bugüne bağlıyor; kapanmış geçmiş değil.",
+     "<e>since</e> geçmişten bugüne bakıyor, ileriye değil.",
+     "Evet. <e>since it opened</e>: açıldığından beri, bugüne bağlı. [D] + pasif."
+    ],
+    "a": 2
+   }
+  ]
+ },
+ {
+  "sec": "suren",
+  "title": "Süren Pasif",
+  "btn": "Modal pasife geçelim",
+  "blocks": [
+   {
+    "t": "h",
+    "eb": "Bölüm 5",
+    "h": "Being: hâlâ yapılıyor"
+   },
+   {
+    "t": "say",
+    "h": "Şimdi YDT'nin sevdiği bi çeldirici. Dokuz sınavda şıklarda birkaç kez çıktı, bi kez bile doğru cevap olmadı. Ama biçimi çözemezsen eleyemezsin de. Merak ettiğim: bi gün doğru cevap olursa ne yapıcaksın?"
+   },
+   {
+    "t": "card",
+    "code": "S",
+    "title": "Süren pasif",
+    "rows": [
+     [
+      "S",
+      "am / is / are being + V3",
+      "A new bridge <b>is being built</b> over the river. → şu sıralar inşa ediliyor"
+     ],
+     [
+      "Ç",
+      "was / were being + V3",
+      "The road <b>was being repaired</b> when we passed. → o sırada onarılıyordu"
+     ]
+    ]
+   },
+   {
+    "t": "say",
+    "h": "Okuma sırası hep aynı. <e>was being repaired</e>: ilk parça <e>was</e> → geçmiş. <e>being</e> → süren, [Ç]'nin -ing'i. <e>being repaired</e> → be + V3, pasif. Toplam: geçmişte o sırada onarılıyordu."
+   },
+   {
+    "t": "say",
+    "h": "Küçük bi not. Tenses'te [H] ve [ÖH] vardı: <e>has been working</e>. Bunların pasif hâli neredeyse hiç kullanılmaz; kitaplar bile tabloda boş bırakır. Önüne çıkarsa çok büyük ihtimalle tuzak."
+   },
+   {
+    "t": "mcq",
+    "id": "sr1",
+    "xp": 1,
+    "q": "<e>New drugs for the disease are being tested.</e> → hangi zaman?",
+    "cebi": "drug|ilaç; disease|hastalık",
+    "codes": [
+     "S",
+     "G",
+     "Ç"
+    ],
+    "f": [
+     "Doğru. <e>are</e> → şimdi. <e>being</e> → sürüyor. <e>being tested</e> → test ediliyor. Şu sıralar.",
+     "<e>being</e> var; genel değil, süren. [S].",
+     "İlk parça <e>are</e>; geçmiş değil."
+    ],
+    "a": 0
+   },
+   {
+    "t": "mcq",
+    "id": "sr2",
+    "xp": 1,
+    "q": "<e>When we entered the {exhibition|sergi} hall, the floors were being cleaned.</e> → hangi zaman?",
+    "cebi": "hall|salon; floor|zemin",
+    "codes": [
+     "S",
+     "Ç",
+     "K"
+    ],
+    "f": [
+     "İlk parça <e>were</e>; geçmiş.",
+     "Evet. <e>were</e> → geçmiş. <e>being</e> → sürüyordu. <e>being cleaned</e> → temizleniyordu. O sırada.",
+     "<e>being</e> var. Kapanmış değil, o anda süren."
+    ],
+    "a": 1
+   },
+   {
+    "t": "mcq",
+    "id": "sr3",
+    "xp": 1,
+    "stem": "The {annual|yıllık} report ---- right now; it will be published this afternoon.",
+    "cebi": "report|rapor; prepare|hazırlamak; publish|yayımlamak",
+    "o": [
+     "is preparing",
+     "was being prepared",
+     "is being prepared"
+    ],
+    "f": [
+     "Aktif oldu: rapor bi şey hazırlıyor gibi. Rapor hazırlanıyor.",
+     "<e>right now</e> şimdi; <e>was</e> geçmiş.",
+     "Doğru. <e>right now</e>: tam şu anda. Rapor kendini hazırlamıyor; pasif + süren."
+    ],
+    "a": 2
+   }
+  ]
+ },
+ {
+  "sec": "modal",
+  "title": "Modal Pasif",
+  "btn": "Kontrol noktası",
+  "blocks": [
+   {
+    "t": "h",
+    "eb": "Bölüm 6",
+    "h": "Modal + be + V3",
+    "code": "MD"
+   },
+   {
+    "t": "say",
+    "h": "Geçen hafta pasif modalı görmüştün: <e>can be recycled</e>, geri dönüştürülebilir. Bu hafta onun kodu [MD]. YDT'de doğru cevap olarak da çıktı. Kural: modaldan sonra yalın <e>be</e>, sonra V3."
+   },
+   {
+    "t": "ex",
+    "items": [
+     [
+      "MD",
+      "Seat belts <pd>must be worn</pd> during the entire journey.",
+      "Emniyet kemeri yolculuk boyunca takılmalı (takılması şart)."
+     ],
+     [
+      "MD",
+      "This {disease|hastalık} <pd>can be prevented</pd> with a simple vaccine.",
+      "Bu hastalık basit bi aşıyla önlenebilir."
+     ]
+    ]
+   },
+   {
+    "t": "say",
+    "h": "Bi de geçmişe bakan hâli var: <b>modal + have been + V3</b>. Okuma: modal → tutum. <e>have been</e> → geçmişe bakıyor. V3 → pasif. YDT'de şıklarda birkaç kez çeldirici, hiç doğru cevap değil."
+   },
+   {
+    "t": "ex",
+    "items": [
+     [
+      "MD",
+      "The {mysterious|gizemli} letter <pd>may have been written</pd> by a child.",
+      "Gizemli mektup bi çocuk tarafından yazılmış olabilir (ihtimal dahilinde)."
+     ]
+    ]
+   },
+   {
+    "t": "say",
+    "h": "Bi de en uzunu, <e>will have been</e> + V3: ileride bi noktada yapılmış olacak. Sadece tanı; dokuz sınavda iki kez geçti."
+   },
+   {
+    "t": "mcq",
+    "id": "md1",
+    "xp": 1,
+    "stem": "This {medicine|ilaç} ---- in a cool, dark place.",
+    "cebi": "store|saklamak; cool|serin",
+    "o": [
+     "should be stored",
+     "should store",
+     "should be store"
+    ],
+    "f": [
+     "Doğru. İlaç saklanmalı: pasif modal. İlaç kendini saklamaz.",
+     "Aktif oldu: ilaç bi şey saklıyor gibi.",
+     "<e>be</e>'den sonra V3: <e>stored</e>."
+    ],
+    "a": 0
+   },
+   {
+    "t": "mcq",
+    "id": "md2",
+    "xp": 1,
+    "stem": "Experts say many lives ---- if the authorities had acted earlier.",
+    "cebi": "authority|yetkili; act|harekete geçmek",
+    "o": [
+     "could be saved",
+     "could have been saved",
+     "could have saved"
+    ],
+    "f": [
+     "Bu şimdi ya da gelecek. Cümle geçmişi anlatıyor.",
+     "Evet. Geçmişe bakıyor (<e>if they had acted earlier</e>) ve can kurtarılan: modal + have been + V3.",
+     "Aktif kaldı; hayatlar kurtarılan, kurtaran değil."
+    ],
+    "a": 1
+   },
+   {
+    "t": "mcq",
+    "id": "md3",
+    "xp": 1,
+    "q": "<e>Smoke alarms should be checked regularly.</e> → hangi kod?",
+    "cebi": "smoke alarm|duman dedektörü",
+    "codes": [
+     "G",
+     "İ",
+     "MD"
+    ],
+    "f": [
+     "İlk parça <e>should</e>, bi modal. [MD].",
+     "<e>will</e> değil, <e>should</e>. [MD].",
+     "Doğru. <e>should</e> → tutum (tavsiye). <e>be checked</e> → kontrol edilmeli. Pasif modal."
+    ],
+    "a": 2
+   }
+  ]
+ },
+ {
+  "sec": "kontrol",
+  "title": "Kontrol Noktası",
+  "btn": "Bombaya geçelim",
+  "blocks": [
+   {
+    "t": "h",
+    "eb": "Ara durak",
+    "h": "Kontrol noktası"
+   },
+   {
+    "t": "say",
+    "h": "Buraya kadar iyi gidiyorsun. Mini bi sınav: beş sorudan dördünü ilk denemede yaparsan devam; yapamazsan zaman tablosuna dönüp bi göz gezdir. Tablo bi yere kaçmıyor."
+   },
+   {
+    "t": "check",
+    "id": "chk1",
+    "need": 4,
+    "back": "zaman",
+    "backLabel": "Zaman tablosuna geri dön",
+    "fail": "Bu sefer olmadı, olsun. Zaman tablosundan başlayıp bi göz gezdir, sonra bu beş soruyu baştan çöz.",
+    "pass2": "Tamamdır, oturdu. Devam ediyoruz.",
+    "fail2": "Tamam, devam edelim; ama ilk parça kuralını aklında tut, boss'ta lazım.",
+    "items": [
+     {
+      "id": "ck1",
+      "xp": 2,
+      "stem": "In Iceland, most electricity ---- from water and heat under the ground.",
+      "cebi": "electricity|elektrik",
+      "o": [
+       "is produced",
+       "produces",
+       "was produced"
+      ],
+      "f": [
+       "Evet. Genel bilgi: [G] + pasif. Elektrik üretilir.",
+       "Aktif oldu; elektrik bi şey üretiyor gibi.",
+       "Genel bilgi, bugün de doğru; geçmiş değil."
+      ],
+      "a": 0
+     },
+     {
+      "id": "ck2",
+      "xp": 2,
+      "stem": "The first modern Olympic Games ---- in Athens in 1896.",
+      "cebi": "hold|düzenlemek",
+      "o": [
+       "have been held",
+       "were held",
+       "held"
+      ],
+      "f": [
+       "<e>in 1896</e> bitmiş bi tarih; [D] olmaz.",
+       "Doğru. <e>in 1896</e>: kapanmış geçmiş + pasif. Oyunlar düzenlendi.",
+       "Aktif; oyunlar düzenleyen değil, düzenlenen."
+      ],
+      "a": 1
+     },
+     {
+      "id": "ck3",
+      "xp": 2,
+      "stem": "As the ice melts, sea levels ---- every year.",
+      "cebi": "melt|erimek; sea level|deniz seviyesi",
+      "o": [
+       "are risen",
+       "were risen",
+       "rise"
+      ],
+      "f": [
+       "<e>rise</e>'ın oku yok; pasif olmaz.",
+       "<e>rise</e> pasife girmez; ayrıca <e>every year</e> bugünkü düzen, geçmiş değil.",
+       "Evet. <e>rise</e> nesne almaz; pasifi olmaz. Deniz seviyesi yükselir."
+      ],
+      "a": 2
+     },
+     {
+      "id": "ck4",
+      "xp": 2,
+      "stem": "Several roads in the city centre ---- at the moment, so traffic is extremely slow.",
+      "o": [
+       "are being repaired",
+       "are repairing",
+       "were being repaired"
+      ],
+      "f": [
+       "Doğru. <e>at the moment</e>: şu anda süren + pasif.",
+       "Aktif; yollar onaran değil, onarılan.",
+       "<e>at the moment</e> şimdi; <e>were</e> geçmiş."
+      ],
+      "a": 0
+     },
+     {
+      "id": "ck5",
+      "xp": 2,
+      "q": "<e>The army entered the city at night.</e> Hedef var mı?",
+      "cebi": "army|ordu; enter|girmek",
+      "o": [
+       "Hedef yok, çünkü Türkçede \"şehre\".",
+       "Hedef: <e>the city</e>. Pasif olur: <e>The city was entered…</e>",
+       "Hedef: <e>the army</e>."
+      ],
+      "f": [
+       "Türkçe eke güvenme. <e>entered the city</e>: edat yok, hedef var.",
+       "Evet. Türkçede \"şehre girdi\" (neye?), ama İngilizcede <e>entered the city</e>: edatsız hedef.",
+       "<e>the army</e> eylemi yapan; özne."
+      ],
+      "a": 1
+     }
+    ],
+    "pass": "Geçtin. Devam."
+   }
+  ]
+ },
+ {
+  "sec": "bomba",
+  "title": "Bombayı İmha Et",
+  "btn": "Çeviriye geçelim",
+  "blocks": [
+   {
+    "t": "h",
+    "eb": "Bölüm 7",
+    "h": "Bombayı imha et"
+   },
+   {
+    "t": "say",
+    "h": "Her soruda üç cümle; biri hatalı, bomba o. İpucu: hedef var mı, <e>be</e> var mı, V3 var mı?"
+   },
+   {
+    "t": "mcq",
+    "id": "bm1",
+    "xp": 1,
+    "q": "Hangi cümle hatalı?",
+    "cebi": "earthquake|deprem; occur|meydana gelmek",
+    "o": [
+     "The earthquake was felt in three neighbouring cities.",
+     "Many old buildings were seriously damaged in the earthquake.",
+     "The earthquake was occurred at 4 a.m. on Monday."
+    ],
+    "f": [
+     "Sağlam; deprem hissedildi, <e>feel</e> nesne alır.",
+     "Sağlam; binalar hasar gördü, be + V3.",
+     "Bomba bu. <e>occur</e>'un oku yok; pasifi olmaz: <e>occurred</e>."
+    ],
+    "a": 2
+   },
+   {
+    "t": "mcq",
+    "id": "bm2",
+    "xp": 1,
+    "q": "Hangi cümle hatalı?",
+    "cebi": "diet|beslenme; cause|neden olmak",
+    "o": [
+     "Poor diet is often led to serious health problems.",
+     "Poor diet often leads to serious health problems.",
+     "Many serious health problems are caused by poor diet."
+    ],
+    "f": [
+     "Bomba bu. <e>lead to</e>: edat var, hedef yok, pasif yok. Doğrusu: <e>Poor diet often leads to…</e>",
+     "Sağlam; aktif, <e>lead to</e>.",
+     "Sağlam; <e>cause</e> nesne alır, pasifi olur."
+    ],
+    "a": 0
+   },
+   {
+    "t": "mcq",
+    "id": "bm3",
+    "xp": 1,
+    "q": "Hangi cümle hatalı?",
+    "o": [
+     "The new railway line will be completed next year.",
+     "The new railway line will completed next year.",
+     "The old railway line was completed in 1950."
+    ],
+    "f": [
+     "Sağlam; [İ] + pasif.",
+     "Bomba bu. <e>be</e> eksik: <e>will be completed</e>.",
+     "Sağlam; [K] + pasif."
+    ],
+    "a": 1
+   },
+   {
+    "t": "mcq",
+    "id": "bm4",
+    "xp": 1,
+    "q": "Hangi cümle hatalı?",
+    "cebi": "migrate|göç etmek; protect|korumak; law|yasa",
+    "o": [
+     "Many birds migrate south in early winter.",
+     "Many {endangered|nesli tükenmekte olan} birds are protected by international law.",
+     "Many birds are migrated south in early winter."
+    ],
+    "f": [
+     "Sağlam; aktif.",
+     "Sağlam; kuşlar korunur, be + V3.",
+     "Bomba bu. <e>migrate</e> (göç etmek) nesne almaz; kuşlar göç eder: <e>migrate</e>."
+    ],
+    "a": 2
+   }
+  ]
+ },
+ {
+  "sec": "ceviri",
+  "title": "Çeviride Çatı",
+  "btn": "Boss'a geçelim",
+  "blocks": [
+   {
+    "t": "h",
+    "eb": "Bölüm 8",
+    "h": "Çeviride pasif kalır"
+   },
+   {
+    "t": "say",
+    "h": "Geçen hafta kip korunumunu görmüştük: \"-ebilir\" uçarsa şık gider. Pasifte de aynısı var. Dokuz sınavın sekizinde, çeviri sorularında çatısı değişmiş çeldirici var; 31 soru, 41 şık. Bazen tek hatası bu."
+   },
+   {
+    "t": "say",
+    "h": "Kural basit: kaynakta özneye yapılıyorsa, şıkta da yapılmalı. Kaynak aktifse şık da aktif. Pasif \"-ıl-, -ın-\" eki Türkçede görünür: yapıldı, bulundu, kabul edildi. İngilizcede <e>be + V3</e>."
+   },
+   {
+    "t": "ex",
+    "items": [
+     [
+      "K",
+      "The ancient {tomb|mezar} <pk>was discovered</pk> by local farmers.",
+      "Kaynak bu. Doğru çeviri: \"Mezar çiftçiler tarafından keşfedildi.\" Pasif → pasif."
+     ],
+     [
+      "K",
+      "<sb>Local farmers</sb> <pk>discovered</pk> the ancient tomb.",
+      "\"Çiftçiler mezarı keşfetti\" ise çeldirici olur: anlam yakın ama çatı aktife dönmüş."
+     ]
+    ]
+   },
+   {
+    "t": "mcq",
+    "id": "cv1",
+    "xp": 1,
+    "q": "<e>This method was first developed in Japan.</e> Hangi çeviri doğru?",
+    "tag": "İngilizce → Türkçe",
+    "cebi": "method|yöntem; develop|geliştirmek",
+    "o": [
+     "Bu yöntem ilk olarak Japonya'da geliştirildi.",
+     "Japonya bu yöntemi ilk olarak geliştirdi.",
+     "Bu yöntem ilk olarak Japonya'da gelişti."
+    ],
+    "f": [
+     "Doğru. <e>was developed</e> → geliştirildi. Pasif kaldı.",
+     "Çatı değişti: Japonya yapan oldu. Kaynakta özne yöntem, ona yapılıyor.",
+     "\"Gelişti\": kendi kendine gelişmiş gibi. Kaynak \"geliştirildi\" diyor."
+    ],
+    "a": 0
+   },
+   {
+    "t": "mcq",
+    "id": "cv2",
+    "xp": 1,
+    "q": "Her yıl tropikal ormanlarda milyonlarca ağaç kesiliyor. Hangi çeviri doğru?",
+    "tag": "Türkçe → İngilizce",
+    "cebi": "cut down|kesmek; tropical|tropikal; forest|orman",
+    "o": [
+     "People cut down millions of trees in tropical forests every year.",
+     "Millions of trees in tropical forests are cut down every year.",
+     "Millions of trees in tropical forests fall down every year."
+    ],
+    "f": [
+     "Anlam yakın ama çatı değişti; kaynakta özne ağaçlar.",
+     "Evet. \"Kesiliyor\": pasif. <e>are cut down</e>.",
+     "\"Devriliyor\" oldu; kesen yok, ağaçlar kendiliğinden düşüyor."
+    ],
+    "a": 1
+   },
+   {
+    "t": "mcq",
+    "id": "cv3",
+    "xp": 1,
+    "q": "Araştırmacılar uykunun hafızayı güçlendirdiğini bulmuş. Hangi çeviri doğru?",
+    "tag": "Türkçe → İngilizce",
+    "cebi": "researcher|araştırmacı; improve|geliştirmek; memory|hafıza",
+    "o": [
+     "It has been found that sleep improves memory.",
+     "Sleep has been found to improve memory by researchers.",
+     "Researchers have found that sleep improves memory."
+    ],
+    "f": [
+     "Çatı pasife döndü, araştırmacılar kayboldu. Kaynakta özne araştırmacılar.",
+     "Pasife çevrilmiş; kaynak aktif.",
+     "Doğru. Kaynak aktif: \"araştırmacılar bulmuş\". Şık da aktif."
+    ],
+    "a": 2
+   },
+   {
+    "t": "mcq",
+    "id": "cv4",
+    "xp": 1,
+    "q": "<e>Most of these medicines are obtained from plants.</e> Hangi çeviri doğru?",
+    "tag": "İngilizce → Türkçe",
+    "cebi": "obtain|elde etmek; plant|bitki",
+    "o": [
+     "Bu ilaçların çoğu bitkilerden elde edilir.",
+     "Bu ilaçların çoğu bitkilerden elde edildi.",
+     "Bitkiler bu ilaçların çoğunu üretir."
+    ],
+    "f": [
+     "Evet. <e>are obtained</e> → elde edilir. [G] + pasif, ikisi de korundu.",
+     "Çatı korundu ama zaman kaydı: [G] → [K].",
+     "Çatı değişti: bitkiler yapan oldu."
+    ],
+    "a": 0
+   }
+  ]
+ },
+ {
+  "sec": "boss",
+  "title": "Boss · Hedef Avcısı",
+  "btn": "Çıkışa geç",
+  "blocks": [
+   {
+    "t": "h",
+    "eb": "Final",
+    "h": "Boss · Hedef Avcısı"
+   },
+   {
+    "t": "say",
+    "h": "Beş soru, beş şık, YDT biçiminde. Her soruda aynı yol: hedef var mı? Varsa özne yapan mı, yapılan mı? Sonra ilk parça: zaman ne?"
+   },
+   {
+    "t": "hp",
+    "ids": [
+     "bs1",
+     "bs2",
+     "bs3",
+     "bs4",
+     "bs5"
+    ]
+   },
+   {
+    "t": "mcq",
+    "id": "bs1",
+    "xp": 5,
+    "five": true,
+    "tag": "Boşluk doldurma",
+    "stem": "Today, English ---- as a common language in international science and business.",
+    "cebi": "common|ortak; science|bilim",
+    "o": [
+     "uses",
+     "is used",
+     "was used",
+     "is using",
+     "has used"
+    ],
+    "f": [
+     "Aktif; dil bi şey kullanıyor gibi.",
+     "Doğru. Genel bilgi [G], dil kullanılan şey: pasif.",
+     "Bugün de doğru bi bilgi; geçmişe kapatma.",
+     "Aktif ve süren; dil kullanan değil.",
+     "Aktif; dil kullanılan şey."
+    ],
+    "a": 1
+   },
+   {
+    "t": "mcq",
+    "id": "bs2",
+    "xp": 5,
+    "five": true,
+    "tag": "Boşluk doldurma",
+    "stem": "By the time the new king arrived in the capital, the old palace ---- completely.",
+    "cebi": "palace|saray; capital|başkent; renovate|yenilemek",
+    "o": [
+     "had been renovated",
+     "has been renovated",
+     "was renovating",
+     "will be renovated",
+     "is being renovated"
+    ],
+    "f": [
+     "Evet. Kral geldiğinde (geçmişte bi nokta) saray çoktan yenilenmişti: [Ö] + pasif.",
+     "[D] bugüne bağlar; cümle geçmişte bi noktaya bakıyor.",
+     "Aktif; saray yenileyen değil.",
+     "Gelecek; kral çoktan gelmiş.",
+     "Şimdi süren; cümle geçmişte."
+    ],
+    "a": 0
+   },
+   {
+    "t": "mcq",
+    "id": "bs3",
+    "xp": 5,
+    "five": true,
+    "tag": "Boşluk doldurma",
+    "stem": "Currently, rock samples from the Moon ---- by scientists in several countries.",
+    "cebi": "sample|örnek; rock|kaya",
+    "o": [
+     "are studying",
+     "were studied",
+     "are being studied",
+     "have studied",
+     "study"
+    ],
+    "f": [
+     "Aktif; örnekler inceleyen değil.",
+     "<e>currently</e> şimdi; geçmiş değil.",
+     "Doğru. <e>currently</e>: şu sıralar süren + pasif. Örnekler incelenen.",
+     "Aktif; örnekler bi şey incelemiyor.",
+     "Aktif ve genel; yanlış çatı."
+    ],
+    "a": 2
+   },
+   {
+    "t": "mcq",
+    "id": "bs4",
+    "xp": 5,
+    "five": true,
+    "tag": "Boşluk doldurma",
+    "stem": "After the {severe|şiddetli} storm, the airport ---- closed for two days.",
+    "cebi": "storm|fırtına",
+    "o": [
+     "was remained",
+     "had been remained",
+     "is remained",
+     "remained",
+     "was being remained"
+    ],
+    "f": [
+     "<e>remain</e>'in oku yok; pasifi olmaz.",
+     "Yine pasif; <e>remain</e> pasife girmez.",
+     "Pasif ve zaman da yanlış.",
+     "Evet. <e>remain</e> nesne almaz; pasif olmaz. Kapalı kaldı.",
+     "Pasif; <e>remain</e> pasife girmez."
+    ],
+    "a": 3
+   },
+   {
+    "t": "mcq",
+    "id": "bs5",
+    "xp": 5,
+    "five": true,
+    "tag": "Türkçe → İngilizce",
+    "q": "Okyanusları korumak için yeni yasalar yürürlüğe konmuş durumda.",
+    "cebi": "introduce|yürürlüğe koymak; protect|korumak; ocean|okyanus",
+    "o": [
+     "Governments have introduced new laws to protect the oceans.",
+     "New laws were introduced to protect the oceans.",
+     "New laws will be introduced to protect the oceans.",
+     "New laws have introduced to protect the oceans.",
+     "New laws have been introduced to protect the oceans."
+    ],
+    "f": [
+     "Çatı aktife döndü; kaynakta özne yasalar.",
+     "Çatı korundu ama zaman [K]'ya kaydı.",
+     "Gelecek oldu; kaynak \"konmuş\".",
+     "<e>been</e> eksik; yasalar bi şey yürürlüğe koyuyor gibi.",
+     "Doğru. \"Yürürlüğe konmuş\": [D] + pasif. Çatı da zaman da korundu."
+    ],
+    "a": 4
+   }
+  ]
+ },
+ {
+  "sec": "cikis",
+  "title": "Çıkış",
+  "btn": null,
+  "blocks": [
+   {
+    "t": "h",
+    "eb": "Final",
+    "h": "Çıkış"
+   },
+   {
+    "t": "say",
+    "h": "Bitti. Bi bakalım."
+   },
+   {
+    "t": "summary"
+   },
+   {
+    "t": "say",
+    "h": "Kendine dürüst ol. Yapabildiklerini işaretle; işaretleyemediğin varsa bağlantıya dokun, o bölüme dön."
+   },
+   {
+    "t": "checklist",
+    "items": [
+     [
+      "Nesne alan fiille nesne almayan fiili ayırıyorum; hedefi fiilden sonraki edatsız isimde arıyorum.",
+      "ok"
+     ],
+     [
+      "\"Neye, kime\" sorusunda Türkçe eke değil İngilizce cümleye bakıyorum.",
+      "tuzak"
+     ],
+     [
+      "Pasifte hedefin başa geçtiğini ve be + V3 geldiğini biliyorum; nesne almayan fiilin pasifi olmuyor.",
+      "kurulum"
+     ],
+     [
+      "Pasif yüklemin zamanını ilk parçadan okuyorum: is / was / has been / had been / will be.",
+      "zaman"
+     ],
+     [
+      "is being / was being + V3'ü çözüyorum: zaman, süren, pasif.",
+      "suren"
+     ],
+     [
+      "Modal + be + V3 ve modal + have been + V3'ü tanıyorum.",
+      "modal"
+     ],
+     [
+      "Çeviride çatısı değişmiş şıkkı yakalıyorum.",
+      "ceviri"
+     ]
+    ]
+   }
+  ],
+  "after": [
+   {
+    "t": "say",
+    "h": "Yarın ikinci gün. Pasif fiilimsiye bulaşınca ne oluyor: <e>to be done</e>, <e>being done</e>? Sonra \"It is believed that…\" ve ettirgenler: <e>make someone do</e>, <e>have something done</e>. Bugünkü oku ve hedefi yanında getir."
+   },
+   {
+    "t": "restart"
+   }
+  ]
+ }
+];
+
+</script>
+<script>
+(function(){
+'use strict';
+/* Kodlar: STAGE.codes = {KOD:[cssSınıfı, ad, tense, Türkçe çekirdek, slogan]} — verilmezse G/K/S */
+const CODES=STAGE.codes||{G:['g','Genel geçer','Present Simple','-r','"Hep böyle."'],K:['k','Kapanmış geçmiş','Past Simple','-dı','"Oldu, bitti, kapı kapandı."'],S:['s','Süren süreç','Present Continuous','-yor','"Bu aralar oluyor, değişiyor."']};
+const CODE_RE=new RegExp('\\[('+Object.keys(CODES).sort((a,b)=>b.length-a.length).join('|')+')\\]','g');
+const L='ABCDE';
+const $=(s,r=document)=>r.querySelector(s);
+const el=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;};
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---- durum ---- */
+let st=load()||fresh();
+st.first=st.first||{};st.bd=st.bd||{};st.ty=st.ty||{};st.sp=st.sp||{};
+function fresh(){return {scr:0,q:{},xp:{},ge:{},sw:{},tp:{},steps:{},chk:{},v2:{},cl:{},cipher:{},bd:{},ty:{},sp:{},first:{},finished:false};}
+function load(){try{const s=localStorage.getItem(STAGE.key);return s?JSON.parse(s):null;}catch(e){return null;}}
+function save(){try{localStorage.setItem(STAGE.key,JSON.stringify(st));}catch(e){}report(false);}
+
+/* ---- öğretmene rapor (yalnızca Google Apps Script'ten açılınca) ---- */
+const GS=(typeof google!=='undefined'&&google.script&&google.script.run)?google.script.run:null;
+/* Sayfa Google dışında (ör. GitHub Pages) barındırılınca kayıt bu adrese POST edilir (Apps Script doPost). */
+const TRACK=(typeof TRACK_URL==='string'&&/^https:\/\/script\.google\.com\//.test(TRACK_URL))?TRACK_URL:null;
+const TRACKED=!!(GS||TRACK);
+function postTrack(p,onFail){
+  const body=JSON.stringify(p);
+  if(navigator.onLine===false){onFail();return;}
+  try{fetch(TRACK,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body,keepalive:true}).then(()=>{retry=0;}).catch(onFail);}catch(e){onFail();}
+}
+let rT=null,lastSent='',retry=0;
+function stats(){
+  const scored=allQ().filter(q=>!q.cipher&&!q.noscore);
+  const ids=scored.map(q=>q.id);
+  const ans=ids.filter(id=>st.first[id]!==undefined);
+  const cor=ans.filter(id=>st.first[id]===true).length;
+  return {sheet:STAGE.sheet||'',topic:STAGE.topic,study:STAGE.study,stage:STAGE.no,name:st.who&&st.who.name,email:st.who&&st.who.email,
+    progress:Math.round(100*Math.min(st.scr,SCREENS.length-1)/(SCREENS.length-1)),
+    finished:!!st.finished,answered:ans.length,correct:cor,total:ids.length};
+}
+function report(now){
+  if(!TRACKED||!st.who)return;
+  clearTimeout(rT);
+  rT=setTimeout(()=>{const p=stats();const k=JSON.stringify(p);if(k===lastSent)return;lastSent=k;
+    const fail=()=>{lastSent='';if(retry<5){retry++;setTimeout(()=>report(true),4000*retry);}};
+    if(GS){try{GS.withFailureHandler(fail).withSuccessHandler(()=>{retry=0;}).kaydet(p);}catch(e){}}
+    else postTrack(p,fail);},now?0:2500);
+}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')report(true);});
+function firstTry(id,ok,noscore){if(!noscore&&st.first[id]===undefined)st.first[id]=!!ok;}
+
+
+/* ---- yardımcılar (üretim blokları) ---- */
+const solvers=[];window.__solvers=solvers;
+function norm(s){return String(s||'').toLowerCase().replace(/[’‘`´]/g,"'").replace(/[.,!?;:"]+/g,' ').replace(/\s+/g,' ').trim();}
+function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):s;}
+function xpg(n){return ` <span class="xpg">+${n} XP</span>`;}
+function shuf(id,n,k){let h=2166136261;for(const c of String(id))h=Math.imul(h^c.charCodeAt(0),16777619)>>>0;
+  const rnd=()=>{h^=h<<13;h>>>=0;h^=h>>>17;h^=h<<5;h>>>=0;return h/4294967296;};
+  for(let t=0;t<50;t++){const a=[...Array(n).keys()];for(let i=n-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+    const c=a.filter(x=>x<k);if(a[0]!==0&&c.some((x,i)=>x!==i))return a;}
+  return [...Array(n).keys()].reverse();}
+
+/* ---- metin biçimleme ---- */
+function fmt(s){
+  if(!s)return '';
+  return s
+    .replace(/\{([^|{}]+)\|([^{}]+)\}/g,(m,w,g)=>`<button type="button" class="gl" data-g="${g.replace(/"/g,'&quot;')}">${w}</button>`)
+    .replace(CODE_RE,(m,c)=>`<button type="button" class="cd ${CODES[c][0]}" data-c="${c}">${c}</button>`)
+    .replace(/<e>/g,'<span class="en">').replace(/<\/e>/g,'</span>')
+    .replace(/<p(g|k|s|d|h|c|o|oh|i|gi)>/g,'<span class="pr $1">').replace(/<\/p(g|k|s|d|h|c|o|oh|i|gi)>/g,'</span>')
+    .replace(/<sb>/g,'<span class="sb">').replace(/<\/sb>/g,'</span>');
+}
+function plain(s){return s.replace(/\{([^|{}]+)\|[^{}]+\}/g,'$1');}
+function chip(c){return c?`<span class="cd ${CODES[c][0]}" aria-hidden="true">${c}</span>`:'';}
+function cebi(str){
+  if(!str)return null;
+  const d=el('div','cebi');
+  d.innerHTML=str.split(';').map(x=>{const [w,g]=x.split('|');return `<span><b>${w.trim()}</b> ${g.trim()}</span>`;}).join('');
+  return d;
+}
+
+/* dokunmatik kelime ve kod açıklamaları (tek dinleyici) */
+document.addEventListener('click',e=>{
+  const g=e.target.closest('.gl');
+  if(g){const n=g.nextElementSibling;if(n&&n.classList.contains('gp'))n.remove();else g.insertAdjacentHTML('afterend',`<span class="gp">${g.dataset.g}</span>`);return;}
+  const c=e.target.closest('button.cd[data-c]');
+  if(c){const n=c.nextElementSibling;if(n&&n.classList.contains('cp'))n.remove();else{const d=CODES[c.dataset.c];c.insertAdjacentHTML('afterend',`<span class="cp">${d[1]} · ${d[2]} · ${d[3]}</span>`);}}
+});
+
+/* ---- XP ---- */
+let XPMAX=0;
+function allQ(){const out=[];for(const s of SCREENS)for(const b of [...s.blocks,...(s.after||[])]){if(b.t==='mcq'||b.t==='tap'||b.t==='swipe'||b.t==='build'||b.t==='type')out.push(b);if(b.t==='spot')b.errs.forEach((e,k)=>out.push({id:b.id+'.'+k,xp:b.xp}));if(b.t==='check')out.push(...b.items);if(b.t==='cipher')out.push({id:b.id,xp:b.bonus,cipher:true});}return out;}
+XPMAX=allQ().reduce((a,b)=>a+(b.xp||0),0);
+function xpNow(){return Object.values(st.xp).reduce((a,b)=>a+b,0);}
+function rank(){const r=xpNow()/XPMAX;let n=STAGE.ranks[0][1];for(const [t,name] of STAGE.ranks)if(r>=t)n=name;return n;}
+function hud(){
+  $('#hudXP').textContent=xpNow()+' XP';
+  $('#hudBar').style.width=Math.round(100*Math.min(st.scr,SCREENS.length-1)/(SCREENS.length-1))+'%';
+  let sec='';for(let i=st.scr;i>=0;i--){if(SCREENS[i].title){sec=SCREENS[i].title;break;}}
+  $('#hudS').textContent=sec;
+}
+function award(id,n){if(st.xp[id]==null){st.xp[id]=n;}}
+
+/* ---- ekranlar ---- */
+const main=$('#main');
+const screenObjs=[];
+function renderScreen(i,scroll){
+  const S=SCREENS[i];
+  const sec=el('section','screen');sec.id='s'+i;
+  if(S.sec&&(i===0||SCREENS[i-1].sec!==S.sec))sec.dataset.anchor=S.sec;
+  const reqs=[];
+  for(const b of S.blocks){const r=block(b,sec,()=>check());if(r&&r.req)reqs.push(r);}
+  const afterBox=el('div');afterBox.style.cssText='display:contents';
+  const nb=S.btn?el('button','btn',S.btn):null;
+  if(nb){nb.type='button';nb.hidden=true;nb.onclick=()=>{nb.hidden=true;nb.remove();next(i);};}
+  sec.appendChild(afterBox);if(nb)sec.appendChild(nb);
+  main.appendChild(sec);
+  let afterDone=false;
+  function check(){
+    if(!reqs.every(r=>r.done()))return;
+    if(!afterDone){afterDone=true;for(const b of (S.after||[]))block(b,afterBox,()=>{});}
+    if(nb&&st.scr===i)nb.hidden=false;
+    if(i===SCREENS.length-1&&!st.finished){st.finished=true;save();report(true);}
+    save();hud();
+  }
+  screenObjs[i]={sec,check};
+  check();
+  if(scroll)setTimeout(()=>sec.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}),40);
+}
+function next(i){if(st.scr===i){st.scr=i+1;save();report(true);}renderScreen(i+1,true);hud();menu();}
+
+/* ---- blok çizerleri ---- */
+function block(b,parent,changed){
+  const f=B[b.t];if(!f){console.warn('bilinmeyen blok',b.t);return null;}
+  return f(b,parent,changed);
+}
+const B={
+ hero(b,p){p.appendChild(el('div','hero',`<small>${STAGE.kicker||'YDT Grammar · Self-study'}</small><h1>${STAGE.title.split('·').pop().trim()}</h1><p>${fmt(STAGE.hero||'')}</p><div class="gks">${(STAGE.heroCodes||Object.keys(CODES)).map(c=>`<span>${c}</span>`).join('')}</div>`));},
+ say(b,p){p.appendChild(el('p','say',fmt(b.h)));},
+ h(b,p){p.appendChild(el('div','eb',b.eb));p.appendChild(el('h2','h'+(b.small?' small':''),(b.code?`<button type="button" class="cd ${CODES[b.code][0]}" data-c="${b.code}">${b.code}</button>`:'')+b.h));},
+ codes(b,p){p.appendChild(el('div','codes',(b.list||Object.keys(CODES)).map(c=>{const d=CODES[c];return `<div class="${d[0]}"><b>${c}</b><strong>${d[1]}</strong><span>${d[2]} · Türkçede çoğu zaman <em>${d[3]}</em></span>${d[4]?`<span>${d[4]}</span>`:''}</div>`;}).join('')));},
+ ex(b,p){const d=el('div','ex');for(const [c,e,t] of b.items)d.appendChild(el('div','it',(c?`<button type="button" class="cd ${CODES[c][0]}" data-c="${c}">${c}</button>`:'<span class="cd n">?</span>')+`<div class="e">${fmt(e)}</div><div class="t">${fmt(t)}</div>`));p.appendChild(d);},
+ card(b,p){p.appendChild(el('div','card '+CODES[b.code][0],`<h4>${chip(b.code)} ${b.title}</h4><dl>${b.rows.map(r=>`<dt>${r[0]}</dt><dd>${r[1]}${r[2]?`<small>${fmt(r[2])}</small>`:''}</dd>`).join('')}</dl>`));},
+ svg(b,p){p.appendChild(el('div','svgbox',b.h));},
+ pairs(b,p){p.appendChild(el('div','pairs',b.items.map(([tr,c,en])=>`<div><span>${tr}</span>${chip(c)}<span>${en}</span></div>`).join('')));},
+ timeline(b,p){p.appendChild(el('div','tl',`<svg viewBox="0 0 640 150" role="img" aria-label="Zaman şeridi: G zamandan bağımsız, K 1800'lerde, S bu dönem">
+  <rect class="gb" x="14" y="10" width="612" height="28" rx="14" stroke-width="1.5"/>
+  <text class="gt" x="320" y="29" text-anchor="middle" font-size="14" font-weight="700">G · zamandan bağımsız: tilki gece avlanır</text>
+  <line class="ax" x1="14" y1="95" x2="618" y2="95" stroke-width="2"/><polygon class="mut" points="628,95 616,89 616,101"/>
+  <rect class="kb" x="70" y="78" width="180" height="34" rx="8" stroke-width="1.5"/>
+  <text class="kt" x="160" y="100" text-anchor="middle" font-size="13.5" font-weight="700">K · in the 1800s</text>
+  <rect class="sbx" x="380" y="78" width="200" height="34" rx="17" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text class="st" x="480" y="100" text-anchor="middle" font-size="13.5" font-weight="700">S · these days</text>
+  <line class="now" x1="480" y1="64" x2="480" y2="122" stroke-width="2"/>
+  <text class="ink" x="480" y="142" text-anchor="middle" font-size="13" font-weight="800">ŞİMDİ</text>
+  <text class="mut" x="16" y="142" font-size="13">GEÇMİŞ</text><text class="mut" x="616" y="142" text-anchor="end" font-size="13">GELECEK</text></svg>`));},
+ v2(b,p){const d=el('div','v2');for(const [a,v] of b.items){const bt=el('button','',a);bt.type='button';const k=a;const show=()=>{bt.innerHTML=`${a} → <b>${v}</b>`;};if(st.v2[k])show();bt.onclick=()=>{if(st.v2[k]){st.v2[k]=0;bt.textContent=a;}else{st.v2[k]=1;show();}save();};d.appendChild(bt);}p.appendChild(d);},
+
+ mcq(b,p,changed,ctx){
+  const box=el('div','q'+(b.bomb?' bomb':''));
+  if(b.tag)box.appendChild(el('span','tag',b.tag));
+  if(b.q)box.appendChild(el('p','ask',fmt(b.q)));
+  if(b.chat){const c=el('div','chat');for(const [w,t] of b.chat){c.appendChild(el('div','bub'+(t==='----'?' me gap':''),t==='----'?`${w}: ----`:`<b>${w}</b>${fmt(t)}`));}box.appendChild(c);}
+  if(b.stem)box.appendChild(el('p','stem'+(b.tr?' trs':''),fmt(b.stem)));
+  const cb=cebi(b.cebi);if(cb)box.appendChild(cb);
+  let hb=null;if(b.hint){hb=el('button','hintb','İpucu');hb.type='button';hb.onclick=()=>{hb.replaceWith(el('div','fb info',fmt(b.hint)));};box.appendChild(hb);}
+  const opts=el('div','opts'+(b.codes?' codes3':'')+(b.who?' who':'')+(b.bomb?' wire':''));
+  const list=b.codes?(Array.isArray(b.codes)?b.codes:['G','K','S']):b.o;
+  const btns=list.map((o,i)=>{
+    const bt=el('button','op');bt.type='button';
+    let lab=b.who?['Ece','Mert','Defne'][i]:b.bomb?'':L[i];
+    if(b.codes)bt.innerHTML=`<span class="cd ${CODES[o][0]}">${o}</span><span class="x">${CODES[o][1]}</span>`;
+    else bt.innerHTML=`<span class="l">${lab}</span><span class="x">${fmt(plain(o))}</span>`+(b.L?`<span class="lt">${b.L[i]}</span>`:'');
+    bt.onclick=()=>pick(i);opts.appendChild(bt);return bt;});
+  box.appendChild(opts);
+  const fbw=el('div');fbw.style.cssText='display:contents';box.appendChild(fbw);
+  p.appendChild(box);
+  const key=b.id;
+  function rec(){return st.q[key]||(st.q[key]={tries:0,solved:false,wrong:[]});}
+  function paint(showFb){
+    const r=rec();
+    btns.forEach((bt,i)=>{bt.classList.remove('right','wrong','dim');bt.disabled=false;
+      if(r.wrong.includes(i))bt.classList.add('wrong');
+      if(r.solved){bt.disabled=true;if(i===b.a)bt.classList.add('right');else if(!r.wrong.includes(i))bt.classList.add('dim');}});
+    if(showFb!=null){fbw.innerHTML='';const ok=showFb===b.a;
+      const xpTxt=ok&&r.tries===1&&b.xp&&!(ctx&&ctx.noxp)?` <span class="xpg">+${b.xp} XP</span>`:'';
+      fbw.appendChild(el('div','fb '+(ok?'ok':'no'),`<div>${fmt(b.f[showFb])}${xpTxt}</div>`));}
+  }
+  function pick(i){
+    const r=rec();if(r.solved)return;
+    r.tries++;
+    firstTry(key,i===b.a,b.noscore);
+    if(i===b.a){r.solved=true;r.first=(r.tries===1);if(r.first&&b.xp&&!(ctx&&ctx.noxp))award(key,b.xp);}
+    else if(!r.wrong.includes(i))r.wrong.push(i);
+    paint(i);save();hud();changed();
+    if(ctx&&ctx.onAnswer)ctx.onAnswer();
+    document.dispatchEvent(new CustomEvent('qsolved',{detail:key}));
+  }
+  const r=rec();if(r.solved)paint(b.a);else if(r.wrong.length)paint(null);
+  return {req:true,done:()=>!!rec().solved,reset:()=>{st.q[key]={tries:0,solved:false,wrong:[]};fbw.innerHTML='';paint(null);if(hb===null&&b.hint){}}};
+ },
+
+ tap(b,p,changed){
+  const box=el('div','q');box.appendChild(el('p','ask',fmt(b.q)));
+  const cb=cebi(b.cebi);
+  const tk=el('div','toks');
+  const groups=[...new Set(b.toks.map(t=>t[1]).filter(r=>r[0]==='p'))];
+  const r=st.tp[b.id]||(st.tp[b.id]={found:[],tries:0,miss:0});
+  const fbw=el('div');fbw.style.cssText='display:contents';
+  const bts=b.toks.map(([w,role],i)=>{const bt=el('button','tk',w);bt.type='button';bt.onclick=()=>hit(i);tk.appendChild(bt);return bt;});
+  box.appendChild(tk);if(cb)box.appendChild(cb);box.appendChild(fbw);p.appendChild(box);
+  const done=()=>groups.every(g=>r.found.includes(g));
+  function paint(){
+    bts.forEach((bt,i)=>{const role=b.toks[i][1];bt.classList.toggle('hit',role[0]==='p'&&r.found.includes(role));if(done()){bt.disabled=true;if(role==='s')bt.classList.add('subj');bt.classList.remove('miss');}});
+  }
+  function say(cls,h){fbw.innerHTML='';fbw.appendChild(el('div','fb '+cls,`<div>${fmt(h)}</div>`));}
+  function hit(i){
+    if(done())return;const role=b.toks[i][1];r.tries++;
+    firstTry(b.id,role[0]==='p');
+    if(role[0]==='p'){if(!r.found.includes(role))r.found.push(role);
+      if(done()){if(r.miss===0)award(b.id,b.xp);say('ok',b.done+(r.miss===0?` <span class="xpg">+${b.xp} XP</span>`:''));}
+      else say('info',b.part||'Bi tane daha var.');}
+    else{r.miss++;bts[i].classList.add('miss');setTimeout(()=>bts[i].classList.remove('miss'),900);say('no',role==='s'?b.fs:b.fo);}
+    paint();save();hud();changed();
+  }
+  paint();if(done())say('ok',b.done);
+  return {req:true,done};
+ },
+
+ ge(b,p,changed){
+  const w=el('div','ge');w.appendChild(el('span','','Sence:'));
+  const fbw=el('div');fbw.style.cssText='display:contents';
+  const opts=[['G','Gerçek'],['E','Efsane']];
+  const bts=opts.map(([k,t])=>{const bt=el('button','',t);bt.type='button';bt.onclick=()=>pick(k);w.appendChild(bt);return bt;});
+  p.appendChild(w);p.appendChild(fbw);
+  function show(k){bts.forEach((bt,i)=>{bt.disabled=true;bt.classList.toggle('sel',opts[i][0]===k);});
+    fbw.innerHTML='';fbw.appendChild(el('div','fb '+(k===b.a?'ok':'info'),`<div>${k===b.a?'Tahminin tuttu. ':'Tahminin tutmadı, olsun. '}${fmt(b.fact)}</div>`));}
+  function pick(k){if(st.ge[b.id])return;st.ge[b.id]=k;show(k);save();changed();}
+  if(st.ge[b.id])show(st.ge[b.id]);
+  return {req:true,done:()=>!!st.ge[b.id]};
+ },
+
+ swipe(b,p,changed){
+  const c=el('div','sw',`<div class="e">${fmt(b.en)}</div>${b.tr?`<div class="t">${fmt(b.tr)}</div>`:''}`);
+  const bt=el('div','bt');const no=el('button','n',b.noLabel||'✕ Geç');const yes=el('button','y',b.yesLabel||'♥ Eşleşme');no.type=yes.type='button';bt.append(no,yes);c.appendChild(bt);
+  const fbw=el('div');fbw.style.cssText='display:contents';c.appendChild(fbw);p.appendChild(c);
+  const r=()=>st.sw[b.id];
+  function show(){const x=r();if(!x)return;
+    no.classList.toggle('wr',x.wrong&&x.wrong.includes(false));yes.classList.toggle('wr',x.wrong&&x.wrong.includes(true));
+    if(x.solved){no.disabled=yes.disabled=true;(b.a?yes:no).classList.add('sel');}
+    fbw.innerHTML='';fbw.appendChild(el('div','fb '+(x.solved?'ok':'no'),`<div>${fmt(x.solved?b.ok:b.no)}${x.solved&&x.first?` <span class="xpg">+${b.xp} XP</span>`:''}</div>`));}
+  function pick(v){const x=st.sw[b.id]||(st.sw[b.id]={tries:0,solved:false,wrong:[]});if(x.solved)return;x.tries++;firstTry(b.id,v===b.a);
+    if(v===b.a){x.solved=true;x.first=x.tries===1;if(x.first)award(b.id,b.xp);}else x.wrong.push(v);
+    show();save();hud();changed();}
+  no.onclick=()=>pick(false);yes.onclick=()=>pick(true);show();
+  return {req:true,done:()=>!!(r()&&r().solved)};
+ },
+
+ steps(b,p,changed){
+  const box=el('div','steps');
+  box.appendChild(el('p','stem',fmt(b.stem)));
+  const ol=el('ol','so');b.o.forEach((o,i)=>ol.appendChild(el('li','',`<b>${L[i]}</b><span>${fmt(o)}</span>`)));box.appendChild(ol);
+  const cb=cebi(b.cebi);if(cb)box.appendChild(cb);
+  const out=el('div');out.style.cssText='display:flex;flex-direction:column;gap:8px';box.appendChild(out);
+  const nb=el('button','btn sec','Sonraki adım');nb.type='button';box.appendChild(nb);p.appendChild(box);
+  const n=()=>st.steps[b.id]||0;
+  function paint(){out.innerHTML='';for(let i=0;i<n();i++)out.appendChild(el('div','st',`<i>${i+1}</i><div>${fmt(b.steps[i])}</div>`));
+    const lis=ol.children;for(let i=0;i<lis.length;i++){lis[i].classList.remove('out','mk');}
+    if(n()>=3){[0,2,3,4].filter(i=>i!==b.mark).forEach(i=>lis[i].classList.add('out'));}
+    if(n()>=4)lis[b.mark].classList.add('mk');
+    nb.hidden=n()>=b.steps.length;}
+  nb.onclick=()=>{st.steps[b.id]=n()+1;paint();save();changed();};
+  paint();
+  return {req:true,done:()=>n()>=b.steps.length};
+ },
+
+ hp(b,p){const d=el('div','hp','BOSS<span class="b">'+b.ids.map(()=>'<i></i>').join('')+'</span>');p.appendChild(d);
+  const f=()=>{const n=b.ids.filter(id=>st.q[id]&&st.q[id].solved).length;[...d.querySelectorAll('i')].forEach((x,i)=>x.classList.toggle('off',i<n));};
+  f();liveFns.push(f);},
+
+ cipher(b,p){const d=el('div','ci');const rv=el('div');rv.style.cssText='display:contents';p.appendChild(d);p.appendChild(rv);
+  const qs={};for(const s of SCREENS)for(const x of s.blocks)if(x.t==='mcq'&&b.ids.includes(x.id))qs[x.id]=x;
+  const f=()=>{d.innerHTML=b.ids.map(id=>{const q=qs[id];const ok=st.q[id]&&st.q[id].solved;return `<span class="${ok?'':'e'}">${ok?q.L[q.a]:'·'}</span>`;}).join('');
+    const all=b.ids.every(id=>st.q[id]&&st.q[id].solved);
+    if(all&&!rv.firstChild){award(b.id,b.bonus);save();rv.appendChild(el('div','fb ok',`<div>${fmt(b.reveal)}</div>`));$('#hudXP').textContent=xpNow()+' XP';}};
+  f();liveFns.push(f);},
+
+ check(b,p,changed){
+  const box=el('div','chk');p.appendChild(box);
+  const c=st.chk[b.id]||(st.chk[b.id]={round:1,result:null});
+  const inner=el('div');inner.style.cssText='display:flex;flex-direction:column;gap:12px';box.appendChild(inner);
+  const msg=el('div');msg.style.cssText='display:flex;flex-direction:column;gap:10px';box.appendChild(msg);
+  let objs=[];
+  function build(){inner.innerHTML='';objs=b.items.map(it=>B.mcq(it,inner,()=>{},{noxp:c.round>1,onAnswer:eval_}));}
+  function eval_(){
+    if(!b.items.every(it=>st.q[it.id]&&st.q[it.id].solved))return;
+    if(c.result)return show();
+    const n=b.items.filter(it=>st.q[it.id].tries===1).length;
+    c.score=n;c.result=(n>=b.need)?'pass':(c.round>1?'done2':'fail');save();show();changed();}
+  function show(){msg.innerHTML='';
+    if(!c.result)return;
+    const n=c.score;
+    if(c.result==='pass'){msg.appendChild(el('div','fb ok',`<div><b>${n}/5.</b> ${fmt(c.round>1?b.pass2:b.pass)}</div>`));}
+    else if(c.result==='done2'){msg.appendChild(el('div','fb info',`<div><b>${n}/5.</b> ${fmt(b.fail2)}</div>`));}
+    else{msg.appendChild(el('div','fb no',`<div><b>${n}/5.</b> ${fmt(b.fail)}</div>`));
+      const row=el('div','row');const back=el('button','btn sec',b.backLabel);back.type='button';
+      back.onclick=()=>{const t=document.querySelector(`[data-anchor="${b.back}"]`);if(t)t.scrollIntoView({behavior:reduce?'auto':'smooth'});};
+      const again=el('button','btn','Kontrolü baştan çöz');again.type='button';
+      again.onclick=()=>{c.round=2;c.result=null;for(const it of b.items)st.q[it.id]={tries:0,solved:false,wrong:[]};save();build();show();box.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});};
+      row.append(back,again);msg.appendChild(row);}
+  }
+  build();show();
+  return {req:true,done:()=>c.result==='pass'||c.result==='done2'};
+ },
+
+
+ /* ---- üretim blokları: kart · build · type · spot ---- */
+ kart(b,p){const d=el('div','kart');if(b.h)d.appendChild(el('h4','',fmt(b.h)));
+  for(const r of (b.rows||[]))d.appendChild(el('div','r',`<div class="t">${fmt(r[0])}</div><div class="e">${fmt(r[1])}</div>`));
+  if(b.note)d.appendChild(el('p','nt',fmt(b.note)));p.appendChild(d);},
+
+ build(b,p,changed){
+  const box=el('div','q bld');
+  if(b.tag)box.appendChild(el('span','tag',b.tag));
+  if(b.q)box.appendChild(el('p','ask',fmt(b.q)));
+  if(b.tr)box.appendChild(el('p','stem trs',fmt(b.tr)));
+  if(b.stem)box.appendChild(el('p','stem',fmt(b.stem)));
+  const T=[...b.tiles,...(b.extra||[])],K=b.tiles.length;
+  const order=shuf(b.id,T.length,K);
+  const r=st.bd[b.id]||(st.bd[b.id]={pick:[],tries:0,solved:false,shown:false});
+  const line=el('div','bline'),pool=el('div','pool'),row=el('div','row'),fbw=el('div');fbw.style.cssText='display:contents';
+  const undo=el('button','btn sec sm','Temizle'),chk=el('button','btn sm','Kontrol et'),show=el('button','btn sec sm','Doğrusunu göster');
+  undo.type=chk.type=show.type='button';show.hidden=true;row.append(chk,undo,show);
+  const tb=order.map(i=>{const bt=el('button','tile',fmt(T[i]));bt.type='button';
+    bt.onclick=()=>{if(r.solved||r.pick.includes(i))return;r.pick.push(i);paint();save();};pool.appendChild(bt);return [i,bt];});
+  box.append(line,pool,row,fbw);p.appendChild(box);
+  const goods=[b.tiles.join(' '),...(b.acc||[])].map(norm);
+  function paint(){
+   line.innerHTML='';
+   r.pick.forEach((i,k)=>{const t=el('button','tile in',fmt(k===0?cap(T[i]):T[i]));t.type='button';
+     t.onclick=()=>{if(r.solved)return;r.pick.splice(k,1);paint();save();};line.appendChild(t);});
+   if(!r.pick.length)line.appendChild(el('span','ph','Kelimelere sırayla dokun'));else if(b.end)line.appendChild(el('span','end',b.end));
+   tb.forEach(([i,bt])=>{const u=r.pick.includes(i);bt.disabled=r.solved||u;bt.classList.toggle('used',u);});
+   line.classList.toggle('ok',r.solved);pool.hidden=r.solved;row.hidden=r.solved;chk.disabled=!r.pick.length;
+   show.hidden=r.solved||r.tries<2;
+  }
+  function say(c,h){fbw.innerHTML='';fbw.appendChild(el('div','fb '+c,`<div>${fmt(h)}</div>`));}
+  function check(){
+   if(r.solved||!r.pick.length)return;
+   const used=r.pick.map(i=>T[i]),s=norm(used.join(' ')),ok=goods.includes(s);
+   firstTry(b.id,ok);r.tries++;
+   if(ok){r.solved=true;const x=r.tries===1&&b.xp;if(x)award(b.id,b.xp);say('ok',(b.ok||'Tamamdır, cümle yerinde.')+(x?xpg(b.xp):''));}
+   else{let m=null;
+    if(b.wrong)for(const k in b.wrong)if(norm(k)===s){m=b.wrong[k];break;}
+    const ex=r.pick.filter(i=>i>=K).map(i=>T[i]);
+    if(!m&&ex.length)m=(b.f&&ex.map(w=>b.f[w]).find(Boolean))||'Kutuda fazladan kelime var; birini kullandın, o bu cümleye ait değil.';
+    if(!m&&r.pick.filter(i=>i<K).length<K)m='Bir kelime eksik kaldı.';
+    if(!m)m=b.no||'Kelimeler doğru, sıra kaymış. İngilizce sıra: kim → ne yapıyor → gerisi.';
+    say('no',m);}
+   paint();save();hud();changed();
+  }
+  chk.onclick=check;
+  undo.onclick=()=>{if(r.solved)return;r.pick=[];paint();save();fbw.innerHTML='';};
+  show.onclick=()=>{r.solved=true;r.shown=true;r.pick=[...Array(K).keys()];paint();save();changed();say('info','Doğrusu bu. '+(b.ok||''));};
+  paint();if(r.solved)say(r.shown?'info':'ok',(r.shown?'Doğrusu bu. ':'')+(b.ok||'Tamamdır, cümle yerinde.'));
+  solvers.push(()=>{if(r.solved||!box.isConnected)return false;r.pick=[];for(let i=0;i<K;i++)tb.find(x=>x[0]===i)[1].click();chk.click();return true;});
+  return {req:true,done:()=>!!r.solved};
+ },
+
+ type(b,p,changed){
+  const box=el('div','q typ');
+  if(b.tag)box.appendChild(el('span','tag',b.tag));
+  if(b.q)box.appendChild(el('p','ask',fmt(b.q)));
+  if(b.tr)box.appendChild(el('p','stem trs',fmt(b.tr)));
+  const parts=b.s.split('{}'),n=parts.length-1,sEl=el('p','stem tys'),ins=[];
+  parts.forEach((pt,k)=>{sEl.appendChild(el('span','',fmt(pt)));if(k<n){const w=Math.max(5,...b.acc[k].map(a=>a.length))+1;
+    const inp=el('input','gapi');Object.assign(inp,{type:'text',autocomplete:'off',spellcheck:false});
+    inp.setAttribute('autocorrect','off');inp.setAttribute('autocapitalize','off');inp.setAttribute('enterkeyhint','done');inp.setAttribute('aria-label','boşluk '+(k+1));
+    inp.style.width=Math.min(w,16)+'ch';inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();check();}});sEl.appendChild(inp);ins.push(inp);}});
+  box.appendChild(sEl);
+  let hb=null;if(b.hint){hb=el('button','hintb','İpucu');hb.type='button';hb.onclick=()=>hb.replaceWith(el('div','fb info',fmt(b.hint)));box.appendChild(hb);}
+  const row=el('div','row'),chk=el('button','btn sm','Kontrol et'),show=el('button','btn sec sm','Doğrusunu göster');chk.type=show.type='button';show.hidden=true;row.append(chk,show);
+  const fbw=el('div');fbw.style.cssText='display:contents';box.append(row,fbw);p.appendChild(box);
+  const r=st.ty[b.id]||(st.ty[b.id]={vals:[],tries:0,solved:false,shown:false});
+  const goodAt=(k,v)=>b.acc[k].map(norm).includes(norm(v));
+  function say(c,h){fbw.innerHTML='';fbw.appendChild(el('div','fb '+c,`<div>${fmt(h)}</div>`));}
+  function paint(){ins.forEach((inp,k)=>{if(r.vals[k]!=null)inp.value=r.vals[k];inp.disabled=r.solved;
+     inp.classList.toggle('ok',r.solved||(r.tries>0&&goodAt(k,inp.value)));inp.classList.toggle('no',!r.solved&&r.tries>0&&!goodAt(k,inp.value));});
+    row.hidden=r.solved;show.hidden=r.solved||r.tries<2;}
+  function check(){
+   if(r.solved)return;r.vals=ins.map(i=>i.value.trim());
+   if(r.vals.some(v=>!v)){say('info','Önce boşlukların hepsini doldur.');return;}
+   const oks=r.vals.map((v,k)=>goodAt(k,v)),ok=oks.every(Boolean);
+   firstTry(b.id,ok);r.tries++;
+   if(ok){r.solved=true;const x=r.tries===1&&b.xp;if(x)award(b.id,b.xp);say('ok',(b.ok||'Tamamdır.')+(x?xpg(b.xp):''));}
+   else{const k=oks.indexOf(false),v=norm(r.vals[k]);const F=Array.isArray(b.f)?(b.f[k]||{}):(b.f||{});
+    let m=null;for(const key in F)if(norm(key)===v){m=F[key];break;}
+    say('no',m||F['*']||b.no||(n>1?'Kırmızı boşluğa bir daha bak.':'Tutmadı. Bir daha düşün.'));}
+   paint();save();hud();changed();
+  }
+  chk.onclick=check;
+  show.onclick=()=>{r.solved=true;r.shown=true;r.vals=b.acc.map(a=>a[0]);paint();save();changed();say('info','Doğrusu bu. '+(b.ok||''));};
+  paint();if(r.solved)say(r.shown?'info':'ok',(r.shown?'Doğrusu bu. ':'')+(b.ok||'Tamamdır.'));
+  solvers.push(()=>{if(r.solved||!box.isConnected)return false;ins.forEach((inp,k)=>inp.value=b.acc[k][0]);chk.click();return true;});
+  return {req:true,done:()=>!!r.solved};
+ },
+
+ spot(b,p,changed){
+  const box=el('div','q spt');
+  if(b.tag)box.appendChild(el('span','tag',b.tag));
+  if(b.q)box.appendChild(el('p','ask',fmt(b.q)));
+  const wrap=el('div',b.from?'msgb':'sp-p');if(b.from)wrap.appendChild(el('span','from',b.from));
+  const tk=el('div','stoks');wrap.appendChild(tk);box.appendChild(wrap);
+  const cnt=el('div','spcount');if(b.errs.length>1)box.appendChild(cnt);
+  const ed=el('div','sped');ed.hidden=true;box.appendChild(ed);
+  const fbw=el('div');fbw.style.cssText='display:contents';box.appendChild(fbw);p.appendChild(box);
+  const r=st.sp[b.id]||(st.sp[b.id]={fixed:{},tries:{},dirty:false});
+  const errOf=i=>b.errs.findIndex((e,k)=>e.i.includes(i));
+  const accOf=(e,i)=>Array.isArray(e.acc)?e.acc:(e.acc[i]||[]);
+  let open=null;
+  const bts=b.toks.map((w,i)=>{if(/^[.,!?;:]+$/.test(w)){const s=el('span','pun',w);tk.appendChild(s);return s;}
+    const bt=el('button','stk',fmt(w));bt.type='button';bt.onclick=()=>hit(i);tk.appendChild(bt);return bt;});
+  function say(c,h){fbw.innerHTML='';fbw.appendChild(el('div','fb '+c,`<div>${fmt(h)}</div>`));}
+  const done=()=>b.errs.every((e,k)=>r.fixed[k]);
+  function paint(){
+   b.toks.forEach((w,i)=>{const bt=bts[i];if(bt.tagName!=='BUTTON')return;const k=errOf(i),fx=k>=0?r.fixed[k]:null;
+     bt.classList.remove('fixd','del','sel');bt.disabled=done();
+     if(fx){bt.disabled=true;if(fx.idx===i){if(fx.txt===''){bt.classList.add('del');bt.innerHTML=fmt(w);}else{bt.classList.add('fixd');bt.innerHTML=fmt(fx.txt);}}else if(fx.idx!==i){bt.innerHTML=fmt(w);}}
+     if(open&&open.i===i)bt.classList.add('sel');});
+   cnt.textContent=`${Object.keys(r.fixed).length} / ${b.errs.length} hata düzeltildi`;
+  }
+  function hit(i){
+   if(done())return;const k=errOf(i);
+   if(k>=0&&!r.fixed[k]){openEd(k,i);return;}
+   if(k>=0)return;
+   const nk=b.errs.findIndex((e,j)=>!r.fixed[j]&&(e.near||[]).includes(i));
+   if(nk>=0){say('info',b.errs[nk].nearMsg||'Yaklaştın. Sorun hemen yanındaki kelimede.');return;}
+   r.dirty=true;ed.hidden=true;open=null;const bt=bts[i];bt.classList.add('miss');setTimeout(()=>bt.classList.remove('miss'),900);
+   say('no',b.fmiss||'Bu kelime masum. Başka yere bak.');paint();save();
+  }
+  function openEd(k,i){
+   open={k,i};ed.hidden=false;ed.innerHTML='';fbw.innerHTML='';
+   ed.appendChild(el('p','',`<b>${b.toks[i]}</b> yerine ne gelmeli? Yaz; kelime fazlaysa <b>Sil</b>'e bas.`));
+   const inp=el('input','gapi wide');Object.assign(inp,{type:'text',autocomplete:'off',spellcheck:false,value:''});
+   inp.setAttribute('autocorrect','off');inp.setAttribute('autocapitalize','off');inp.setAttribute('enterkeyhint','done');inp.setAttribute('aria-label','düzeltme');
+   const row=el('div','row'),ok=el('button','btn sm','Düzelt'),del=el('button','btn sec sm','Sil'),sh=el('button','btn sec sm','Doğrusunu göster');
+   ok.type=del.type=sh.type='button';sh.hidden=(r.tries[k]||0)<2;row.append(ok,del,sh);ed.append(inp,row);
+   inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();sub(inp.value);}});
+   ok.onclick=()=>{if(inp.value.trim())sub(inp.value);};del.onclick=()=>sub('');
+   sh.onclick=()=>{const a=accOf(b.errs[k],i);r.fixed[k]={idx:i,txt:a[0],shown:true};finish(k,'info','Doğrusu bu. '+(b.errs[k].why||''));};
+   paint();if(!reduce)inp.focus({preventScroll:true});
+  }
+  function sub(val){
+   const {k,i}=open,e=b.errs[k],v=norm(val),good=accOf(e,i).map(norm).includes(v);
+   const first=!(r.tries[k]>0);r.tries[k]=(r.tries[k]||0)+1;
+   if(first)firstTry(b.id+'.'+k,good&&!r.dirty);
+   if(good){const clean=first&&!r.dirty;if(clean&&b.xp)award(b.id+'.'+k,b.xp);r.fixed[k]={idx:i,txt:accOf(e,i).find(x=>norm(x)===v)??val.trim()};
+     finish(k,'ok',(e.why||'Tamamdır.')+(clean&&b.xp?xpg(b.xp):''));}
+   else{let m=null;if(e.f)for(const key in e.f)if(norm(key)===v){m=e.f[key];break;}
+     say('no',m||(v===''?'Silmek yetmiyor; burada bir şeyin değişmesi lazım.':'Doğru yeri buldun ama düzeltme tutmadı. Bir daha dene.'));
+     if(r.tries[k]>=2)ed.querySelector('.row .btn:last-child').hidden=false;save();}
+  }
+  function finish(k,c,h){r.dirty=false;open=null;ed.hidden=true;say(c,h);paint();save();hud();changed();
+   if(done()&&b.done)fbw.appendChild(el('div','fb ok',`<div>${fmt(b.done)}</div>`));}
+  paint();if(done()&&b.done)say('ok',b.done);
+  solvers.push(()=>{if(done()||!box.isConnected)return false;
+   b.errs.forEach((e,k)=>{if(r.fixed[k])return;const i=e.i[0];hit(i);const a=accOf(e,i)[0];
+     if(a===''){ed.querySelector('.row .btn:nth-child(2)').click();}else{ed.querySelector('input').value=a;ed.querySelector('.row .btn').click();}});return true;});
+  return {req:true,done};
+ },
+
+ summary(b,p){const d=el('div','sum');p.appendChild(d);
+  const f=()=>{const all=allQ().filter(q=>q.xp&&!q.cipher);const first=all.filter(q=>st.xp[q.id]!=null).length;
+    d.innerHTML=`<div><b>${xpNow()}</b><span>/ ${XPMAX} XP</span></div><div><b>${first}</b><span>soru ilk denemede</span></div><div><b>${Math.round(100*xpNow()/XPMAX)}%</b><span>başarı</span></div><div class="rk"><span>Rütben</span><b>${rank()}</b><span>${rankNote()}</span></div>`;};
+  f();liveFns.push(f);},
+ checklist(b,p){const d=el('div','clist');b.items.forEach(([t,a],i)=>{const lb=el('label','',`<input type="checkbox" id="cl${i}"><span>${t}</span><a href="#" data-go="${a}">bölüme dön</a>`);
+   const inp=lb.querySelector('input');inp.checked=!!st.cl[i];inp.onchange=()=>{st.cl[i]=inp.checked?1:0;save();};
+   lb.querySelector('a').onclick=e=>{e.preventDefault();go(a);};d.appendChild(lb);});p.appendChild(d);},
+ restart(b,p){const bt=el('button','btn sec','Aşamayı baştan çöz');bt.type='button';let arm=false;
+   bt.onclick=()=>{if(!arm){arm=true;bt.textContent='Emin misin? Bütün cevaplar silinir. Tekrar dokun.';return;}reset();};p.appendChild(bt);}
+};
+const liveFns=[];
+function rankNote(){const r=rank();const d={'Çaylak':'Olsun, ilk tur bu. Tuzak bölümlerine bi daha bak.','Zaman Yolcusu':'Fena değil. Bi tur daha atarsan dedektif olursun.','Zaman Dedektifi':'Çok iyi. KRONOS\'a az kaldı.','KRONOS':'Zamanın efendisi sensin.'};return (STAGE.rankNotes&&STAGE.rankNotes[r])||d[r]||'';}
+const _hud=hud;hud=function(){_hud();liveFns.forEach(f=>f());};
+
+/* ---- menü ---- */
+function menu(){
+  const nav=$('#menuNav');nav.innerHTML='';const seen=new Set();
+  if(st.who)nav.appendChild(el('p','who-l','Öğrenci: <b></b>')).querySelector('b').textContent=st.who.name;
+  SCREENS.forEach((s,i)=>{if(!s.title||seen.has(s.sec))return;seen.add(s.sec);
+    const a=el('a',i<=st.scr?'':'lock',s.title);a.href='#';a.onclick=e=>{e.preventDefault();closeMenu();go(s.sec);};nav.appendChild(a);});
+}
+function go(sec){const t=document.querySelector(`[data-anchor="${sec}"]`);if(t)t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});}
+function closeMenu(){$('#menu').hidden=true;}
+$('#menuB').onclick=()=>{menu();$('#menu').hidden=false;};
+$('#menu').addEventListener('click',e=>{if(e.target.id==='menu')closeMenu();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
+let armR=false;$('#resetB').onclick=()=>{if(!armR){armR=true;$('#resetB').textContent='Emin misin? Tekrar dokun.';return;}reset();};
+function reset(){const w=st.who;st=fresh();st.who=w;save();location.hash='';main.innerHTML='';liveFns.length=0;boot(true);closeMenu();armR=false;$('#resetB').textContent='Baştan başla';window.scrollTo(0,0);}
+
+/* ---- başlat ---- */
+function gate(){
+  const box=el('section','screen');
+  box.innerHTML=`<div class="hero"><small>${STAGE.kicker||'YDT Grammar · Self-study'}</small><h1>${STAGE.title.split('·').pop().trim()}</h1><p>Başlamadan önce kendini tanıt. Hocan ilerlemeni bu bilgilerle görecek.</p></div>
+  <form class="login" id="lg" novalidate>
+    <label for="lgN">Adın soyadın</label><input id="lgN" autocomplete="name" required maxlength="80">
+    <label for="lgE">E-posta adresin</label><input id="lgE" type="email" autocomplete="email" inputmode="email" required maxlength="120">
+    <p class="lgerr" id="lgX" hidden></p>
+    <button class="btn" type="submit">Derse başla</button>
+    <p class="lgnote">Aynı telefonla açtığın sürece kaldığın yerden devam edersin.</p>
+  </form>`;
+  main.appendChild(box);
+  $('#lg').addEventListener('submit',e=>{e.preventDefault();
+    const n=$('#lgN').value.trim(),m=$('#lgE').value.trim().toLowerCase();
+    const x=$('#lgX');
+    if(n.length<3){x.textContent='Adını ve soyadını yaz.';x.hidden=false;return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m)){x.textContent='E-posta adresini kontrol et, bi harf eksik gibi.';x.hidden=false;return;}
+    st.who={name:n,email:m};save();box.remove();boot();report(true);});
+}
+function boot(){
+  if(TRACKED&&!st.who){$('#hudT').textContent=STAGE.title;gate();return;}
+  $('#hudT').textContent=STAGE.title;
+  const upto=Math.min(st.scr,SCREENS.length-1);
+  for(let i=0;i<=upto;i++)renderScreen(i,false);
+  hud();menu();
+  if(upto>0){const t=document.getElementById('s'+upto);if(t)setTimeout(()=>t.scrollIntoView({block:'start'}),60);}
+}
+boot();
+})();
+
+</script>
+
+</body></html>
